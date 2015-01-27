@@ -17,7 +17,11 @@ public class Main {
     public static void main(String argv[]) {
 
         try {
-            GenomeCDS arabicVirus = new GenomeCDS("Arabis mosaic virus small satellite RNA");
+            GenomeCDS genomeCDS = new GenomeCDS();
+
+            genomeCDS.getGenomeCDS("Arabis mosaic virus small satellite RNA");
+            genomeCDS.getGenomeCDS("Abutilon Brazil virus");
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,9 +38,11 @@ class GenomeCDS
     HandlerGenomeId handlerGenomeId = new HandlerGenomeId();
     HandlerSequenceId handlerSequenceId = new HandlerSequenceId();
 
-    GenomeCDS(String genomeName) {
+    List<Scanner> getGenomeCDS(String genomeName)
+    {
         try {
-            saxParser = factory.newSAXParser();
+            List<Scanner> cdsList = new ArrayList<Scanner>();
+
             saxParser.parse("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=genome&term=" + genomeName,
                     handlerGenomeId);
             saxParser.parse("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=genome&db=nuccore&id=" + handlerGenomeId.getGenomeId(),
@@ -46,6 +52,7 @@ class GenomeCDS
                 try {
                     URL url = new URL("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&rettype=gb&retmode=text&id=" + sequenceId);
                     Scanner s = new Scanner(url.openStream());
+                    cdsList.add(s);
                     System.out.println(s.nextLine());
                     // read from your scanner
                 } catch (IOException ex) {
@@ -55,6 +62,19 @@ class GenomeCDS
                     ex.printStackTrace(); // for now, simply output it.
                 }
             }
+
+            return cdsList;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    GenomeCDS() {
+        try {
+            saxParser = factory.newSAXParser();
         }
         catch (Exception e)
         {
