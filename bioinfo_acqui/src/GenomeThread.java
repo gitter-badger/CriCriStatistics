@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class GenomeCDS
+public class GenomeThread extends Thread
 {
     protected SAXParserFactory factory = SAXParserFactory.newInstance();
     protected SAXParser saxParser;
@@ -14,7 +14,30 @@ public class GenomeCDS
     protected HandlerGenomeId handlerGenomeId = new HandlerGenomeId();
     protected HandlerSequenceId handlerSequenceId = new HandlerSequenceId();
 
-    public List<Scanner> getGenomeCDS(String genomeName)
+    protected List<Genome> genomeList;
+
+    public GenomeThread(List<Genome> genomeList) {
+        super();
+
+        this.genomeList = genomeList;
+
+        try {
+            saxParser = factory.newSAXParser();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void run()
+    {
+        for (final Genome genome: genomeList) {
+            getGenomeCDS(genome.getOrganism());
+        }
+    }
+
+    private List<Scanner> getGenomeCDS(String genomeName)
     {
         try {
             List<Scanner> cdsList = new ArrayList<Scanner>();
@@ -45,16 +68,6 @@ public class GenomeCDS
         {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    public GenomeCDS() {
-        try {
-            saxParser = factory.newSAXParser();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
         }
     }
 }
