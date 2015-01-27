@@ -11,45 +11,55 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+//TODO: Get genomes overview list (timestamp for updating once a day?week?
 public class Main {
 
     public static void main(String argv[]) {
 
         try {
+            GenomeCDS arabicVirus = new GenomeCDS("Arabis mosaic virus small satellite RNA");
 
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser saxParser = factory.newSAXParser();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            HandlerGenomeId handlerGenomeId = new HandlerGenomeId();
-            HandlerSequenceId handlerSequenceId = new HandlerSequenceId();
+    }
+}
 
+class GenomeCDS
+{
+    SAXParserFactory factory = SAXParserFactory.newInstance();
+    SAXParser saxParser;
 
-            String genomeName = "Arabis mosaic virus small satellite RNA";
-            saxParser.parse("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=genome&term="+genomeName,
+    HandlerGenomeId handlerGenomeId = new HandlerGenomeId();
+    HandlerSequenceId handlerSequenceId = new HandlerSequenceId();
+
+    GenomeCDS(String genomeName) {
+        try {
+            saxParser = factory.newSAXParser();
+            saxParser.parse("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=genome&term=" + genomeName,
                     handlerGenomeId);
-            saxParser.parse("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=genome&db=nuccore&id="+handlerGenomeId.getGenomeId(),
+            saxParser.parse("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=genome&db=nuccore&id=" + handlerGenomeId.getGenomeId(),
                     handlerSequenceId);
 
-            for (final String sequenceId: handlerSequenceId.getSequenceIdList())
-            {
+            for (final String sequenceId : handlerSequenceId.getSequenceIdList()) {
                 try {
-                    URL url = new URL("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&rettype=gb&retmode=text&id="+sequenceId);
+                    URL url = new URL("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&rettype=gb&retmode=text&id=" + sequenceId);
                     Scanner s = new Scanner(url.openStream());
                     System.out.println(s.nextLine());
                     // read from your scanner
-                }
-                catch(IOException ex) {
+                } catch (IOException ex) {
                     // there was some connection problem, or the file did not exist on the server,
                     // or your URL was not in the right format.
                     // think about what to do now, and put it here.
                     ex.printStackTrace(); // for now, simply output it.
                 }
             }
-
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
-
     }
 }
 
