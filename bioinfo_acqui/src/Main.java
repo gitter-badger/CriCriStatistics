@@ -1,3 +1,4 @@
+import javax.xml.parsers.SAXParserFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,18 +9,24 @@ public class Main {
 
         try {
             GenomeOverview genomeOverview = new GenomeOverview();
+            SAXParserFactory factory = SAXParserFactory.newInstance();
 
             List<Genome> genomeList = genomeOverview.getGenomeList();
 
-            int noOfThreads = 4;
+            int noOfThreads = 8;
             List<GenomeThread> genomeThreads = new ArrayList<GenomeThread>();
 
             for (int i = 0; i < noOfThreads; i++)
             {
-                GenomeThread genomeThread = new GenomeThread(genomeList.subList(i*(genomeList.size()/noOfThreads),
-                        i+1*(genomeList.size()/noOfThreads)));
+                GenomeThread genomeThread = new GenomeThread(String.valueOf(i), factory.newSAXParser(),
+                        genomeList.subList(i*(genomeList.size()/noOfThreads),
+                        (i+1)*(genomeList.size()/noOfThreads)));
                 genomeThreads.add(genomeThread);
-                genomeThread.run();
+            }
+
+            for (int i = 0; i < noOfThreads; i++) {
+                Thread thread = new Thread(genomeThreads.get(i));
+                thread.start();
             }
 
 

@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class GenomeThread extends Thread
+public class GenomeThread implements Runnable
 {
-    protected SAXParserFactory factory = SAXParserFactory.newInstance();
     protected SAXParser saxParser;
 
     protected HandlerGenomeId handlerGenomeId = new HandlerGenomeId();
@@ -16,13 +15,15 @@ public class GenomeThread extends Thread
 
     protected List<Genome> genomeList;
 
-    public GenomeThread(List<Genome> genomeList) {
-        super();
+    protected String threadName;
 
+    public GenomeThread(String threadName, SAXParser parser, List<Genome> genomeList) {
+
+        this.threadName = threadName;
         this.genomeList = genomeList;
 
         try {
-            saxParser = factory.newSAXParser();
+            saxParser = parser;
         }
         catch (Exception e)
         {
@@ -33,11 +34,12 @@ public class GenomeThread extends Thread
     public void run()
     {
         for (final Genome genome: genomeList) {
+            System.out.print(this.threadName + '\t');
             getGenomeCDS(genome.getOrganism());
         }
     }
 
-    private List<Scanner> getGenomeCDS(String genomeName)
+    private synchronized List<Scanner> getGenomeCDS(String genomeName)
     {
         try {
             List<Scanner> cdsList = new ArrayList<Scanner>();
