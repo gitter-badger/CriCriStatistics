@@ -17,6 +17,8 @@ public class GenomeThread implements Runnable
 
     protected String threadName;
 
+    private IGenomeParser genomeParser;
+
     public GenomeThread(String threadName, SAXParser parser, List<Genome> genomeList) {
 
         this.threadName = threadName;
