@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c9fdcf69-7558-4a5c-8d7c-42b055244a64" name="Default" comment="Threads optimized">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/TextAreaOutputStream.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GenomeOverview.java" afterPath="$PROJECT_DIR$/src/GenomeOverview.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GenomeThread.java" afterPath="$PROJECT_DIR$/src/GenomeThread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.java" afterPath="$PROJECT_DIR$/src/Main.java" />
+    <list default="true" id="c9fdcf69-7558-4a5c-8d7c-42b055244a64" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="bioinfo_acqui.iws" />
@@ -32,11 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="158" max-vertical-offset="1496">
-              <caret line="62" column="63" selection-start-line="62" selection-start-column="63" selection-end-line="62" selection-end-column="63" />
+            <state vertical-scroll-proportion="0.27687296" vertical-offset="697" max-vertical-offset="1496">
+              <caret line="51" column="31" selection-start-line="51" selection-start-column="31" selection-end-line="51" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#940#954#0" expanded="true" />
@@ -93,11 +89,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GenomeThread.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GenomeThread.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GenomeThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9413681" vertical-offset="102" max-vertical-offset="1360">
-              <caret line="40" column="70" selection-start-line="40" selection-start-column="70" selection-end-line="40" selection-end-column="70" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="746" max-vertical-offset="1360">
+              <caret line="58" column="75" selection-start-line="58" selection-start-column="75" selection-end-line="58" selection-end-column="75" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -524,7 +520,7 @@
       <workItem from="1422382062667" duration="4018000" />
       <workItem from="1422386149711" duration="9170000" />
       <workItem from="1422434792326" duration="175000" />
-      <workItem from="1422443356201" duration="4099000" />
+      <workItem from="1422443356201" duration="5188000" />
     </task>
     <task id="LOCAL-00001" summary="GenomeCDS class. We should now return the scanner containing the CDS files associated to the Genome Term">
       <created>1422387513688</created>
@@ -550,11 +546,17 @@
       <option name="project" value="LOCAL" />
       <updated>1422392944189</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="UI with swing">
+      <created>1422447486928</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1422447486928</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17462000" />
+    <option name="totallyTimeSpent" value="18551000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1672" y="-8" width="1696" height="1066" extended-state="6" />
@@ -609,7 +611,8 @@
     <MESSAGE value="We are now getting every cds file from all genomes" />
     <MESSAGE value="Threads are here, we can now parallelize genome cds getters !" />
     <MESSAGE value="Threads optimized" />
-    <option name="LAST_COMMIT_MESSAGE" value="Threads optimized" />
+    <MESSAGE value="UI with swing" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI with swing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -720,17 +723,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="158" max-vertical-offset="1496">
-          <caret line="62" column="63" selection-start-line="62" selection-start-column="63" selection-end-line="62" selection-end-column="63" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#940#954#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GenomeOverview.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1105">
@@ -772,12 +764,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/genome_overview.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="320.11642" vertical-offset="4336" max-vertical-offset="191386">
+          <caret line="11252" column="0" selection-start-line="11252" selection-start-column="0" selection-end-line="11252" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/compiler.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="614">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/GenomeThread.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9413681" vertical-offset="102" max-vertical-offset="1360">
-          <caret line="40" column="70" selection-start-line="40" selection-start-column="70" selection-end-line="40" selection-end-column="70" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="746" max-vertical-offset="1360">
+          <caret line="58" column="75" selection-start-line="58" selection-start-column="75" selection-end-line="58" selection-end-column="75" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27687296" vertical-offset="697" max-vertical-offset="1496">
+          <caret line="51" column="31" selection-start-line="51" selection-start-column="31" selection-end-line="51" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#940#954#0" expanded="true" />
           </folding>
         </state>
       </provider>
