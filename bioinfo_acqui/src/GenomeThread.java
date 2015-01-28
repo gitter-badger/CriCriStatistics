@@ -34,7 +34,6 @@ public class GenomeThread implements Runnable
     public void run()
     {
         for (final Genome genome: genomeList) {
-            System.out.print(this.threadName + '\t');
             getGenomeCDS(genome.getOrganism());
         }
     }

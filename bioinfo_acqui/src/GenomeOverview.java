@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Proxy;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
@@ -11,12 +13,15 @@ import java.util.List;
 public class GenomeOverview
 {
 
-    GenomeOverview() throws IOException {
-
+    GenomeOverview() {
         if (Files.exists(FileSystems.getDefault().getPath("genome_overview.txt")) == false) {
-            URL website = new URL("http://www.ncbi.nlm.nih.gov/genomes/Genome2BE/genome2srv.cgi?action=download&orgn=&report=overview&king=All&group=All&subgroup=All");
-            File target = new File("genome_overview.txt");
-            Files.copy(website.openStream(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            try {
+                URL website = new URL("http://www.ncbi.nlm.nih.gov/genomes/Genome2BE/genome2srv.cgi?action=download&orgn=&report=overview&king=All&group=All&subgroup=All");
+                File target = new File("genome_overview.txt");
+                Files.copy(website.openStream(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -39,6 +44,12 @@ public class GenomeOverview
                 g.setChrs(split[5]);
 
                 genomeList.add(g);
+
+//                //create directory
+//                boolean isCreated = (new File(String.format("%s/%s/%s/%s.txt", g.getKingdom(), g.getGroup(), g.getSubGroup(), g.getOrganism()))).mkdirs();
+//                if (!isCreated) {
+//                    // Directory creation failed
+//                }
             }
         }
 
