@@ -17,6 +17,8 @@ public class GenomeThread implements Runnable
 
     protected String threadName;
 
+    private IGenomeParser genomeParser;
+
     public GenomeThread(String threadName, SAXParser parser, List<Genome> genomeList) {
 
         this.threadName = threadName;
@@ -34,20 +36,27 @@ public class GenomeThread implements Runnable
     public void run()
     {
         for (final Genome genome: genomeList) {
-            System.out.print(this.threadName + '\t');
+            //genomeParser.parseGenome(genome, getGenomeCDS(genome.getOrganism()));
             getGenomeCDS(genome.getOrganism());
         }
     }
 
-    private synchronized List<Scanner> getGenomeCDS(String genomeName)
+    private List<Scanner> getGenomeCDS(String genomeName)
     {
         try {
             List<Scanner> cdsList = new ArrayList<Scanner>();
 
-            saxParser.parse("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=genome&term=" + genomeName,
-                    handlerGenomeId);
-            saxParser.parse("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=genome&db=nuccore&id=" + handlerGenomeId.getGenomeId(),
-                    handlerSequenceId);
+            synchronized(saxParser)
+            {
+                try {
+                    saxParser.parse("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=genome&term=" + genomeName,
+                            handlerGenomeId);
+                    saxParser.parse("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=genome&db=nuccore&id=" + handlerGenomeId.getGenomeId(),
+                            handlerSequenceId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
             for (final String sequenceId : handlerSequenceId.getSequenceIdList()) {
                 try {
