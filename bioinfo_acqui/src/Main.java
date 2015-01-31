@@ -18,7 +18,8 @@ public class Main {
 
         // String sequence = "ACGTAAACAGATCACCCGCTGAT";
         // Alphabet a4 = new Alphabet();
-        // Statistics stats = new Statistics(a4, sequence);        
+        // Statistics stats = new Statistics(a4, sequence);
+        // stats.phases.get(0).get("GTA");       
         
         try {
             JFrame frame = new MainForm();
