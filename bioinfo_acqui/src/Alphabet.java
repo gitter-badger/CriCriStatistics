@@ -18,6 +18,7 @@ public class Alphabet
     {
         items = new ArrayList<String>();
         item_length = length;
+        // TODO: remove duplicates in alphabet string
         GenerateCombinations(item_length, alphabet.toCharArray(), "");
     }
 

@@ -16,6 +16,10 @@ public class Main {
 
     public static void main(String argv[]) {
 
+        // String sequence = "ACGTAAACAGATCACCCGCTGAT";
+        // Alphabet a4 = new Alphabet();
+        // Statistics stats = new Statistics(a4, sequence);        
+        
         try {
             JFrame frame = new MainForm();
             System.setProperty("java.net.useSystemProxies", "true");
