@@ -1,37 +1,39 @@
 import java.lang.String;
 import java.util.ArrayList;
 
-public class Alphabet
-{
+public class Alphabet {
+
+    // TODO: set alphabet to lower?
     public ArrayList<String> items;
     public int item_length;
 
     // default to A4
-    public Alphabet()
-    {
+    public Alphabet() {
+    
         items = new ArrayList<String>();
         item_length = 3;
         GenerateCombinations(item_length, new char[] {'A','C','G','T'}, "");
     }
 
-    public Alphabet(String alphabet, int length)
-    {
+    public Alphabet(String alphabet, int length) {
+    
         items = new ArrayList<String>();
         item_length = length;
         // TODO: remove duplicates in alphabet string
         GenerateCombinations(item_length, alphabet.toCharArray(), "");
     }
 
-    private void GenerateCombinations(int length, char[] alphabet, String curr)
-    {
-        if (curr.length() == length)
-        {
+    private void GenerateCombinations(int length, char[] alphabet, String curr) {
+    
+        if (curr.length() == length) {
+        
             items.add(curr);
         }
-        else
-        {
-            for (char c : alphabet)
-            {
+        else {
+        
+            for (char c : alphabet) {
+            
+                // TODO: could be optimized with a StringBuilder
                 String oldCurr = curr;
                 curr += c;
                 GenerateCombinations(length, alphabet, curr);
