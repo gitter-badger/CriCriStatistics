@@ -10,6 +10,7 @@ public class Statistics
 {
     public ArrayList<HashMap<String, Integer>> phases;
     private int shift_window_size;
+    // TODO: add total_number_of_nucleotides attribute
 
     // TODO: we could also add a constructor with an array of CDS (String[] seq)
     // then the frequencies would be summed in the same HashMap (keeping phases separated of course)
@@ -33,7 +34,7 @@ public class Statistics
     }
 
     private void ComputeFrequencies(String seq) {
-
+        // TODO: use multi-threading here!
         for (int i=0; i<shift_window_size; i++) {
 
             PhaseFrequencies(seq, i);
