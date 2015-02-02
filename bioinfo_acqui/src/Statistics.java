@@ -59,7 +59,7 @@ public class Statistics
         for (String n_nucleotide : Split(work_sequence)) {
 
             phases.get(true_phase)
-                  .put(trinucleotide,
+                  .put(n_nucleotide,
                        phases.get(true_phase)
                              .get(n_nucleotide) + 1);
         }
