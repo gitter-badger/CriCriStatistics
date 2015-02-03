@@ -55,6 +55,8 @@ public class Statistics
                 0, work_sequence.length() - shift);
         }
 
+        // TODO: we could walk on string with a loop instead of splitting it
+        // (which can be very costly with a very long string)
         // increment each met key
         for (String n_nucleotide : Split(work_sequence)) {
 
