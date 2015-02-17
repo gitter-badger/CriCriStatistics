@@ -1,13 +1,5 @@
 import javax.swing.*;
-import javax.swing.text.DefaultCaret;
 import javax.xml.parsers.SAXParserFactory;
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +29,7 @@ public class Main {
             {
                 GenomeThread genomeThread = new GenomeThread(String.valueOf(i), factory.newSAXParser(),
                         genomeList.subList(i*(genomeList.size()/noOfThreads),
-                        (i+1)*(genomeList.size()/noOfThreads)));
+                        (i+1)*(genomeList.size()/noOfThreads)), null);
                 genomeThreads.add(genomeThread);
             }
 

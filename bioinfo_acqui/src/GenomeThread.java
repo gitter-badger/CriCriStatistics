@@ -19,10 +19,11 @@ public class GenomeThread implements Runnable
 
     private IGenomeParser genomeParser;
 
-    public GenomeThread(String threadName, SAXParser parser, List<Genome> genomeList) {
+    public GenomeThread(String threadName, SAXParser parser, List<Genome> genomeList, IGenomeParser genomeParser) {
 
         this.threadName = threadName;
         this.genomeList = genomeList;
+        this.genomeParser = genomeParser;
 
         try {
             saxParser = parser;
@@ -36,8 +37,10 @@ public class GenomeThread implements Runnable
     public void run()
     {
         for (final Genome genome: genomeList) {
-            //genomeParser.parseGenome(genome, getGenomeCDS(genome.getOrganism()));
-            getGenomeCDS(genome.getOrganism());
+            if (genomeParser != null)
+                genomeParser.parseGenome(genome, getGenomeCDS(genome.getOrganism()));
+            else
+                getGenomeCDS(genome.getOrganism());
         }
     }
 
