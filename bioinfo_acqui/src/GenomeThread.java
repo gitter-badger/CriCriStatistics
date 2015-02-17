@@ -82,8 +82,15 @@ public class GenomeThread implements Runnable
                         {
                             saxParser.parse(sequenceIdIS, handlerSequenceId);
                         }
+                        else
+                        {
+                            System.out.println("sequenceIdIS null   "+handlerGenomeId.getGenomeId());
+                        }
                     }
-                    //TODO: error handling (else)
+                    else
+                    {
+                        System.out.println("genomeIdIS null   " + genomeName);
+                    }
 
                 } catch (Exception e) {
                     System.out.println(e);
