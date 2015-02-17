@@ -14,8 +14,6 @@ public class HandlerSequenceId extends HandlerGenomeId {
     public void startElement(String uri, String localName,String qName,
                              Attributes attributes) throws SAXException {
 
-        //System.out.println("Start Element :" + qName);
-
         if (qName.equalsIgnoreCase("LINK")) {
             inLink = true;
         }
@@ -40,7 +38,7 @@ public class HandlerSequenceId extends HandlerGenomeId {
 
         if (inLinkId) {
             sequenceIdList.add(new String(ch, start, length));
-            System.out.println("sequenceId : " + new String(ch, start, length));
+            System.out.println("   _ sequenceId : " + new String(ch, start, length));
             inLinkId = false;
         }
     }

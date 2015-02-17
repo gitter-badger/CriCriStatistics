@@ -11,8 +11,6 @@ public class HandlerGenomeId extends DefaultHandler {
     public void startElement(String uri, String localName,String qName,
                              Attributes attributes) throws SAXException {
 
-        //System.out.println("Start Element :" + qName);
-
         if (qName.equalsIgnoreCase("IDLIST")) {
             inIdList = true;
         }
@@ -37,7 +35,7 @@ public class HandlerGenomeId extends DefaultHandler {
 
         if (inIdListId) {
             genomeId = new String(ch, start, length);
-            System.out.println("genomeId : " + new String(ch, start, length));
+            System.out.println("- genomeId : " + new String(ch, start, length));
             inIdListId = false;
         }
     }
