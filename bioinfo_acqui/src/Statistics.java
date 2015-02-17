@@ -1,6 +1,7 @@
 import java.beans.Statement;
 import java.lang.Integer;
 import java.lang.String;
+import java.lang.System;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,12 +10,11 @@ import java.util.Map;
 public class Statistics
 {
     public ArrayList<HashMap<String, Integer>> phases;
+    // should we have it 'phases' ?
+    public int total_n_nucleotides = 0;
     private int shift_window_size;
-    // TODO: add total_number_of_nucleotides attribute
 
-    // TODO: we could also add a constructor with an array of CDS (String[] seq)
-    // then the frequencies would be summed in the same HashMap (keeping phases separated of course)
-    public Statistics(Alphabet alphabet, String seq) {
+    public Statistics(Alphabet alphabet) {
 
         shift_window_size = alphabet.item_length;
         phases = new ArrayList<HashMap<String, Integer>>(shift_window_size);
@@ -29,8 +29,21 @@ public class Statistics
             }
             phases.add(frequencies);
         }
+    }
+    
+    public Statistics(Alphabet alphabet, String seq) {
 
+        this(alphabet);
         ComputeFrequencies(seq);
+    }
+    
+    public Statistics(Alphabet alphabet, String[] seq) {
+
+        this(alphabet);
+        for (String cds: seq) {
+            
+            ComputeFrequencies(cds);
+        }
     }
 
     private void ComputeFrequencies(String seq) {
@@ -55,11 +68,27 @@ public class Statistics
                 0, work_sequence.length() - shift);
         }
 
-        // TODO: we could walk on string with a loop instead of splitting it
-        // (which can be very costly with a very long string)
-        // increment each met key
-        for (String n_nucleotide : Split(work_sequence)) {
+        // tried to optimize, got exceptions, got bored, got back to previous working version
 
+//        char[] char_array = work_sequence.toCharArray();
+//        char[] tmp = new char[shift_window_size+1];
+//
+//        for (int i=0; i<work_sequence.length(); i++) {
+//
+//            // walk on string to get chars
+//            for (int c=0; c<shift_window_size; c++) {
+//
+//                tmp[c] = char_array[i];
+//                i++;
+//            }
+//
+//            // create String from these chars
+//            String n_nucleotide = new String(tmp);
+//            System.out.println("Nucl: "+ n_nucleotide);
+
+        for (String n_nucleotide: Split(work_sequence)) {
+
+            // increment each met key
             phases.get(true_phase)
                   .put(n_nucleotide,
                        phases.get(true_phase)

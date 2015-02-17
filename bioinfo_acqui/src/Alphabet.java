@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 public class Alphabet {
 
-    // TODO: set alphabet to lower?
     public ArrayList<String> items;
     public int item_length;
 
@@ -12,15 +11,25 @@ public class Alphabet {
     
         items = new ArrayList<String>();
         item_length = 3;
-        GenerateCombinations(item_length, new char[] {'A','C','G','T'}, "");
+        GenerateCombinations(item_length, new char[] {'a','c','g','t'}, "");
     }
 
     public Alphabet(String alphabet, int length) {
     
         items = new ArrayList<String>();
         item_length = length;
-        // TODO: remove duplicates in alphabet string
-        GenerateCombinations(item_length, alphabet.toCharArray(), "");
+        GenerateCombinations(length, RemoveDuplicates(alphabet).toCharArray(), "");
+    }
+
+    private String RemoveDuplicates(String s) {
+        StringBuilder noDupes = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            String si = s.substring(i, i + 1);
+            if (noDupes.indexOf(si) == -1) {
+                noDupes.append(si);
+            }
+        }
+        return noDupes.toString().toLowerCase();
     }
 
     private void GenerateCombinations(int length, char[] alphabet, String curr) {
