@@ -49,6 +49,9 @@ public class Main {
         try {
             JFrame frame = new MainForm();
             System.setProperty("java.net.useSystemProxies", "true");
+            
+            DebugOption debugOption = new DebugOption();
+            debugOption.parseInputCommand(argv);
 
             GenomeOverview genomeOverview = new GenomeOverview();
             SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -63,6 +66,7 @@ public class Main {
                 GenomeThread genomeThread = new GenomeThread(String.valueOf(i), factory.newSAXParser(),
                         genomeList.subList(i*(genomeList.size()/noOfThreads),
                         (i+1)*(genomeList.size()/noOfThreads)), null);
+                genomeThread.setDebuggingOption(debugOption);
                 genomeThreads.add(genomeThread);
             }
 

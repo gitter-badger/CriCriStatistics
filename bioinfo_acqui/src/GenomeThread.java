@@ -1,6 +1,8 @@
 import javax.xml.parsers.SAXParser;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.FileWriter;
+import java.io.File;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -17,11 +19,14 @@ public class GenomeThread implements Runnable
     protected List<Genome> genomeList;
 
     protected String threadName;
+    
+    protected DebugOption debugOption;
 
     private IGenomeParser genomeParser;
 
     public GenomeThread(String threadName, SAXParser parser, List<Genome> genomeList, IGenomeParser genomeParser) {
-
+        
+        this.debugOption = null;
         this.threadName = threadName;
         this.genomeList = genomeList;
         this.genomeParser = genomeParser;
@@ -60,6 +65,10 @@ public class GenomeThread implements Runnable
             System.out.println(ioe);
             return null;
         }
+    }
+    
+    public void setDebuggingOption(DebugOption debugOption){
+      this.debugOption = debugOption;
     }
 
     private List<Scanner> getGenomeGenbanks(String genomeName)
@@ -103,14 +112,20 @@ public class GenomeThread implements Runnable
                     Scanner s = new Scanner(url.openStream());
                     cdsList.add(s);
                     System.out.println("      *"+s.nextLine());
-//
-//                    FileWriter fw = new FileWriter(genomeName+sequenceId);
-//                    while (s.hasNextLine())
-//                    {
-//                        fw.write(s.nextLine()+'\n');
-//                    }
-//                    fw.close();
-                    // read from your scanner
+                    
+                    if( debugOption != null && debugOption.isGBLoggingActivated() ){
+                        File sequenceDir = new File("sequenceDir");
+                        sequenceDir.mkdir();
+                        FileWriter fw = new FileWriter("sequenceDir/"+genomeName+sequenceId);
+                    
+                        while (s.hasNextLine())
+                        {
+                            fw.write(s.nextLine()+'\n');
+                        }
+                        fw.close();
+                        // read from your scanner
+                    }
+
                 } catch (IOException ex) {
                     // there was some connection problem, or the file did not exist on the server,
                     // or your URL was not in the right format.
