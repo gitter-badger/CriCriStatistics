@@ -46,7 +46,11 @@ public class Main {
 //        System.out.println("gta in seq1+seq2 phase 2: " + stats12.phases.get(1).get("gta"));
 //        System.out.println("gta in seq1+seq2 phase 3: " + stats12.phases.get(2).get("gta"));
 
+        SimpleParser test = new SimpleParser();
+        test.test();
+        
         try {
+
             JFrame frame = new MainForm();
             System.setProperty("java.net.useSystemProxies", "true");
             
