@@ -52,18 +52,23 @@ public class Statistics
 
         this(alphabet);
         for (String cds: seq) {
-            
+            total_n_nucleotides += cds.length()/shift_window_size;
             ComputeFrequencies(cds);
         }
     }
+    
 
+    //TODO: Pretty print this !!
     public void print(){
+      int i = 0;
       for ( HashMap<String, Integer> map : phases ){
-        
+        System.out.println("Phases " +i );
+        i++;
         for (Entry<String, Integer> entry : map.entrySet() ){
           String label = entry.getKey();
           Integer count = entry.getValue();
-          System.out.println(label + ": " + ( count / (total_n_nucleotides/shift_window_size )) + "%" );
+          float percent = (float)(((float) (count)) / ((float) (total_n_nucleotides))) * 100; 
+          System.out.println(label + ": " + percent + "%" );
         }
 
       } 
