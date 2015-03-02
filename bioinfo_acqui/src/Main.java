@@ -46,7 +46,11 @@ public class Main {
 //        System.out.println("gta in seq1+seq2 phase 2: " + stats12.phases.get(1).get("gta"));
 //        System.out.println("gta in seq1+seq2 phase 3: " + stats12.phases.get(2).get("gta"));
 
+        //SimpleParser test = new SimpleParser();
+        //test.test();
+        
         try {
+
             JFrame frame = new MainForm();
             System.setProperty("java.net.useSystemProxies", "true");
             
@@ -63,9 +67,10 @@ public class Main {
 
             for (int i = 0; i < noOfThreads; i++)
             {
+                SimpleParser test = new SimpleParser();
                 GenomeThread genomeThread = new GenomeThread(String.valueOf(i), factory.newSAXParser(),
                         genomeList.subList(i*(genomeList.size()/noOfThreads),
-                        (i+1)*(genomeList.size()/noOfThreads)), null);
+                        (i+1)*(genomeList.size()/noOfThreads)), test);
                 genomeThread.setDebuggingOption(debugOption);
                 genomeThreads.add(genomeThread);
             }

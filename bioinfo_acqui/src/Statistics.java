@@ -3,6 +3,7 @@ import java.lang.Integer;
 import java.lang.String;
 import java.lang.System;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.*;
@@ -46,6 +47,15 @@ public class Statistics
             ComputeFrequencies(cds);
         }
     }
+    
+    public Statistics(Alphabet alphabet, Vector<String> seq) {
+
+        this(alphabet);
+        for (String cds: seq) {
+            
+            ComputeFrequencies(cds);
+        }
+    }
 
     public void print(){
       for ( HashMap<String, Integer> map : phases ){
@@ -59,6 +69,7 @@ public class Statistics
       } 
 
     }
+
 
     private void ComputeFrequencies(String seq) {
         // TODO: use multi-threading here!
