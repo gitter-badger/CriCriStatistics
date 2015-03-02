@@ -5,7 +5,7 @@ import java.lang.System;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.*;
 
 public class Statistics
 {
@@ -40,10 +40,24 @@ public class Statistics
     public Statistics(Alphabet alphabet, String[] seq) {
 
         this(alphabet);
+
         for (String cds: seq) {
-            
+            total_n_nucleotides += cds.length();
             ComputeFrequencies(cds);
         }
+    }
+
+    public void print(){
+      for ( HashMap<String, Integer> map : phases ){
+        
+        for (Entry<String, Integer> entry : map.entrySet() ){
+          String label = entry.getKey();
+          Integer count = entry.getValue();
+          System.out.println(label + ": " + ( count / (total_n_nucleotides/shift_window_size )) + "%" );
+        }
+
+      } 
+
     }
 
     private void ComputeFrequencies(String seq) {
