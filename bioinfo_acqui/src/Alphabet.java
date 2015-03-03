@@ -3,21 +3,21 @@ import java.util.ArrayList;
 
 public class Alphabet {
 
-    public ArrayList<String> items;
-    public int item_length;
+    public ArrayList<String> words;
+    public int word_length;
 
     // default to A4
     public Alphabet() {
     
-        items = new ArrayList<String>();
-        item_length = 3;
-        GenerateCombinations(item_length, new char[] {'a','c','g','t'}, "");
+        words = new ArrayList<String>();
+        word_length = 3;
+        GenerateCombinations(word_length, new char[] {'a','c','g','t'}, "");
     }
 
     public Alphabet(String alphabet, int length) {
     
-        items = new ArrayList<String>();
-        item_length = length;
+        words = new ArrayList<String>();
+        word_length = length;
         GenerateCombinations(length, RemoveDuplicates(alphabet).toCharArray(), "");
     }
 
@@ -36,7 +36,7 @@ public class Alphabet {
     
         if (curr.length() == length) {
         
-            items.add(curr);
+            words.add(curr);
         }
         else {
         

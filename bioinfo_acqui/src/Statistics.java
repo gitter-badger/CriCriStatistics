@@ -12,7 +12,7 @@ public class Statistics
 {
     public ArrayList<HashMap<String, Integer>> phases;
     public int total_n_nucleotides = 0;
-    private int shift_window_size;
+    private int word_length;
     public Genome genome;
     // TODO: add static attribute to classify each genome in kingdom, groups, subgroups...
     
@@ -20,14 +20,14 @@ public class Statistics
     public Statistics(Alphabet alphabet, Genome genome) {
         
         this.genome = genome;
-        shift_window_size = alphabet.item_length;
-        phases = new ArrayList<HashMap<String, Integer>>(shift_window_size);
+        word_length = alphabet.word_length;
+        phases = new ArrayList<HashMap<String, Integer>>(word_length);
 
         // initialize list of hash to 0
-        for (int i=0; i<shift_window_size; i++) {
+        for (int i=0; i<word_length; i++) {
 
             HashMap<String, Integer> frequencies = new HashMap<String, Integer>();
-            for (String key : alphabet.items) {
+            for (String key : alphabet.words) {
 
                 frequencies.put(key, 0);
             }
@@ -46,7 +46,7 @@ public class Statistics
         this(alphabet, genome);
 
         for (String cds: seq) {
-            total_n_nucleotides += cds.length();
+            total_n_nucleotides += cds.length()/word_length;
             ComputeFrequencies(cds);
         }
     }
@@ -55,7 +55,7 @@ public class Statistics
 
         this(alphabet, genome);
         for (String cds: seq) {
-            total_n_nucleotides += cds.length()/shift_window_size;
+            total_n_nucleotides += cds.length()/word_length;
             ComputeFrequencies(cds);
         }
     }
@@ -81,7 +81,7 @@ public class Statistics
 
     private void ComputeFrequencies(String seq) {
         // TODO: use multi-threading here!
-        for (int i=0; i<shift_window_size; i++) {
+        for (int i=0; i<word_length; i++) {
 
             PhaseFrequencies(seq, i);
         }
@@ -90,11 +90,11 @@ public class Statistics
     private void PhaseFrequencies(String sequence, int phase) {
 
         // ensure phase do not go out of bounds
-        int true_phase = phase % shift_window_size;
+        int true_phase = phase % word_length;
         String work_sequence = sequence.substring(true_phase);
 
-        // ensure the passed String has a size multiple of shift_window_size
-        int shift = work_sequence.length() % shift_window_size;
+        // ensure the passed String has a size multiple of word_length
+        int shift = work_sequence.length() % word_length;
         if (shift > 0) {
 
             work_sequence = work_sequence.substring(
@@ -104,12 +104,12 @@ public class Statistics
         // tried to optimize, got exceptions, got bored, got back to previous working version
 
 //        char[] char_array = work_sequence.toCharArray();
-//        char[] tmp = new char[shift_window_size+1];
+//        char[] tmp = new char[word_length+1];
 //
 //        for (int i=0; i<work_sequence.length(); i++) {
 //
 //            // walk on string to get chars
-//            for (int c=0; c<shift_window_size; c++) {
+//            for (int c=0; c<word_length; c++) {
 //
 //                tmp[c] = char_array[i];
 //                i++;
@@ -133,9 +133,9 @@ public class Statistics
 
         List<String> parts = new ArrayList<String>();
         int len = s.length();
-        for (int i=0; i<len; i+=shift_window_size) {
+        for (int i=0; i<len; i+=word_length) {
 
-            parts.add(s.substring(i, i+shift_window_size));
+            parts.add(s.substring(i, i+word_length));
         }
 
         return parts;
