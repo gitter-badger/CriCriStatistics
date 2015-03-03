@@ -13,9 +13,7 @@ import java.util.List;
 
 //TODO: Get genomes overview list (timestamp for updating once a day?week?
 public class Main {
-
     public static void main(String argv[]) {
-
 //        String sequence1 = "acgtaaacagatcacccgctgat";
 //        String sequence2 = "tcgtagtagtagtcaccctccgta";
 //        String[] seq_array = new String[2];

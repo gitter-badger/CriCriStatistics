@@ -6,11 +6,12 @@ import java.util.Vector;
 import java.util.Stack;
 import java.util.ArrayList;
 import java.lang.StringBuilder;
-
+import org.apache.log4j.Logger;
 
 /*TODO: Must change everything to stringBuffer/builder ...*/
 public class SimpleParser implements IGenomeParser {
     
+    final static Logger logger = Logger.getLogger(SimpleParser.class); 
     private StringBuilder sequence;
     private Genome genome;
     private int totalNucleotide;
@@ -23,6 +24,11 @@ public class SimpleParser implements IGenomeParser {
       this.cds = new Vector<String>();
       this.cdsInfo = new Vector<String>();
       this.a4 = new Alphabet();
+		    
+      int parameter = 42;
+      logger.warn("This is warn : " + parameter);
+		  logger.error("This is error : " + parameter);
+		  logger.fatal("This is fatal : " + parameter);
     } 
 
     public void test(){
