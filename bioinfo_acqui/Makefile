@@ -5,7 +5,8 @@ INC = -Iinclude
 VPATH = src:include:bin
 CC = javac
 CFLAGS = -g 
-LIBS = lib/log4j-1.2.17.jar
+LIBS = lib/jxl.jar:lib/log4j-1.2.17.jar
+
 ALL: Bio
 
 Bio: $(SRC)*.java | obj
