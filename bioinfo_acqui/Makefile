@@ -5,7 +5,7 @@ INC = -Iinclude
 VPATH = src:include:bin
 CC = javac
 CFLAGS = -g 
-LIBS = lib/jxl.jar:lib/log4j-1.2.17.jar
+LIBS = lib/jxl.jar:lib/log4j-1.2.17.jar:lib/sqlite4java-392/sqlite4java.jar
 
 ALL: Bio
 
@@ -16,7 +16,7 @@ obj:
 	mkdir obj
 
 launch:
-	java -cp ".:obj:lib/*" Main
+	java -cp ".:obj:lib/*:lib/sqlite4java-392/*" Main
 
 clean:
 	rm -r $(OBJ)/*.class genome_overview.txt 2>/dev/null     
