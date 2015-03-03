@@ -24,10 +24,9 @@ public class ExcelWriter {
     private String outputFile;
     private WritableWorkbook workbook;
 
-    public ExcelWriter(Statistics stat)
+    public ExcelWriter()
            throws IOException, WriteException {
 
-        //this.outputFile = stat.name + ".xls";
         File file = new File(outputFile);
         WorkbookSettings wbSettings = new WorkbookSettings();
 
@@ -56,8 +55,14 @@ public class ExcelWriter {
         cv.setAutosize(true);
     }
     
-    public void Write() 
+    public void Write(Statistics stats)
            throws IOException, WriteException {
+
+        // TODO: create path of the file from stats.genome.kingdom ...
+        // if the directory does not exist, create it (equivalent in java of mkdir -p ?)
+        // this.outputFile = stat.genome.kindgom + ... + ".xls";
+        
+        // TODO: write data in file with Add methods
         
         workbook.write();
         workbook.close();
