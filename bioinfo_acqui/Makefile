@@ -18,5 +18,5 @@ launch:
 	java -cp ".:obj:lib/*" Main
 
 clean:
-	rm -r $(OBJ)/*.class
+	rm -r $(OBJ)/*.class genome_overview.txt 2>/dev/null     
 
