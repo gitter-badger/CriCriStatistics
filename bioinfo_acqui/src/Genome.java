@@ -7,6 +7,8 @@ public class Genome
     private String subGroup;
     private String size;
     private String chrs;
+    private int nbFailedCDS;
+    private int nbCorrectCDS;
 
     public String getOrganism() {
         return organism;
@@ -54,5 +56,21 @@ public class Genome
 
     public void setChrs(String chrs) {
         this.chrs = chrs;
+    }
+    
+    public int getNbFailedCDS(){
+        return this.nbFailedCDS;
+    }
+    
+    public void setNbFailedCDS(int nbFailedCDS){
+        this.nbFailedCDS = nbFailedCDS;
+    }
+    
+    public int getNbCorrectCDS(){
+        return this.nbCorrectCDS;
+    }
+    
+    public void setNbCorrectCDS(int nbCorrectCDS){
+        this.nbCorrectCDS = nbCorrectCDS;
     }
 }

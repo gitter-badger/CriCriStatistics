@@ -24,11 +24,6 @@ public class SimpleParser implements IGenomeParser {
       this.cds = new Vector<String>();
       this.cdsInfo = new Vector<String>();
       this.a4 = new Alphabet();
-		    
-      int parameter = 42;
-      logger.warn("This is warn : " + parameter);
-		  logger.error("This is error : " + parameter);
-		  logger.fatal("This is fatal : " + parameter);
     } 
 
     public void test(){
@@ -92,8 +87,11 @@ public class SimpleParser implements IGenomeParser {
         }
         
         
-        if ( cds.size() > 0){
-          Statistics stats = new Statistics(this.a4, cds, genome);
+        genome.setNbFailedCDS(this.cds.size() - this.cdsInfo.size());
+        genome.setNbCorrectCDS(this.cds.size() );
+
+        if ( this.cds.size() > 0){
+          Statistics stats = new Statistics(this.a4, this.cds, genome);
           //System.out.println("gta in seq1+seq2 phase 1: " + stats.phases.get(0).get("gta"));
           stats.print();
         }
@@ -164,8 +162,8 @@ public class SimpleParser implements IGenomeParser {
           }
         }
         catch (Exception e){
-          System.out.println("CAUGHT");
-          //e.printStackTrace();
+          logger.warn("Bad bounds for CDS:" + bounds );
+          //logger.warn(e.printStackTrace());
         }
 
       }
@@ -349,8 +347,16 @@ public class SimpleParser implements IGenomeParser {
 
       for (int i = 0 ; i < splittedGroupBounds.length ; i++) {
         splittedBounds = splittedGroupBounds[i].split("\\.\\.");
-        individualBound.add(Integer.parseInt(splittedBounds[0]));
-        individualBound.add(Integer.parseInt(splittedBounds[1]));
+        
+        try{
+          individualBound.add(Integer.parseInt(splittedBounds[0]));
+          individualBound.add(Integer.parseInt(splittedBounds[1]));
+        }
+        catch(Exception e){
+          logger.warn("Bad bounds in join operator CDS:" + cdsInfo );
+          //logger.warn(e.printStackTrace());
+        }
+
       }
       
       return individualBound;
