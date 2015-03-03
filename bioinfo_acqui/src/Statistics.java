@@ -11,9 +11,9 @@ import java.util.Map;
 public class Statistics
 {
     public ArrayList<HashMap<String, Integer>> phases;
-    // should we have it 'phases' ?
     public int total_n_nucleotides = 0;
     private int shift_window_size;
+    public String name;
 
     public Statistics(Alphabet alphabet) {
 
