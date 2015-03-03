@@ -44,8 +44,8 @@ public class Statistics
     public Statistics(Alphabet alphabet, String[] seq, Genome genome) {
 
         this(alphabet, genome);
-
         for (String cds: seq) {
+            
             total_n_nucleotides += cds.length()/word_length;
             ComputeFrequencies(cds);
         }
@@ -55,27 +55,33 @@ public class Statistics
 
         this(alphabet, genome);
         for (String cds: seq) {
+            
             total_n_nucleotides += cds.length()/word_length;
             ComputeFrequencies(cds);
         }
     }
-    
 
-    //TODO: Pretty print this !!
-    public void print(){
-      int i = 0;
-      for ( HashMap<String, Integer> map : phases ){
-        System.out.println("Phases " +i );
-        i++;
-        for (Entry<String, Integer> entry : map.entrySet() ){
-          String label = entry.getKey();
-          Integer count = entry.getValue();
-          float percent = (float)(((float) (count)) / ((float) (total_n_nucleotides))) * 100; 
-          System.out.println(label + ": " + percent + "%" );
+    public void print() {
+
+        System.out.print("      ");
+        for (int i=0; i<phases.size(); i++) {
+            
+            System.out.format("%-16s", "Phase " + i);
         }
+        System.out.println();
+        System.out.println("------------------------------------------------------");
 
-      } 
+        for (Entry<String, Integer> entry : phases.get(0).entrySet() ) {
 
+            String label = entry.getKey();
+            System.out.print(label.toUpperCase() + "   ");
+            for (int i=0; i<phases.size(); i++) {
+
+                float percent = (float)(((float) (phases.get(i).get(label))) / ((float) (total_n_nucleotides))) * 100;
+                System.out.format("%-16s", percent + "%");
+            }
+            System.out.println();
+        }
     }
 
 
