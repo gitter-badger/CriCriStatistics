@@ -13,10 +13,12 @@ public class Statistics
     public ArrayList<HashMap<String, Integer>> phases;
     public int total_n_nucleotides = 0;
     private int shift_window_size;
-    public String name;
-
-    public Statistics(Alphabet alphabet) {
-
+    public Genome genome;
+    
+    
+    public Statistics(Alphabet alphabet, Genome genome) {
+        
+        this.genome = genome ;
         shift_window_size = alphabet.item_length;
         phases = new ArrayList<HashMap<String, Integer>>(shift_window_size);
 
@@ -32,15 +34,15 @@ public class Statistics
         }
     }
     
-    public Statistics(Alphabet alphabet, String seq) {
+    public Statistics(Alphabet alphabet, String seq, Genome genome) {
 
-        this(alphabet);
+        this(alphabet, genome);
         ComputeFrequencies(seq);
     }
     
-    public Statistics(Alphabet alphabet, String[] seq) {
+    public Statistics(Alphabet alphabet, String[] seq, Genome genome) {
 
-        this(alphabet);
+        this(alphabet, genome);
 
         for (String cds: seq) {
             total_n_nucleotides += cds.length();
@@ -48,9 +50,9 @@ public class Statistics
         }
     }
     
-    public Statistics(Alphabet alphabet, Vector<String> seq) {
+    public Statistics(Alphabet alphabet, Vector<String> seq, Genome genome) {
 
-        this(alphabet);
+        this(alphabet, genome);
         for (String cds: seq) {
             total_n_nucleotides += cds.length()/shift_window_size;
             ComputeFrequencies(cds);

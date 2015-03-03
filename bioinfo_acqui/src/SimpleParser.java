@@ -93,7 +93,7 @@ public class SimpleParser implements IGenomeParser {
         
         
         if ( cds.size() > 0){
-          Statistics stats = new Statistics(this.a4, cds);
+          Statistics stats = new Statistics(this.a4, cds, genome);
           //System.out.println("gta in seq1+seq2 phase 1: " + stats.phases.get(0).get("gta"));
           stats.print();
         }

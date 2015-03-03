@@ -27,7 +27,7 @@ public class ExcelWriter {
     public ExcelWriter(Statistics stat)
            throws IOException, WriteException {
 
-        this.outputFile = stat.name + ".xls";
+        //this.outputFile = stat.name + ".xls";
         File file = new File(outputFile);
         WorkbookSettings wbSettings = new WorkbookSettings();
 
