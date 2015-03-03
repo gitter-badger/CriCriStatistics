@@ -88,7 +88,8 @@ public class SimpleParser implements IGenomeParser {
         
         if ( cds.size() > 0){
           Statistics stats = new Statistics(this.a4, cds);
-          System.out.println("gta in seq1+seq2 phase 1: " + stats.phases.get(0).get("gta"));
+          //System.out.println("gta in seq1+seq2 phase 1: " + stats.phases.get(0).get("gta"));
+          stats.print();
         }
       }
       return true;    

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.*;
 
 public class Statistics
 {
@@ -41,19 +41,38 @@ public class Statistics
     public Statistics(Alphabet alphabet, String[] seq) {
 
         this(alphabet);
+
         for (String cds: seq) {
-            
+            total_n_nucleotides += cds.length();
             ComputeFrequencies(cds);
         }
     }
-
+    
     public Statistics(Alphabet alphabet, Vector<String> seq) {
 
         this(alphabet);
         for (String cds: seq) {
-            
+            total_n_nucleotides += cds.length()/shift_window_size;
             ComputeFrequencies(cds);
         }
+    }
+    
+
+    //TODO: Pretty print this !!
+    public void print(){
+      int i = 0;
+      for ( HashMap<String, Integer> map : phases ){
+        System.out.println("Phases " +i );
+        i++;
+        for (Entry<String, Integer> entry : map.entrySet() ){
+          String label = entry.getKey();
+          Integer count = entry.getValue();
+          float percent = (float)(((float) (count)) / ((float) (total_n_nucleotides))) * 100; 
+          System.out.println(label + ": " + percent + "%" );
+        }
+
+      } 
+
     }
 
 
