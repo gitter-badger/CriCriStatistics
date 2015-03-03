@@ -5,11 +5,12 @@ INC = -Iinclude
 VPATH = src:include:bin
 CC = javac
 CFLAGS = -g 
+LIBS = lib/jxl.jar
 
 ALL: Bio
 
 Bio: $(SRC)/*.java | obj
-	$(CC) $(CFLAGS) $(SRC)*.java -d $(OBJ) 
+	$(CC) $(CFLAGS) -cp $(LIBS) $(SRC)*.java -d $(OBJ)
 
 obj:
 	mkdir obj
