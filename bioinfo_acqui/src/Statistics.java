@@ -14,11 +14,12 @@ public class Statistics
     public int total_n_nucleotides = 0;
     private int shift_window_size;
     public Genome genome;
+    // TODO: add static attribute to classify each genome in kingdom, groups, subgroups...
     
     
     public Statistics(Alphabet alphabet, Genome genome) {
         
-        this.genome = genome ;
+        this.genome = genome;
         shift_window_size = alphabet.item_length;
         phases = new ArrayList<HashMap<String, Integer>>(shift_window_size);
 
