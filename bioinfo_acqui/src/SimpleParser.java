@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.io.File;
@@ -6,6 +7,8 @@ import java.util.Vector;
 import java.util.Stack;
 import java.util.ArrayList;
 import java.lang.StringBuilder;
+import java.util.logging.Level;
+import jxl.write.WriteException;
 import org.apache.log4j.Logger;
 
 /*TODO: Must change everything to stringBuffer/builder ...*/
@@ -91,9 +94,17 @@ public class SimpleParser implements IGenomeParser {
         genome.setNbCorrectCDS(this.cds.size() );
 
         if ( this.cds.size() > 0){
-          Statistics stats = new Statistics(this.a4, this.cds, genome);
-          //System.out.println("gta in seq1+seq2 phase 1: " + stats.phases.get(0).get("gta"));
-          stats.print();
+
+                try {
+                    Statistics stats = new Statistics(this.a4, this.cds, genome);
+                    System.out.println("gta in seq1+seq2 phase 1: " + stats.phases.get(0).get("gta"));
+                    stats.print();
+                    Statistics.Write(stats);
+                } catch (IOException ex) {
+                    java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (WriteException ex) {
+                    java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
+                }
         }
       }
       return true;    
@@ -126,9 +137,7 @@ public class SimpleParser implements IGenomeParser {
               Vector<Integer> boundsVector = join(bounds.substring(5, bounds.length()).replace(")","")); 
               extractCDS(boundsVector, isComplement);
               return true;
-            }
-
-          
+            } 
           }
         }
         else if(bounds.startsWith("join",0)){
