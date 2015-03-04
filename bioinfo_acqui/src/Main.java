@@ -51,7 +51,21 @@ public class Main {
         //SimpleParser test = new SimpleParser();
         //test.test();
         
+        DatabaseModule db = new DatabaseModule();
+        boolean work = true;
+        work = db.updateGenomeEntry(16,"XXXX");
+        logger.debug("1 " + work);
+        work = db.updateGenomeEntry(29,"XXXX");
+        logger.debug("2 " + work);
+        work = db.updateGenomeEntry(52,"XXXX");
+        logger.debug("3 " + work);
+        work = db.updateGenomeEntry(19,"XXXX");
+        logger.debug("3 " + work);
 
+        work = db.updateGenomeEntry(2,"XXXX");
+        logger.debug("same hash " + work);
+        work = db.updateGenomeEntry(3,"YYYY");
+        logger.debug("update hash " + work);
         try {
 
             JFrame frame = new MainForm();
@@ -72,7 +86,6 @@ public class Main {
             for (int i = 0; i < noOfThreads; i++)
             {
                 SimpleParser test = new SimpleParser();
-                DatabaseModule db = new DatabaseModule();
                 GenomeThread genomeThread = new GenomeThread(String.valueOf(i), factory.newSAXParser(),
                         genomeList.subList(i*(genomeList.size()/noOfThreads),
                         (i+1)*(genomeList.size()/noOfThreads)), db, test);
@@ -89,7 +102,6 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
 
