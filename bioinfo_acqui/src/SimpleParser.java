@@ -103,16 +103,16 @@ public class SimpleParser implements IGenomeParser {
     private boolean checkCDSBounds(String bounds){
       boolean isComplement = false;
       
-      logger.debug("For cds:" + bounds );
+      //logger.debug("For cds:" + bounds );
       
       if (bounds.charAt(0) > '9'){
-        logger.debug("Is an operator " + bounds);
+        //logger.debug("Is an operator " + bounds);
         
         if(checkParentheses(bounds)){
-          logger.debug("Parenthesis OK");
+          //logger.debug("Parenthesis OK");
         }
         else{
-          logger.debug("Parenthesis NOT OK");
+          //logger.debug("Parenthesis NOT OK");
         }
 
         if (bounds.startsWith("complement", 0)){
@@ -166,7 +166,6 @@ public class SimpleParser implements IGenomeParser {
         }
         catch (Exception e){
           logger.error("Bad bounds for CDS:" + bounds );
-          logger.error("",e);
         }
 
       }
