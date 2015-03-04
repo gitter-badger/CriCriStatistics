@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import jxl.write.WriteException;
 import org.apache.log4j.Logger;
 
-/*TODO: Must change everything to stringBuffer/builder ...*/
 public class SimpleParser implements IGenomeParser {
     
     final static Logger logger = Logger.getLogger(SimpleParser.class); 
@@ -76,6 +75,9 @@ public class SimpleParser implements IGenomeParser {
       this.cdsInfo.clear();
       this.cds.clear();
       this.totalNucleotide = -1; 
+      
+      if( genbanksScanner == null)
+        return false;
 
       for (Scanner scan : genbanksScanner){
         duplicates = dupScanner(scan);
@@ -94,33 +96,36 @@ public class SimpleParser implements IGenomeParser {
         genome.setNbCorrectCDS(this.cds.size() );
 
         if ( this.cds.size() > 0){
-
-                try {
-                    Statistics stats = new Statistics(this.a4, this.cds, genome);
-                    System.out.println("gta in seq1+seq2 phase 1: " + stats.phases.get(0).get("gta"));
-                    stats.print();
-                    Statistics.Write(stats);
-                } catch (IOException ex) {
-                    java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (WriteException ex) {
-                    java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            try {
+                Statistics stats = new Statistics(this.a4, this.cds, genome);
+                System.out.println("gta in seq1+seq2 phase 1: " + stats.phases.get(0).get("gta"));
+                stats.print();
+                Statistics.Write(stats);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (WriteException ex) {
+                java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
       }
+
       return true;    
     }
     
     private boolean checkCDSBounds(String bounds){
       boolean isComplement = false;
-
+      
+      //logger.debug("For cds:" + bounds );
+      
       if (bounds.charAt(0) > '9'){
-        //System.out.println("Is an operator " + bounds);
+        //logger.debug("Is an operator " + bounds);
         
         if(checkParentheses(bounds)){
-          //System.out.println("Parenthesis OK");
+          //logger.debug("Parenthesis OK");
         }
         else{
-          //System.out.println("Parenthesis NOT OK");
+          //logger.debug("Parenthesis NOT OK");
         }
 
         if (bounds.startsWith("complement", 0)){
@@ -171,8 +176,7 @@ public class SimpleParser implements IGenomeParser {
           }
         }
         catch (Exception e){
-          logger.warn("Bad bounds for CDS:" + bounds );
-          //logger.warn(e.printStackTrace());
+          logger.error("Bad bounds for CDS:" + bounds );
         }
 
       }
@@ -362,8 +366,8 @@ public class SimpleParser implements IGenomeParser {
           individualBound.add(Integer.parseInt(splittedBounds[1]));
         }
         catch(Exception e){
-          logger.warn("Bad bounds in join operator CDS:" + cdsInfo );
-          //logger.warn(e.printStackTrace());
+          logger.error("Bad bounds in join operator CDS:" + cdsInfo );
+          logger.error("",e);
         }
 
       }
