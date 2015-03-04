@@ -72,6 +72,9 @@ public class SimpleParser implements IGenomeParser {
       this.cdsInfo.clear();
       this.cds.clear();
       this.totalNucleotide = -1; 
+      
+      if( genbanksScanner == null)
+        return false;
 
       for (Scanner scan : genbanksScanner){
         duplicates = dupScanner(scan);

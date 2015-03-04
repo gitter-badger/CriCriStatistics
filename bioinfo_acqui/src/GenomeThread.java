@@ -8,6 +8,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.security.MessageDigest;
 
 public class GenomeThread implements Runnable
 {
@@ -21,12 +22,14 @@ public class GenomeThread implements Runnable
     protected String threadName;
     
     protected DebugOption debugOption;
+    protected DatabaseModule db;
 
     private IGenomeParser genomeParser;
 
-    public GenomeThread(String threadName, SAXParser parser, List<Genome> genomeList, IGenomeParser genomeParser) {
+    public GenomeThread(String threadName, SAXParser parser, List<Genome> genomeList,DatabaseModule db, IGenomeParser genomeParser) {
         
         this.debugOption = null;
+        this.db = db;
         this.threadName = threadName;
         this.genomeList = genomeList;
         this.genomeParser = genomeParser;
@@ -84,8 +87,13 @@ public class GenomeThread implements Runnable
                     if (genomeIdIS != null)
                     {
                         saxParser.parse(genomeIdIS, handlerGenomeId);
+                        
+                        if(!this.db.updateGenomeEntry(Integer.parseInt(handlerGenomeId.getGenomeId()),"XXXXX"))
+                          return null;
 
                         InputStream sequenceIdIS = getParseInputSource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=genome&db=nuccore&id=" + handlerGenomeId.getGenomeId());
+                          
+                        MessageDigest md = MessageDigest.getInstance("SHA-256");
 
                         if (sequenceIdIS != null)
                         {
