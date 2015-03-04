@@ -10,9 +10,13 @@ import java.io.PrintStream;
 import java.lang.System;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 //TODO: Get genomes overview list (timestamp for updating once a day?week?
 public class Main {
+        
+    final static Logger logger = Logger.getLogger(Main.class); 
+    
     public static void main(String argv[]) {
 //        String sequence1 = "acgtaaacagatcacccgctgat";
 //        String sequence2 = "tcgtagtagtagtcaccctccgta";
@@ -47,6 +51,7 @@ public class Main {
         //SimpleParser test = new SimpleParser();
         //test.test();
         
+
         try {
 
             JFrame frame = new MainForm();
@@ -57,18 +62,20 @@ public class Main {
 
             GenomeOverview genomeOverview = new GenomeOverview();
             SAXParserFactory factory = SAXParserFactory.newInstance();
-
+          
             List<Genome> genomeList = genomeOverview.getGenomeList();
+            logger.info("Nb of genome: "+ genomeList.size() );
 
-            int noOfThreads = 8;
+            int noOfThreads = 1;
             List<GenomeThread> genomeThreads = new ArrayList<GenomeThread>();
-
+            
             for (int i = 0; i < noOfThreads; i++)
             {
                 SimpleParser test = new SimpleParser();
+                DatabaseModule db = new DatabaseModule();
                 GenomeThread genomeThread = new GenomeThread(String.valueOf(i), factory.newSAXParser(),
                         genomeList.subList(i*(genomeList.size()/noOfThreads),
-                        (i+1)*(genomeList.size()/noOfThreads)), test);
+                        (i+1)*(genomeList.size()/noOfThreads)), db, test);
                 genomeThread.setDebuggingOption(debugOption);
                 genomeThreads.add(genomeThread);
             }
