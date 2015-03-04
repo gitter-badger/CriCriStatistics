@@ -18,6 +18,9 @@ obj:
 launch:
 	java -cp ".:obj:lib/*:lib/sqlite4java-392/*" Main
 
+debug:
+	jdb -classpath ".:obj:lib/*:lib/sqlite4java-392/*" Main
+
 clean:
-	rm -r $(OBJ)/*.class genome_overview.txt 2>/dev/null     
+	rm -r $(OBJ)/*.class genome_overview.txt bioinfo.log* 2>/dev/null     
 
