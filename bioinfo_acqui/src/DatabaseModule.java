@@ -7,17 +7,15 @@ public class DatabaseModule{
   
   
   // Singleton Stuff
-	/*
   private static class SingletonHolder { 
-	     public static final DataAccess INSTANCE = new DataAccess();
+	     public static final DatabaseModule INSTANCE = new DatabaseModule();
 	}
-	public static DataAccess getInstance() {
+	public static DatabaseModule getInstance() {
 	     return SingletonHolder.INSTANCE;
 	}
-	*/
   // End Singleton Stuff
 
-  public DatabaseModule(){
+  private DatabaseModule(){
     //this.db = new SQLiteConnection(new File("database"));
     this.queue = new SQLiteQueue(new File("database"));
     
@@ -80,12 +78,6 @@ public class DatabaseModule{
   
   private String getGenomeEntry(int genomeId){
       /* 
-      try{ 
-        queue.stop(true).join();
-      }
-      catch(Exception e){
-        System.out.println("Database queue execution failed: " + e.getMessage());
-      }
       */
       final int id = genomeId;
 
@@ -160,5 +152,13 @@ public class DatabaseModule{
       }
     }
   }
-
+  
+  public void gracefulStop(){
+    try{ 
+      this.queue.stop(true).join();
+    }
+    catch(Exception e){
+      System.out.println("Database queue execution failed: " + e.getMessage());
+    }
+  }
 }
