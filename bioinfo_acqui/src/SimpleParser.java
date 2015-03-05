@@ -98,9 +98,9 @@ public class SimpleParser implements IGenomeParser {
         if ( this.cds.size() > 0){
             try {
                 Statistics stats = new Statistics(this.a4, this.cds, genome);
-                System.out.println("gta in seq1+seq2 phase 1: " + stats.phases.get(0).get("gta"));
-                stats.print();
-                Statistics.Write(stats);
+                //System.out.println("gta in seq1+seq2 phase 1: " + stats.phases.get(0).get("gta"));
+                //stats.print();
+                //Statistics.Write(stats);
             } catch (IOException ex) {
                 java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
             } catch (WriteException ex) {

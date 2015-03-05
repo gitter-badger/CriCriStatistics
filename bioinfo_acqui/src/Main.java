@@ -18,25 +18,19 @@ public class Main {
     final static Logger logger = Logger.getLogger(Main.class); 
     
     public static void main(String argv[]) {
-
-        //SimpleParser test = new SimpleParser();
-        //test.test();
         
-        DatabaseModule db = new DatabaseModule();
-        boolean work = true;
-        work = db.updateGenomeEntry(16,"XXXX");
-        logger.debug("1 " + work);
-        work = db.updateGenomeEntry(29,"XXXX");
-        logger.debug("2 " + work);
-        work = db.updateGenomeEntry(52,"XXXX");
-        logger.debug("3 " + work);
-        work = db.updateGenomeEntry(19,"XXXX");
-        logger.debug("3 " + work);
+        DatabaseModule db = DatabaseModule.getInstance();
+        
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+          @Override
+          public void run() {
+            logger.debug("Inside Add Shutdown Hook");
+            DatabaseModule db = DatabaseModule.getInstance();
+            db.gracefulStop();
+          }
+        });
 
-        work = db.updateGenomeEntry(2,"XXXX");
-        logger.debug("same hash " + work);
-        work = db.updateGenomeEntry(3,"YYYY");
-        logger.debug("update hash " + work);
+        
         try {
 
             JFrame frame = new MainForm();
