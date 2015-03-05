@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.File;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -44,7 +45,11 @@ public class GenomeThread implements Runnable
     }
 
     public void run()
-    {
+    { 
+        
+        for (final Genome genome: genomeList) {
+          System.out.println(genome.getOrganism());        
+        }
         for (final Genome genome: genomeList) {
             if (genomeParser != null)
                 genomeParser.parseGenome(genome, getGenomeGenbanks(genome.getOrganism()));
@@ -82,13 +87,13 @@ public class GenomeThread implements Runnable
             synchronized(saxParser)
             {
                 try {
-                    InputStream genomeIdIS = getParseInputSource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=genome&term=" + genomeName);
-
+                    InputStream genomeIdIS = getParseInputSource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=genome&term=" + URLEncoder.encode(genomeName));
+          
                     if (genomeIdIS != null)
                     {
                         saxParser.parse(genomeIdIS, handlerGenomeId);
                         
-                        if(!this.db.updateGenomeEntry(Integer.parseInt(handlerGenomeId.getGenomeId()),"XXXXX"))
+                        if(this.db.updateGenomeEntry(Integer.parseInt(handlerGenomeId.getGenomeId()),"XXXXX"))
                           return null;
 
                         InputStream sequenceIdIS = getParseInputSource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=genome&db=nuccore&id=" + handlerGenomeId.getGenomeId());
