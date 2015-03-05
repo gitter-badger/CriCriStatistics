@@ -2,32 +2,21 @@ import com.almworks.sqlite4java.*;
 import java.io.File;
 
 public class DatabaseModule{
-  //private SQLiteConnection db; 
   private static SQLiteQueue queue;
-  
   
   // Singleton Stuff
   private static class SingletonHolder { 
 	     public static final DatabaseModule INSTANCE = new DatabaseModule();
 	}
-	public static DatabaseModule getInstance() {
+	
+  public static DatabaseModule getInstance() {
 	     return SingletonHolder.INSTANCE;
 	}
   // End Singleton Stuff
 
-  private DatabaseModule(){
-    //this.db = new SQLiteConnection(new File("database"));
-    this.queue = new SQLiteQueue(new File("database"));
-    
-    /*
-    try{
-      this.db.open(true);
-    }
-    catch(Exception e){
-      e.printStackTrace();   
-    }
-    */
 
+  private DatabaseModule(){
+    this.queue = new SQLiteQueue(new File("database.sqlite"));
     this.queue.start();
     
     queue.execute(new SQLiteJob<Object>() {
@@ -45,18 +34,10 @@ public class DatabaseModule{
         }
       }
     });
-    /* 
-    try{
-      queue.stop(true).join();
-    }
-    catch(Exception e){
-      System.out.println("Database queue execution failed: " + e.getMessage());
-    }
-    */
   }
 
+
   private void addGenomeEntry(int genomeId, String hash){
-    
     final int  id = genomeId;
     final String h = hash;
 
@@ -75,10 +56,9 @@ public class DatabaseModule{
       }
     });
   }
-  
+
+
   private String getGenomeEntry(int genomeId){
-      /* 
-      */
       final int id = genomeId;
 
       String hash = (String) this.queue.execute(new SQLiteJob<Object>() {
@@ -92,12 +72,7 @@ public class DatabaseModule{
             }
             else{
               if(st.hasRow()) {
-                //int columns = st.columnCount();
-                
-                //for(int column = 0 ; column < columns ; column++)
                 return (String) (st.columnValue(1));
-                
-                //return stack.toArray();
               } 
               else {
                 st.dispose();
@@ -114,7 +89,8 @@ public class DatabaseModule{
       
       return hash;
   }
-  
+
+
   private void updateHash(int genomeId, String hash){
     final int  id = genomeId;
     final String h = hash;
