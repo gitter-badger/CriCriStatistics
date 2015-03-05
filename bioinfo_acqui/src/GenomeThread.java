@@ -48,9 +48,6 @@ public class GenomeThread implements Runnable
     { 
         
         for (final Genome genome: genomeList) {
-          System.out.println(genome.getOrganism());        
-        }
-        for (final Genome genome: genomeList) {
             if (genomeParser != null)
                 genomeParser.parseGenome(genome, getGenomeGenbanks(genome.getOrganism()));
             else
