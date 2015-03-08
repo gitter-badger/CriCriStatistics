@@ -13,6 +13,8 @@ import java.util.List;
 public class GenomeOverview
 {
 
+    private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
+    
     GenomeOverview() {
         if (Files.exists(FileSystems.getDefault().getPath("genome_overview.txt")) == false) {
             try {
@@ -52,7 +54,7 @@ public class GenomeOverview
 //                }
             }
         }
-
+        mediatorGUI.setProgressBar(genomeList.size());
         return genomeList;
     }
 

@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 public class SimpleParser implements IGenomeParser {
     
+    private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
     final static Logger logger = Logger.getLogger(SimpleParser.class); 
     private StringBuilder sequence;
     private Genome genome;
@@ -98,9 +99,8 @@ public class SimpleParser implements IGenomeParser {
         if ( this.cds.size() > 0){
             try {
                 Statistics stats = new Statistics(this.a4, this.cds, genome);
-                //System.out.println("gta in seq1+seq2 phase 1: " + stats.phases.get(0).get("gta"));
-                //stats.print();
-                //Statistics.Write(stats);
+                stats.print();
+                Statistics.Write(stats);
             } catch (IOException ex) {
                 java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
             } catch (WriteException ex) {
@@ -159,7 +159,7 @@ public class SimpleParser implements IGenomeParser {
 
       if(number.length < 2){
         //throws exception
-        System.out.println("Incorrect cds bound:" + bounds);
+        //System.out.println("Incorrect cds bound:" + bounds);
       }
       else{
         

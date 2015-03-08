@@ -13,6 +13,7 @@ import jxl.write.WriteException;
 
 public class Statistics {
 
+    private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
     public ArrayList<HashMap<String, Integer>> phases;
     public int total_n_nucleotides = 0;
     private int word_length;
@@ -66,24 +67,25 @@ public class Statistics {
 
     public void print() {
 
-        System.out.print("      ");
+        //System.out.print("      ");
         for (int i=0; i<phases.size(); i++) {
             
-            System.out.format("%-16s", "Phase " + i);
+            mediatorGUI.updateStatisticsPanel("Phase" + i, 0); 
         }
-        System.out.println();
-        System.out.println("------------------------------------------------------");
+        mediatorGUI.updateStatisticsPanel("", 0); 
+        mediatorGUI.updateStatisticsPanel("------------------------------------------------------", 0);
 
         for (Entry<String, Integer> entry : phases.get(0).entrySet() ) {
 
             String label = entry.getKey();
-            System.out.print(label.toUpperCase() + "   ");
+            mediatorGUI.updateStatisticsPanel(label.toUpperCase() + "   ", 0);
             for (int i=0; i<phases.size(); i++) {
 
                 float percent = (float)(((float) (phases.get(i).get(label))) / ((float) (total_n_nucleotides))) * 100;
-                System.out.format("%-16s", percent + "%");
+                mediatorGUI.updateStatisticsPanel(percent + "%",0);
             }
-            System.out.println();
+            mediatorGUI.updateStatisticsPanel("", 0); 
+            //System.out.println();
         }
     }
 

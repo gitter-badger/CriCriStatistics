@@ -47,9 +47,12 @@ public class GenomeThread implements Runnable
     public void run()
     { 
         
+        IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
         for (final Genome genome: genomeList) {
-            if (genomeParser != null)
+            if (genomeParser != null){
                 genomeParser.parseGenome(genome, getGenomeGenbanks(genome.getOrganism()));
+                mediatorGUI.incrementProgressBar();
+            }
             else
                 getGenomeGenbanks(genome.getOrganism());
         }
@@ -78,6 +81,8 @@ public class GenomeThread implements Runnable
 
     private List<Scanner> getGenomeGenbanks(String genomeName)
     {
+        
+        IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
         try {
             List<Scanner> cdsList = new ArrayList<Scanner>();
 
@@ -103,12 +108,12 @@ public class GenomeThread implements Runnable
                         }
                         else
                         {
-                            System.out.println("sequenceIdIS null   "+handlerGenomeId.getGenomeId());
+                            mediatorGUI.updateAquisitionPanel("sequenceIdIS null   "+handlerGenomeId.getGenomeId(), 0);
                         }
                     }
                     else
                     {
-                        System.out.println("genomeIdIS null   " + genomeName);
+                        mediatorGUI.updateAquisitionPanel("genomeIdIS null   " + genomeName, 0);
                     }
 
                 } catch (Exception e) {
@@ -121,7 +126,7 @@ public class GenomeThread implements Runnable
                     URL url = new URL("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&rettype=gb&retmode=text&id=" + sequenceId);
                     Scanner s = new Scanner(url.openStream());
                     cdsList.add(s);
-                    System.out.println("      *"+s.nextLine());
+                    mediatorGUI.updateAquisitionPanel("      *"+s.nextLine(), 0);
                     
                     if( debugOption != null && debugOption.isGBLoggingActivated() ){
                         File sequenceDir = new File("sequenceDir");

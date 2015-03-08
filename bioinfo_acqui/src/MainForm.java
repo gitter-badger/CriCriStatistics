@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.io.PrintStream;
+import org.apache.log4j.Logger;
 
 class MainForm extends JFrame {
     private JTextArea textAreaAcqui = new JTextArea();
@@ -9,7 +10,9 @@ class MainForm extends JFrame {
     private JTextArea textAreaStat = new JTextArea();
     private JProgressBar bar = new JProgressBar();
     private JTabbedPane tabbedPane = new JTabbedPane();
-    
+    private int progressBarValue;
+    final static Logger logger = Logger.getLogger(MainForm.class); 
+
     protected JComponent makeTextPanel(String text) {
         JPanel panel = new JPanel(false);
         JLabel filler = new JLabel(text);
@@ -18,19 +21,42 @@ class MainForm extends JFrame {
         panel.add(filler);
         return panel;
     }
+    
+    public void appendTextAreaAcquisition(String info){
+      this.textAreaAcqui.append(info);
+    }
+    
+    public void appendTextAreaParsing(String info){
+      this.textAreaParse.append(info);
+    }
+    
+    public void appendTextAreaStatistics(String info){
+      this.textAreaStat.append(info);
+    }
+    
+    public void incrementProgressBar(){
+      this.progressBarValue++;
+      this.bar.setValue( progressBarValue);
+    }
+    
+    public void setProgressBar(int max){
+      this.bar.setMaximum(max);
+      this.bar.setStringPainted(true);
+    }
 
     public MainForm() {
         super("Trinucleotide statistical analysis");
         
-        tabbedPane.addTab("Acquisition",null,new JScrollPane(textAreaAcqui),"");
-        tabbedPane.addTab("Parsing",null,new JScrollPane(textAreaParse),"");
-        tabbedPane.addTab("Statistic",null,new JScrollPane(textAreaStat),"");
+        this.tabbedPane.addTab("Acquisition",null,new JScrollPane(textAreaAcqui),"");
+        this.tabbedPane.addTab("Parsing",null,new JScrollPane(textAreaParse),"");
+        this.tabbedPane.addTab("Statistic",null,new JScrollPane(textAreaStat),"");
 
-        bar.setMaximum(500);
-        bar.setMinimum(0);
-        bar.setStringPainted(true);
+        this.bar.setMaximum(500);
+        this.bar.setMinimum(0);
+        this.bar.setStringPainted(true);
+        this.progressBarValue = 0;
 
-        System.setOut(new PrintStream(new TextAreaOutputStream(textAreaAcqui)));
+        //System.setOut(new PrintStream(new TextAreaOutputStream(textAreaAcqui)));
 
         DefaultCaret caret = (DefaultCaret)textAreaAcqui.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);

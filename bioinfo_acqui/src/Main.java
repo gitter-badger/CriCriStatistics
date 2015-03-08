@@ -21,10 +21,13 @@ public class Main {
         
         DatabaseModule db = DatabaseModule.getInstance();
         
+        Settings settings = Settings.getInstance();
+        settings.setNumThreads(1);
+
         Runtime.getRuntime().addShutdownHook(new Thread() {
           @Override
           public void run() {
-            logger.debug("Inside Add Shutdown Hook");
+            logger.debug("Inside Database Shutdown Hook");
             DatabaseModule db = DatabaseModule.getInstance();
             db.gracefulStop();
           }
@@ -34,6 +37,9 @@ public class Main {
         try {
 
             JFrame frame = new MainForm();
+            MediatorGUI mediatorGUI = MediatorGUI.getInstance();
+            mediatorGUI.setGUI( (MainForm) frame);
+
             System.setProperty("java.net.useSystemProxies", "true");
             
             DebugOption debugOption = new DebugOption();
@@ -45,7 +51,7 @@ public class Main {
             List<Genome> genomeList = genomeOverview.getGenomeList();
             logger.info("Nb of genome: "+ genomeList.size() );
 
-            int noOfThreads = 1;
+            int noOfThreads = settings.getNumThreads();
             List<GenomeThread> genomeThreads = new ArrayList<GenomeThread>();
             
             for (int i = 0; i < noOfThreads; i++)
