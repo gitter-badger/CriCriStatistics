@@ -65,7 +65,6 @@ public class DatabaseModule{
         protected Object job(SQLiteConnection connection) throws SQLiteException {
           try{
             SQLiteStatement st = connection.prepare("SELECT * FROM genome_version WHERE id=" + id + ";");
-            System.out.println("TOTO ?");
             if(!st.step()){
               st.dispose();
               return null;
