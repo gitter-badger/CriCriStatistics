@@ -25,4 +25,4 @@ clean:
 	rm -r $(OBJ)/*.class genome_overview.txt bioinfo.log* 2>/dev/null     
 
 dropdb:
-	rm database
+	rm database.sqlite
