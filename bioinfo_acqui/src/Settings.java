@@ -23,4 +23,9 @@ public class Settings{
   public int getNumThreads(){
     return this.numThreads;
   }
+
+  public int getCleanThreadId(){
+    return (int)((Thread.currentThread().getId() % numThreads) + 1 );
+  }
+  
 }
