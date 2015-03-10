@@ -89,7 +89,6 @@ public class Statistics {
         }
     }
 
-
     private void ComputeFrequencies(String seq) {
         // TODO: use multi-threading here!
         for (int i = 0; i < word_length; i++) {
