@@ -60,6 +60,10 @@ class MainForm extends JFrame {
 
         DefaultCaret caret = (DefaultCaret)textAreaAcqui.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        caret = (DefaultCaret)textAreaParse.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        caret = (DefaultCaret)textAreaStat.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         
         // monospace font
         Font monoFont = new Font("Monospaced", Font.PLAIN ,12);
