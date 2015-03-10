@@ -39,7 +39,7 @@ public class MediatorGUI implements IMediatorGUI{
   
   public void updateStatisticsPanel(String info, int threadId){
     if (this.gui!= null){
-      this.gui.appendTextAreaStatistics("\n");
+//      this.gui.appendTextAreaStatistics("\n");
       this.gui.appendTextAreaStatistics(info);
     }
   }
