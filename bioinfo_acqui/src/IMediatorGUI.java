@@ -1,7 +1,7 @@
 public interface IMediatorGUI{
-  public void updateAquisitionPanel(String info, int threadId);
-  public void updateParsingPanel(String info, int threadId);
-  public void updateStatisticsPanel(String info, int threadId);
+  public void updateAquisitionPanel(String info);
+  public void updateParsingPanel(String info);
+  public void updateStatisticsPanel(String info);
   public void incrementProgressBar();
   public void setProgressBar(int nbTotalGenome);
 }

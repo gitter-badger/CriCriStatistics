@@ -108,12 +108,12 @@ public class GenomeThread implements Runnable
                         }
                         else
                         {
-                            mediatorGUI.updateAquisitionPanel("sequenceIdIS null   "+handlerGenomeId.getGenomeId(), 0);
+                            mediatorGUI.updateAquisitionPanel("sequenceIdIS null   "+handlerGenomeId.getGenomeId());
                         }
                     }
                     else
                     {
-                        mediatorGUI.updateAquisitionPanel("genomeIdIS null   " + genomeName, 0);
+                        mediatorGUI.updateAquisitionPanel("genomeIdIS null   " + genomeName);
                     }
 
                 } catch (Exception e) {
@@ -126,7 +126,7 @@ public class GenomeThread implements Runnable
                     URL url = new URL("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&rettype=gb&retmode=text&id=" + sequenceId);
                     Scanner s = new Scanner(url.openStream());
                     cdsList.add(s);
-                    mediatorGUI.updateAquisitionPanel("      *"+s.nextLine(), 0);
+                    mediatorGUI.updateAquisitionPanel("      *"+s.nextLine());
                     
                     if( debugOption != null && debugOption.isGBLoggingActivated() ){
                         File sequenceDir = new File("sequenceDir");

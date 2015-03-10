@@ -23,21 +23,21 @@ public class MediatorGUI implements IMediatorGUI{
     this.gui = gui;
   }
   
-  public void updateAquisitionPanel(String info, int threadId){
+  public void updateAquisitionPanel(String info){
     if (this.gui!= null){ 
       this.gui.appendTextAreaAcquisition("\n");
       this.gui.appendTextAreaAcquisition(info);
     }
   }
 
-  public void updateParsingPanel(String info, int threadId){
+  public void updateParsingPanel(String info){
     if (this.gui!= null){
       this.gui.appendTextAreaParsing("\n");
       this.gui.appendTextAreaParsing(info);
     }
   }
   
-  public void updateStatisticsPanel(String info, int threadId){
+  public void updateStatisticsPanel(String info){
     if (this.gui!= null){
       this.gui.appendTextAreaStatistics("\n");
       this.gui.appendTextAreaStatistics(info);

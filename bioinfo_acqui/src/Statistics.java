@@ -14,6 +14,7 @@ import jxl.write.WriteException;
 public class Statistics {
 
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
+
     public ArrayList<HashMap<String, Integer>> phases;
     public int total_n_nucleotides = 0;
     private int word_length;
@@ -70,21 +71,21 @@ public class Statistics {
         //System.out.print("      ");
         for (int i=0; i<phases.size(); i++) {
             
-            mediatorGUI.updateStatisticsPanel("Phase" + i, 0); 
+            mediatorGUI.updateStatisticsPanel("Phase" + i); 
         }
-        mediatorGUI.updateStatisticsPanel("", 0); 
-        mediatorGUI.updateStatisticsPanel("------------------------------------------------------", 0);
+        mediatorGUI.updateStatisticsPanel(""); 
+        mediatorGUI.updateStatisticsPanel("------------------------------------------------------");
 
         for (Entry<String, Integer> entry : phases.get(0).entrySet() ) {
 
             String label = entry.getKey();
-            mediatorGUI.updateStatisticsPanel(label.toUpperCase() + "   ", 0);
+            mediatorGUI.updateStatisticsPanel(label.toUpperCase() + "   ");
             for (int i=0; i<phases.size(); i++) {
 
                 float percent = (float)(((float) (phases.get(i).get(label))) / ((float) (total_n_nucleotides))) * 100;
-                mediatorGUI.updateStatisticsPanel(percent + "%",0);
+                mediatorGUI.updateStatisticsPanel(percent + "%");
             }
-            mediatorGUI.updateStatisticsPanel("", 0); 
+            mediatorGUI.updateStatisticsPanel(""); 
             //System.out.println();
         }
     }

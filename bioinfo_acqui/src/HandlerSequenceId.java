@@ -9,7 +9,6 @@ public class HandlerSequenceId extends HandlerGenomeId {
     boolean inLink = false;
     boolean inLinkId = false;
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
-    private static Settings settings = Settings.getInstance();
 
     List sequenceIdList = new ArrayList<String>();
 
@@ -40,7 +39,7 @@ public class HandlerSequenceId extends HandlerGenomeId {
 
         if (inLinkId) {
             sequenceIdList.add(new String(ch, start, length));
-            mediatorGUI.updateAquisitionPanel("   _ sequenceId : " + new String(ch, start, length),(int)Thread.currentThread().getId()%settings.getNumThreads() + 1 );
+            mediatorGUI.updateAquisitionPanel("   _ sequenceId : " + new String(ch, start, length));
             inLinkId = false;
         }
     }

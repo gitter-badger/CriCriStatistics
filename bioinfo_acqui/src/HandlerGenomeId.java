@@ -8,7 +8,6 @@ public class HandlerGenomeId extends DefaultHandler {
     boolean inIdListId = false;
     String genomeId;
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
-    private static Settings settings = Settings.getInstance();
 
     public void startElement(String uri, String localName,String qName,
                              Attributes attributes) throws SAXException {
@@ -37,7 +36,7 @@ public class HandlerGenomeId extends DefaultHandler {
 
         if (inIdListId) {
             genomeId = new String(ch, start, length);
-            mediatorGUI.updateAquisitionPanel("- genomeId : " + new String(ch, start, length),(int)Thread.currentThread().getId()%settings.getNumThreads() +1 );
+            mediatorGUI.updateAquisitionPanel("- genomeId : " + new String(ch, start, length));
             inIdListId = false;
         }
     }
