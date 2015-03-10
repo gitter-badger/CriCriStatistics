@@ -1,15 +1,15 @@
 import org.apache.log4j.Logger;
 
 public class MediatorGUI implements IMediatorGUI{
-  
+
   private MainForm gui;
-  final static Logger logger = Logger.getLogger(MediatorGUI.class); 
-  
+  final static Logger logger = Logger.getLogger(MediatorGUI.class);
+
   // Singleton Stuff
-  private static class SingletonHolder { 
+  private static class SingletonHolder {
 	     public static final MediatorGUI INSTANCE = new MediatorGUI();
 	}
-	
+
   public static MediatorGUI getInstance() {
 	     return SingletonHolder.INSTANCE;
 	}
@@ -18,13 +18,13 @@ public class MediatorGUI implements IMediatorGUI{
   private MediatorGUI(){
     this.gui = null;
   }
-  
+
   public void setGUI(MainForm gui){
     this.gui = gui;
   }
-  
+
   public void updateAquisitionPanel(String info, int threadId){
-    if (this.gui!= null){ 
+    if (this.gui!= null){
       this.gui.appendTextAreaAcquisition("\n");
       this.gui.appendTextAreaAcquisition(info);
     }
@@ -36,7 +36,7 @@ public class MediatorGUI implements IMediatorGUI{
       this.gui.appendTextAreaParsing(info);
     }
   }
-  
+
   public void updateStatisticsPanel(String info, int threadId){
     if (this.gui!= null){
 //      this.gui.appendTextAreaStatistics("\n");
@@ -46,12 +46,12 @@ public class MediatorGUI implements IMediatorGUI{
 
   public synchronized void incrementProgressBar(){
     if (this.gui!= null){
-      this.gui.incrementProgressBar(); 
+      this.gui.incrementProgressBar();
     }
   }
 
   public void setProgressBar(int nbTotalGenome){
-    if (this.gui!= null) 
-      this.gui.setProgressBar(nbTotalGenome); 
+    if (this.gui!= null)
+      this.gui.setProgressBar(nbTotalGenome);
   }
 }
