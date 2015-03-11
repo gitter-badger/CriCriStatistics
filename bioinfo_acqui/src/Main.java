@@ -22,7 +22,7 @@ public class Main {
         DatabaseModule db = DatabaseModule.getInstance();
         
         Settings settings = Settings.getInstance();
-        settings.setNumThreads(1);
+        settings.setNumThreads(5);
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
           @Override
@@ -36,7 +36,7 @@ public class Main {
         
         try {
 
-            JFrame frame = new MainForm();
+            JFrame frame = new MainForm(settings.getNumThreads());
             MediatorGUI mediatorGUI = MediatorGUI.getInstance();
             mediatorGUI.setGUI( (MainForm) frame);
 

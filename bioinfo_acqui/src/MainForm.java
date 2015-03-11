@@ -5,33 +5,28 @@ import java.io.PrintStream;
 import org.apache.log4j.Logger;
 
 class MainForm extends JFrame {
-    private JTextArea textAreaAcqui = new JTextArea();
-    private JTextArea textAreaParse = new JTextArea();
-    private JTextArea textAreaStat = new JTextArea();
+    private JTextArea[] textAreaAcqui;
+    private JTextArea[] textAreaParse;
+    private JTextArea[] textAreaStat;
     private JProgressBar bar = new JProgressBar();
-    private JTabbedPane tabbedPane = new JTabbedPane();
+    private JTabbedPane mainTabbedPane = new JTabbedPane();
+    private JTabbedPane acquisitionTabbedPane = new JTabbedPane();
+    private JTabbedPane parsingTabbedPane = new JTabbedPane();
+    private JTabbedPane statisticTabbedPane = new JTabbedPane();
     private int progressBarValue;
     final static Logger logger = Logger.getLogger(MainForm.class); 
 
-    protected JComponent makeTextPanel(String text) {
-        JPanel panel = new JPanel(false);
-        JLabel filler = new JLabel(text);
-        filler.setHorizontalAlignment(JLabel.CENTER);
-        panel.setLayout(new GridLayout(1, 1));
-        panel.add(filler);
-        return panel;
+
+    public void appendTextAreaAcquisition(String info, int index){
+      this.textAreaAcqui[index].append(info);
     }
     
-    public void appendTextAreaAcquisition(String info){
-      this.textAreaAcqui.append(info);
+    public void appendTextAreaParsing(String info, int index){
+      this.textAreaParse[index].append(info);
     }
     
-    public void appendTextAreaParsing(String info){
-      this.textAreaParse.append(info);
-    }
-    
-    public void appendTextAreaStatistics(String info){
-      this.textAreaStat.append(info);
+    public void appendTextAreaStatistics(String info, int index){
+      this.textAreaStat[index].append(info);
     }
     
     public void incrementProgressBar(){
@@ -44,38 +39,48 @@ class MainForm extends JFrame {
       this.bar.setStringPainted(true);
     }
 
-    public MainForm() {
+    public MainForm(int numThreads) {
         super("Trinucleotide statistical analysis");
         
-        this.tabbedPane.addTab("Acquisition",null,new JScrollPane(textAreaAcqui),"");
-        this.tabbedPane.addTab("Parsing",null,new JScrollPane(textAreaParse),"");
-        this.tabbedPane.addTab("Statistic",null,new JScrollPane(textAreaStat),"");
+        this.textAreaAcqui = new JTextArea[numThreads];
+        this.textAreaParse = new JTextArea[numThreads];
+        this.textAreaStat = new JTextArea[numThreads];
+        
+        // monospace font
+        Font monoFont = new Font("Monospaced", Font.PLAIN ,12);
+        
+        for (int i = 0; i < numThreads; i++ ){
+          this.textAreaAcqui[i] = new JTextArea();
+          this.textAreaParse[i] = new JTextArea();
+          this.textAreaStat[i] = new JTextArea();
+          
+          this.textAreaAcqui[i].setFont(monoFont);
+          this.textAreaParse[i].setFont(monoFont);
+          this.textAreaStat[i].setFont(monoFont);
+          
+          this.acquisitionTabbedPane.addTab("", null, new JScrollPane(this.textAreaAcqui[i]), "");
+          this.parsingTabbedPane.addTab("", null, new JScrollPane(this.textAreaParse[i]), "");
+          this.statisticTabbedPane.addTab("", null, new JScrollPane(this.textAreaStat[i]), "");
+        }
+
+        this.mainTabbedPane.addTab("Acquisition", null, acquisitionTabbedPane, "");
+        this.mainTabbedPane.addTab("Parsing", null, parsingTabbedPane, "");
+        this.mainTabbedPane.addTab("Statistic", null, statisticTabbedPane, "");
 
         this.bar.setMaximum(500);
         this.bar.setMinimum(0);
         this.bar.setStringPainted(true);
         this.progressBarValue = 0;
 
-        //System.setOut(new PrintStream(new TextAreaOutputStream(textAreaAcqui)));
-
-        DefaultCaret caret = (DefaultCaret)textAreaAcqui.getCaret();
-        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        
-        // monospace font
-        Font monoFont = new Font("Monospaced", Font.PLAIN ,12);
-        this.textAreaAcqui.setFont(monoFont);
-        this.textAreaParse.setFont(monoFont);
-        this.textAreaStat.setFont(monoFont);
+        //DefaultCaret caret = (DefaultCaret)textAreaAcqui.getCaret();
+        //caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getContentPane().add(tabbedPane, BorderLayout.CENTER);
+        this.getContentPane().add(mainTabbedPane, BorderLayout.CENTER);
         this.getContentPane().add(bar, BorderLayout.NORTH);
         this.setVisible(true);
 
         setSize(640,480);
-
-
-
         setVisible(true);
     }
 }

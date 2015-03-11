@@ -25,26 +25,29 @@ public class MediatorGUI implements IMediatorGUI{
   }
   
   public void updateAquisitionPanel(String info){
-    //settings.getCleanThreadId();
+    int id = settings.getCleanThreadId();
+    
     if (this.gui!= null){ 
-      this.gui.appendTextAreaAcquisition("\n");
-      this.gui.appendTextAreaAcquisition(info);
+      this.gui.appendTextAreaAcquisition("\n", id);
+      this.gui.appendTextAreaAcquisition(info, id);
     }
   }
 
   public void updateParsingPanel(String info){
-    //settings.getCleanThreadId();
+    int id = settings.getCleanThreadId();
+    
     if (this.gui!= null){
-      this.gui.appendTextAreaParsing("\n");
-      this.gui.appendTextAreaParsing(info);
+      this.gui.appendTextAreaParsing("\n", id);
+      this.gui.appendTextAreaParsing(info, id);
     }
   }
   
   public void updateStatisticsPanel(String info){
-    //settings.getCleanThreadId();
+    int id = settings.getCleanThreadId();
+    
     if (this.gui!= null){
-      this.gui.appendTextAreaStatistics("\n");
-      this.gui.appendTextAreaStatistics(info);
+      this.gui.appendTextAreaStatistics("\n", id);
+      this.gui.appendTextAreaStatistics(info, id);
     }
   }
 
