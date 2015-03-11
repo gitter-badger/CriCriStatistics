@@ -176,7 +176,7 @@ public class SimpleParser implements IGenomeParser {
           }
         }
         catch (Exception e){
-          logger.error("Bad bounds for CDS:" + bounds );
+          //logger.error("Bad bounds for CDS:" + bounds );
         }
 
       }
@@ -317,8 +317,10 @@ public class SimpleParser implements IGenomeParser {
         //System.out.println("CORRECT stop trinucleotide");
       }
 
-      if (!((newCdsSequence.length() % 3) == 0) ){
+      if (!((newCdsSequence.length() % 3) == 0) 
+          || newCdsSequence.length() == 0 ){
         //System.out.println("Number of nucleotide not a multiple of 3");
+        return;
       }
 
       if (!checkAlphabet(newCdsSequence)){
@@ -329,16 +331,16 @@ public class SimpleParser implements IGenomeParser {
         newCdsSequence = newCdsSequence.reverse();
         newCdsSequence = complement(newCdsSequence);
       }
-      
+  
       cds.add(newCdsSequence.toString());
 
     }
     
     public StringBuilder complement(StringBuilder mutableSequence){
 
-      for (int i = 0; i < sequence.length() ; i++ ){
+      for (int i = 0; i < mutableSequence.length() ; i++ ){
         
-        switch (sequence.charAt(i)){
+        switch (mutableSequence.charAt(i)){
           case 'a': mutableSequence.setCharAt(i,'t');
                     break;
           case 'c': mutableSequence.setCharAt(i,'g');
@@ -366,8 +368,8 @@ public class SimpleParser implements IGenomeParser {
           individualBound.add(Integer.parseInt(splittedBounds[1]));
         }
         catch(Exception e){
-          logger.error("Bad bounds in join operator CDS:" + cdsInfo );
-          logger.error("",e);
+          //logger.error("Bad bounds in join operator CDS:" + cdsInfo );
+          //logger.error("",e);
         }
 
       }
