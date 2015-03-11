@@ -68,13 +68,12 @@ public class Statistics {
 
     public void print() {
 
-        //System.out.print("      ");
+        mediatorGUI.updateStatisticsPanel("Organism: " + this.genome.getOrganism() + "\n");
+        mediatorGUI.updateStatisticsPanel("      ");
         for (int i=0; i<phases.size(); i++) {
-            
-            mediatorGUI.updateStatisticsPanel("Phase" + i); 
+            mediatorGUI.updateStatisticsPanel(String.format("%-16s", "Phase " + i));
         }
-        mediatorGUI.updateStatisticsPanel(""); 
-        mediatorGUI.updateStatisticsPanel("------------------------------------------------------");
+        mediatorGUI.updateStatisticsPanel("\n------------------------------------------------------\n");
 
         for (Entry<String, Integer> entry : phases.get(0).entrySet() ) {
 
@@ -83,11 +82,12 @@ public class Statistics {
             for (int i=0; i<phases.size(); i++) {
 
                 float percent = (float)(((float) (phases.get(i).get(label))) / ((float) (total_n_nucleotides))) * 100;
-                mediatorGUI.updateStatisticsPanel(percent + "%");
+                mediatorGUI.updateStatisticsPanel(String.format("%-16s", percent + "%"));
             }
-            mediatorGUI.updateStatisticsPanel(""); 
-            //System.out.println();
+            mediatorGUI.updateStatisticsPanel("\n");
         }
+
+        mediatorGUI.updateStatisticsPanel("\n");
     }
 
     private void ComputeFrequencies(String seq) {

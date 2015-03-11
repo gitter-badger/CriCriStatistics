@@ -74,6 +74,14 @@ class MainForm extends JFrame {
 
         //DefaultCaret caret = (DefaultCaret)textAreaAcqui.getCaret();
         //caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        //System.setOut(new PrintStream(new TextAreaOutputStream(textAreaAcqui)));
+
+        //DefaultCaret caret = (DefaultCaret)textAreaAcqui.getCaret();
+        //caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        //caret = (DefaultCaret)textAreaParse.getCaret();
+        //caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        //caret = (DefaultCaret)textAreaStat.getCaret();
+        //caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().add(mainTabbedPane, BorderLayout.CENTER);
