@@ -228,13 +228,12 @@ public class SimpleParser implements IGenomeParser {
     //private boolean checkOperator();
     
     private boolean correctStartCodon(StringBuilder codon){
-      //String[] start = new String[8]("");
-      int i;
-
       String[] start = {"atg","ctg","ttg","gtg","ata","atc","att","tta"};
-     
+      int i;
       
-      //check codon size
+      if (codon < 3)
+        return false;
+
       for (i = 0 ; i < start.length ; i++){
         if(codon.substring(0, 3).equals(start[i]))
           return true;
@@ -247,7 +246,8 @@ public class SimpleParser implements IGenomeParser {
       String[] stop = {"taa","tag","tga"};
       int i;
 
-      //check codon size
+      if (codon < 3) 
+        return false;
 
       for (i = 0 ; i < stop.length ; i++){
         if(codon.substring(codon.length() - 3, codon.length() ).equals(stop[i]))
