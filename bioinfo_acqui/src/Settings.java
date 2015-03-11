@@ -25,7 +25,7 @@ public class Settings{
   }
 
   public int getCleanThreadId(){
-    return (int)((Thread.currentThread().getId() % numThreads) + 1 );
+    return (int)((Thread.currentThread().getId() % numThreads));
   }
   
 }

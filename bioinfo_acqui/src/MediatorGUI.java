@@ -4,6 +4,7 @@ public class MediatorGUI implements IMediatorGUI{
   
   private MainForm gui;
   final static Logger logger = Logger.getLogger(MediatorGUI.class); 
+  private static Settings settings = Settings.getInstance();
   
   // Singleton Stuff
   private static class SingletonHolder { 
@@ -24,6 +25,7 @@ public class MediatorGUI implements IMediatorGUI{
   }
   
   public void updateAquisitionPanel(String info){
+    //settings.getCleanThreadId();
     if (this.gui!= null){ 
       this.gui.appendTextAreaAcquisition("\n");
       this.gui.appendTextAreaAcquisition(info);
@@ -31,6 +33,7 @@ public class MediatorGUI implements IMediatorGUI{
   }
 
   public void updateParsingPanel(String info){
+    //settings.getCleanThreadId();
     if (this.gui!= null){
       this.gui.appendTextAreaParsing("\n");
       this.gui.appendTextAreaParsing(info);
@@ -38,6 +41,7 @@ public class MediatorGUI implements IMediatorGUI{
   }
   
   public void updateStatisticsPanel(String info){
+    //settings.getCleanThreadId();
     if (this.gui!= null){
       this.gui.appendTextAreaStatistics("\n");
       this.gui.appendTextAreaStatistics(info);
