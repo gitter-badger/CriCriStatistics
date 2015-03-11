@@ -58,9 +58,9 @@ class MainForm extends JFrame {
           this.textAreaParse[i].setFont(monoFont);
           this.textAreaStat[i].setFont(monoFont);
           
-          this.acquisitionTabbedPane.addTab("", null, new JScrollPane(this.textAreaAcqui[i]), "");
-          this.parsingTabbedPane.addTab("", null, new JScrollPane(this.textAreaParse[i]), "");
-          this.statisticTabbedPane.addTab("", null, new JScrollPane(this.textAreaStat[i]), "");
+          this.acquisitionTabbedPane.addTab("Thread "+i, null, new JScrollPane(this.textAreaAcqui[i]), "");
+          this.parsingTabbedPane.addTab("Thread "+i, null, new JScrollPane(this.textAreaParse[i]), "");
+          this.statisticTabbedPane.addTab("Thread "+i, null, new JScrollPane(this.textAreaStat[i]), "");
         }
 
         this.mainTabbedPane.addTab("Acquisition", null, acquisitionTabbedPane, "");
