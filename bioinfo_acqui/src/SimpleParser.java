@@ -93,7 +93,7 @@ public class SimpleParser implements IGenomeParser {
         }
         
         
-        genome.setNbFailedCDS(this.cds.size() - this.cdsInfo.size());
+        genome.setNbFailedCDS(this.cdsInfo.size() - this.cds.size());
         genome.setNbCorrectCDS(this.cds.size() );
 
         if ( this.cds.size() > 0){

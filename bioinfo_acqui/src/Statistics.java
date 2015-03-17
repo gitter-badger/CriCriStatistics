@@ -177,12 +177,11 @@ public class Statistics {
 
             File file = new File(absoluteFilePath);
             file.mkdirs();
-            File stat = new File(absoluteFilePath + verifyString(stats.genome.getOrganism()) + ".xls");          
-            stat.createNewFile();
+            ExcelWriter ew = new ExcelWriter(stats);
+            ew.setOutputFile(absoluteFilePath + verifyString(stats.genome.getOrganism()) + ".xls");
+            ew.Write();
 
         }
-
-        // TODO: write data in file with Add methods
 
     }
 }
