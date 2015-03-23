@@ -16,6 +16,7 @@ public class SimpleParser implements IGenomeParser {
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
     final static Logger logger = Logger.getLogger(SimpleParser.class); 
     private StringBuilder sequence;
+    StatsFactory statsFactory = new StatsFactory();
     private Genome genome;
     private int totalNucleotide;
     private Vector<String> cdsInfo;
@@ -97,15 +98,14 @@ public class SimpleParser implements IGenomeParser {
         genome.setNbCorrectCDS(this.cds.size() );
 
         if ( this.cds.size() > 0){
-            try {
-                Statistics stats = new Statistics(this.a4, this.cds, genome);
-                stats.print();
-                Statistics.Write(stats);
-            } catch (IOException ex) {
-                java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (WriteException ex) {
-                java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                try {
+                    statsFactory.new_stats(this.a4, this.cds, genome);
+                } catch (IOException ex) {
+                    java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (WriteException ex) {
+                    java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
+                }
+          
         }
 
       }
@@ -231,7 +231,7 @@ public class SimpleParser implements IGenomeParser {
       String[] start = {"atg","ctg","ttg","gtg","ata","atc","att","tta"};
       int i;
       
-      if (codon < 3)
+      if (codon.length() < 3)
         return false;
 
       for (i = 0 ; i < start.length ; i++){
@@ -246,7 +246,7 @@ public class SimpleParser implements IGenomeParser {
       String[] stop = {"taa","tag","tga"};
       int i;
 
-      if (codon < 3) 
+      if (codon.length() < 3)
         return false;
 
       for (i = 0 ; i < stop.length ; i++){

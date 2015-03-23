@@ -52,6 +52,7 @@ public class ExcelWriter {
     public void Write()
             throws IOException, WriteException {
         File file = new File(outputFile);
+        file.createNewFile();
         WorkbookSettings wbSettings = new WorkbookSettings();
 
         wbSettings.setLocale(new Locale("en", "EN"));

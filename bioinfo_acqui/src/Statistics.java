@@ -51,7 +51,7 @@ public class Statistics {
         this(alphabet, genome);
 
         for (String cds : seq) {
-            total_n_nucleotides += cds.length() / word_length;
+            total_n_nucleotides += (cds.length() / word_length) - 1;
             ComputeFrequencies(cds);
         }
     }
@@ -60,7 +60,7 @@ public class Statistics {
 
         this(alphabet, genome);
         for (String cds : seq) {
-            total_n_nucleotides += cds.length() / word_length;
+            total_n_nucleotides += (cds.length() / word_length) - 1;
             ComputeFrequencies(cds);
         }
 
@@ -169,7 +169,7 @@ public class Statistics {
                     + File.separator
                     + verifyString(stats.genome.getSubGroup()) + File.separator;
 
-            String homeDirectory = System.getProperty("user.home");
+            String homeDirectory =  System.getProperty("user.home");
 
             String absoluteFilePath = "";
 
