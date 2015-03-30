@@ -14,7 +14,7 @@ import jxl.write.WriteException;
 public class Statistics {
 
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
-
+    
     public ArrayList<HashMap<String, Integer>> phases;
     public int total_n_nucleotides = 0;
     private int word_length;
@@ -183,5 +183,10 @@ public class Statistics {
 
         }
 
+    }
+
+    public void tagAsDone(){
+      DatabaseModule db = DatabaseModule.getInstance();
+      db.updateGenomeEntry(this.genome.getId(), "XXXXX");
     }
 }

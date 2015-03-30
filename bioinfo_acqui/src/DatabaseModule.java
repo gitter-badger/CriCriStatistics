@@ -128,6 +128,14 @@ public class DatabaseModule{
     }
   }
   
+  public boolean genomeEntryExist(int genomeId){
+    
+    if(getGenomeEntry(genomeId) == null)
+      return false;
+    else
+      return true;
+  }
+
   public void gracefulStop(){
     try{ 
       this.queue.stop(true).join();

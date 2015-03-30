@@ -16,6 +16,8 @@ public class StatsFactory {
         Statistics stats = new Statistics(alphabet, seq, genome);
         stats.print();
         Statistics.Write(stats);
+        stats.tagAsDone(); 
+
         if (!kingdomHash.containsKey(stats.genome.getKingdom())) {
             ArrayList<Statistics> stat = new ArrayList<Statistics>();
             stat.add(stats);

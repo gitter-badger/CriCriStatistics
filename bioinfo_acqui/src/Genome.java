@@ -7,6 +7,7 @@ public class Genome
     private String subGroup;
     private String size;
     private String chrs;
+    private int id;
     private int nbFailedCDS;
     private int nbCorrectCDS;
 
@@ -72,5 +73,13 @@ public class Genome
     
     public void setNbCorrectCDS(int nbCorrectCDS){
         this.nbCorrectCDS = nbCorrectCDS;
+    }
+
+    public void setId(int genomeId){
+      this.id = genomeId;
+    }
+    
+    public int getId(){
+      return this.id;
     }
 }

@@ -50,11 +50,11 @@ public class GenomeThread implements Runnable
         IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
         for (final Genome genome: genomeList) {
             if (genomeParser != null){
-                genomeParser.parseGenome(genome, getGenomeGenbanks(genome.getOrganism()));
+                genomeParser.parseGenome(genome, getGenomeGenbanks(genome.getOrganism(), genome));
                 mediatorGUI.incrementProgressBar();
             }
             else
-                getGenomeGenbanks(genome.getOrganism());
+                getGenomeGenbanks(genome.getOrganism(), genome);
         }
     }
 
@@ -79,7 +79,7 @@ public class GenomeThread implements Runnable
       this.debugOption = debugOption;
     }
 
-    private List<Scanner> getGenomeGenbanks(String genomeName)
+    private List<Scanner> getGenomeGenbanks(String genomeName, Genome genome)
     {
         
         IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
@@ -94,8 +94,9 @@ public class GenomeThread implements Runnable
                     if (genomeIdIS != null)
                     {
                         saxParser.parse(genomeIdIS, handlerGenomeId);
+                        genome.setId(Integer.parseInt(handlerGenomeId.getGenomeId()));                    
                         
-                        if(this.db.updateGenomeEntry(Integer.parseInt(handlerGenomeId.getGenomeId()),"XXXXX"))
+                        if(this.db.genomeEntryExist(genome.getId()))
                           return null;
 
                         InputStream sequenceIdIS = getParseInputSource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=genome&db=nuccore&id=" + handlerGenomeId.getGenomeId());
