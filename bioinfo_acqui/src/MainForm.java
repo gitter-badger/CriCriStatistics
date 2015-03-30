@@ -49,6 +49,8 @@ class MainForm extends JFrame {
         // monospace font
         Font monoFont = new Font("Monospaced", Font.PLAIN ,12);
         
+        DefaultCaret caret;
+
         for (int i = 0; i < numThreads; i++ ){
           this.textAreaAcqui[i] = new JTextArea();
           this.textAreaParse[i] = new JTextArea();
@@ -61,6 +63,16 @@ class MainForm extends JFrame {
           this.acquisitionTabbedPane.addTab("Thread "+i, null, new JScrollPane(this.textAreaAcqui[i]), "");
           this.parsingTabbedPane.addTab("Thread "+i, null, new JScrollPane(this.textAreaParse[i]), "");
           this.statisticTabbedPane.addTab("Thread "+i, null, new JScrollPane(this.textAreaStat[i]), "");
+        
+          caret = (DefaultCaret)textAreaAcqui[i].getCaret();
+          caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+          
+          caret = (DefaultCaret)textAreaParse[i].getCaret();
+          caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+          
+          caret = (DefaultCaret)textAreaStat[i].getCaret();
+          caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
         }
 
         this.mainTabbedPane.addTab("Acquisition", null, acquisitionTabbedPane, "");
@@ -72,17 +84,6 @@ class MainForm extends JFrame {
         this.bar.setStringPainted(true);
         this.progressBarValue = 0;
 
-        //DefaultCaret caret = (DefaultCaret)textAreaAcqui.getCaret();
-        //caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        //System.setOut(new PrintStream(new TextAreaOutputStream(textAreaAcqui)));
-
-        //DefaultCaret caret = (DefaultCaret)textAreaAcqui.getCaret();
-        //caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        //caret = (DefaultCaret)textAreaParse.getCaret();
-        //caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        //caret = (DefaultCaret)textAreaStat.getCaret();
-        //caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().add(mainTabbedPane, BorderLayout.CENTER);
         this.getContentPane().add(bar, BorderLayout.NORTH);
