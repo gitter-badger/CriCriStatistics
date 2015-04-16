@@ -14,67 +14,66 @@ import org.apache.log4j.Logger;
 
 //TODO: Get genomes overview list (timestamp for updating once a day?week?
 public class Main {
-        
-    final static Logger logger = Logger.getLogger(Main.class); 
-    
+
+    final static Logger logger = Logger.getLogger(Main.class);
+
     public static void main(String argv[]) {
-        
+
         DatabaseModule db = DatabaseModule.getInstance();
-        
+
         Settings settings = Settings.getInstance();
         settings.setNumThreads(5);
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
-          @Override
-          public void run() {
-            logger.debug("Inside Database Shutdown Hook");
-            DatabaseModule db = DatabaseModule.getInstance();
-            db.gracefulStop();
-          }
+
+            @Override
+            public void run() {
+                logger.debug("Inside Database Shutdown Hook");
+                DatabaseModule db = DatabaseModule.getInstance();
+                db.gracefulStop();
+            }
         });
 
-        
+
         try {
 
             JFrame frame = new MainForm(settings.getNumThreads());
             MediatorGUI mediatorGUI = MediatorGUI.getInstance();
-            mediatorGUI.setGUI( (MainForm) frame);
+            mediatorGUI.setGUI((MainForm) frame);
 
             System.setProperty("java.net.useSystemProxies", "true");
-            
+
             DebugOption debugOption = new DebugOption();
             debugOption.parseInputCommand(argv);
 
             GenomeOverview genomeOverview = new GenomeOverview();
             SAXParserFactory factory = SAXParserFactory.newInstance();
-          
+
             List<Genome> genomeList = genomeOverview.getGenomeList();
-            logger.info("Nb of genome: "+ genomeList.size() );
+            logger.info("Nb of genome: " + genomeList.size());
 
             int noOfThreads = settings.getNumThreads();
             List<GenomeThread> genomeThreads = new ArrayList<GenomeThread>();
-            
-            for (int i = 0; i < noOfThreads; i++)
-            {
+
+            for (int i = 0; i < noOfThreads; i++) {
                 SimpleParser test = new SimpleParser();
                 GenomeThread genomeThread = new GenomeThread(String.valueOf(i), factory.newSAXParser(),
-                        genomeList.subList(i*(genomeList.size()/noOfThreads),
-                        (i+1)*(genomeList.size()/noOfThreads)), db, test);
+                        genomeList.subList(i * (genomeList.size() / noOfThreads),
+                        (i + 1) * (genomeList.size() / noOfThreads)), db, test);
                 genomeThread.setDebuggingOption(debugOption);
                 genomeThreads.add(genomeThread);
             }
 
+            List<Thread> threadList = new ArrayList<Thread>();
+
             for (int i = 0; i < noOfThreads; i++) {
                 Thread thread = new Thread(genomeThreads.get(i));
                 thread.start();
+                threadList.add(thread);
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
-
-
-
