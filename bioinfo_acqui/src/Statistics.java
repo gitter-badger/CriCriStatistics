@@ -179,7 +179,7 @@ public class Statistics {
             file.mkdirs();
             ExcelWriter ew = new ExcelWriter(stats);
             ew.setOutputFile(absoluteFilePath + verifyString(stats.genome.getOrganism()) + ".xls");
-            ew.Write();
+            ew.write();
 
         }
 
