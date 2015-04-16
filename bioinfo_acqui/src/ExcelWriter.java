@@ -71,6 +71,7 @@ public class ExcelWriter {
         return text.replaceAll("[?:!/*<>]+", "_");
     }
 
+    public void writeStatistics() throws IOException, WriteException {
 
         String homeDirectory = System.getProperty("user.home");
 

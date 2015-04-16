@@ -1,10 +1,16 @@
+import java.io.IOException;
+import java.util.logging.Level;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.PrintStream;
+import jxl.write.WriteException;
 import org.apache.log4j.Logger;
 
 class MainForm extends JFrame {
+
     private JTextArea[] textAreaAcqui;
     private JTextArea[] textAreaParse;
     private JTextArea[] textAreaStat;
@@ -14,57 +20,75 @@ class MainForm extends JFrame {
     private JTabbedPane parsingTabbedPane = new JTabbedPane();
     private JTabbedPane statisticTabbedPane = new JTabbedPane();
     private int progressBarValue;
-    final static Logger logger = Logger.getLogger(MainForm.class); 
+    final static Logger logger = Logger.getLogger(MainForm.class);
 
+    public void appendTextAreaAcquisition(String info, int index) {
+        this.textAreaAcqui[index].append(info);
+    }
 
-    public void appendTextAreaAcquisition(String info, int index){
-      this.textAreaAcqui[index].append(info);
+    public void appendTextAreaParsing(String info, int index) {
+        this.textAreaParse[index].append(info);
     }
-    
-    public void appendTextAreaParsing(String info, int index){
-      this.textAreaParse[index].append(info);
+
+    public void appendTextAreaStatistics(String info, int index) {
+        this.textAreaStat[index].append(info);
     }
-    
-    public void appendTextAreaStatistics(String info, int index){
-      this.textAreaStat[index].append(info);
+
+    public void incrementProgressBar() {
+        this.progressBarValue++;
+        this.bar.setValue(progressBarValue);
     }
-    
-    public void incrementProgressBar(){
-      this.progressBarValue++;
-      this.bar.setValue( progressBarValue);
-    }
-    
-    public void setProgressBar(int max){
-      this.bar.setMaximum(max);
-      this.bar.setStringPainted(true);
+
+    public void setProgressBar(int max) {
+        this.bar.setMaximum(max);
+        this.bar.setStringPainted(true);
     }
 
     public MainForm(int numThreads) {
         super("Trinucleotide statistical analysis");
-        
+
         this.textAreaAcqui = new JTextArea[numThreads];
         this.textAreaParse = new JTextArea[numThreads];
         this.textAreaStat = new JTextArea[numThreads];
-        
-        // monospace font
-        Font monoFont = new Font("Monospaced", Font.PLAIN ,12);
-        
-        DefaultCaret caret;
 
-        for (int i = 0; i < numThreads; i++ ){
-          this.textAreaAcqui[i] = new JTextArea();
-          this.textAreaParse[i] = new JTextArea();
-          this.textAreaStat[i] = new JTextArea();
-          
-          this.textAreaAcqui[i].setFont(monoFont);
-          this.textAreaParse[i].setFont(monoFont);
-          this.textAreaStat[i].setFont(monoFont);
-          
-          this.acquisitionTabbedPane.addTab("Thread "+i, null, new JScrollPane(this.textAreaAcqui[i]), "");
-          this.parsingTabbedPane.addTab("Thread "+i, null, new JScrollPane(this.textAreaParse[i]), "");
-          this.statisticTabbedPane.addTab("Thread "+i, null, new JScrollPane(this.textAreaStat[i]), "");
-        
-          caret = (DefaultCaret)textAreaAcqui[i].getCaret();
+        this.addWindowListener(new WindowAdapter() {
+
+            public void windowClosing(WindowEvent e) {
+
+                   ExcelWriter ew = new ExcelWriter();
+                try {
+                    try {
+                        ew.writeStatistics();
+                    } catch (WriteException ex) {
+                        java.util.logging.Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } catch (IOException ex) {
+                    java.util.logging.Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                 System.out.println("it is over");
+                 System.exit(1);
+              
+            }
+        });
+
+        // monospace font
+        Font monoFont = new Font("Monospaced", Font.PLAIN, 12);
+		DefaultCaret caret;
+		
+        for (int i = 0; i < numThreads; i++) {
+            this.textAreaAcqui[i] = new JTextArea();
+            this.textAreaParse[i] = new JTextArea();
+            this.textAreaStat[i] = new JTextArea();
+
+            this.textAreaAcqui[i].setFont(monoFont);
+            this.textAreaParse[i].setFont(monoFont);
+            this.textAreaStat[i].setFont(monoFont);
+
+            this.acquisitionTabbedPane.addTab("Thread " + i, null, new JScrollPane(this.textAreaAcqui[i]), "");
+            this.parsingTabbedPane.addTab("Thread " + i, null, new JScrollPane(this.textAreaParse[i]), "");
+            this.statisticTabbedPane.addTab("Thread " + i, null, new JScrollPane(this.textAreaStat[i]), "");
+			
+		  caret = (DefaultCaret)textAreaAcqui[i].getCaret();
           caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
           
           caret = (DefaultCaret)textAreaParse[i].getCaret();
@@ -89,7 +113,8 @@ class MainForm extends JFrame {
         this.getContentPane().add(bar, BorderLayout.NORTH);
         this.setVisible(true);
 
-        setSize(640,480);
+        setSize(640, 480);
         setVisible(true);
+
     }
 }
