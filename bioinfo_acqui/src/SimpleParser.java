@@ -91,7 +91,6 @@ public class SimpleParser implements IGenomeParser {
 
         for(String cdsItem : this.cdsInfo){
           checkCDSBounds(cdsItem);
-          mediatorGUI.updateParsingPanel("    Checked CDS bounds (" + cdsItem + ")");
         }
 
 
@@ -101,8 +100,8 @@ public class SimpleParser implements IGenomeParser {
 
         if ( this.cds.size() > 0){
                 try {
-                    statsFactory.new_stats(this.a4, this.cds, genome);
                     mediatorGUI.updateParsingPanel("        Launching stats computation (" + this.cds.size() + " CDS)");
+                    statsFactory.new_stats(this.a4, this.cds, genome);
                 } catch (IOException ex) {
                     java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (WriteException ex) {
@@ -144,6 +143,7 @@ public class SimpleParser implements IGenomeParser {
             if(bounds.startsWith("join", 0)){
               Vector<Integer> boundsVector = join(bounds.substring(5, bounds.length()).replace(")","")); 
               extractCDS(boundsVector, isComplement);
+              mediatorGUI.updateParsingPanel("    Checked CDS (" + bounds + ")");
               return true;
             } 
           }
@@ -151,6 +151,7 @@ public class SimpleParser implements IGenomeParser {
         else if(bounds.startsWith("join",0)){
           Vector<Integer> boundsVector = join(bounds.substring(5, bounds.length()).replace(")","")); 
           extractCDS(boundsVector, isComplement);
+          mediatorGUI.updateParsingPanel("    Checked CDS (" + bounds + ")");
           return true;
         }
         
@@ -184,6 +185,7 @@ public class SimpleParser implements IGenomeParser {
 
       }
 
+      mediatorGUI.updateParsingPanel("    Checked CDS (" + bounds + ")");
       return true;
     }
     
@@ -274,7 +276,9 @@ public class SimpleParser implements IGenomeParser {
         if ( splittedLine.length > 1){
           if(splittedLine[0].equals("CDS") ){
             this.cdsInfo.add(splittedLine[1]);
-            mediatorGUI.updateParsingPanel("Extracted CDS (" + splittedLine[1] + ")");
+            if (!splittedLine[1].equals("::")) {
+              mediatorGUI.updateParsingPanel("Extracted CDS (" + splittedLine[1] + ")");
+            }
           }
         }
 
