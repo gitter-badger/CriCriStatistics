@@ -81,7 +81,10 @@ public class GenomeThread implements Runnable
 
     private List<Scanner> getGenomeGenbanks(String genomeName, Genome genome)
     {
-        
+        // bug fix :
+        // exception raised when we got : in URLs (genome name) like Cellulophaga phage phi19:1
+        genomeName = genomeName.replaceAll(":", " ");
+
         IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
         try {
             List<Scanner> cdsList = new ArrayList<Scanner>();
@@ -95,6 +98,7 @@ public class GenomeThread implements Runnable
                     if (genomeIdIS != null)
                     {
                         saxParser.parse(genomeIdIS, handlerGenomeId);
+
                         genome.setId(Integer.parseInt(handlerGenomeId.getGenomeId()));                    
                         
                         if(this.db.genomeEntryExist(genome.getId()))
