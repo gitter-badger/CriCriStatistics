@@ -85,15 +85,15 @@ public class SimpleParser implements IGenomeParser {
         duplicates = dupScanner(scan);
         extractSequence(duplicates.get(0) );
         extractCDSInfo(duplicates.get(1) );
-        
+
         duplicates.get(0).close();
         duplicates.get(1).close();
 
         for(String cdsItem : this.cdsInfo){
           checkCDSBounds(cdsItem);
         }
-        
-        
+
+
         genome.setNbFailedCDS(this.cdsInfo.size() - this.cds.size());
         genome.setNbCorrectCDS(this.cds.size() );
 

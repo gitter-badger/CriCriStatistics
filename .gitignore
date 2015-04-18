@@ -15,3 +15,8 @@ genome_overview.txt
 .idea/
 bioinfo.log
 stats/
+
+database.sqlite
+database.sqlite-journal
+jxl.log
+obj/
