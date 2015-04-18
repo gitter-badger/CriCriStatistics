@@ -89,7 +89,8 @@ public class GenomeThread implements Runnable
             synchronized(saxParser)
             {
                 try {
-                    InputStream genomeIdIS = getParseInputSource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=genome&term=" + URLEncoder.encode(genomeName));
+                    InputStream genomeIdIS = getParseInputSource("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=genome&term="
+                            + URLEncoder.encode(genomeName,java.nio.charset.StandardCharsets.UTF_8.toString()));
           
                     if (genomeIdIS != null)
                     {
