@@ -74,14 +74,14 @@ public class SimpleParser implements IGenomeParser {
     public boolean parseGenome(Genome genome, List<Scanner> genbanksScanner){
       List<Scanner> duplicates;
       this.sequence.setLength(0);
-      this.cdsInfo.clear();
-      this.cds.clear();
       this.totalNucleotide = -1; 
       
       if( genbanksScanner == null)
         return false;
 
       for (Scanner scan : genbanksScanner){
+        this.cdsInfo.clear();
+        this.cds.clear();
         duplicates = dupScanner(scan);
         extractSequence(duplicates.get(0) );
         extractCDSInfo(duplicates.get(1) );
@@ -96,6 +96,7 @@ public class SimpleParser implements IGenomeParser {
         
         genome.setNbFailedCDS(this.cdsInfo.size() - this.cds.size());
         genome.setNbCorrectCDS(this.cds.size() );
+
 
         if ( this.cds.size() > 0){
                 try {
