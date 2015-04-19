@@ -42,13 +42,14 @@ public class Main {
 
             final DebugOption debugOption = new DebugOption();
             debugOption.parseInputCommand(argv);
+            
+            final SAXParserFactory factory = SAXParserFactory.newInstance();
 
             // Trigger launching of acquisition and treatment when hitting button
             ((MainForm) frame).getButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     GenomeOverview genomeOverview = new GenomeOverview();
-                    SAXParserFactory factory = SAXParserFactory.newInstance();
 
                     List<Genome> genomeList = null;
                     try {
