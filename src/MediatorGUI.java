@@ -46,8 +46,15 @@ public class MediatorGUI implements IMediatorGUI{
   public void updateStatisticsPanel(String info){
     int id = settings.getCleanThreadId();
     if (this.gui!= null){
-      //this.gui.appendTextAreaStatistics("\n");
       this.gui.appendTextAreaStatistics(info, id);
+    }
+  }
+
+  public void updateWritingPanel(String info){
+    int id = settings.getCleanThreadId();
+    if (this.gui!= null){
+      this.gui.appendTextAreaWriting("\n", id);
+      this.gui.appendTextAreaWriting(info, id);
     }
   }
 

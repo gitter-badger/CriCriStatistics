@@ -16,6 +16,7 @@ class MainForm extends JFrame {
     private JTextArea[] textAreaAcqui;
     private JTextArea[] textAreaParse;
     private JTextArea[] textAreaStat;
+    private JTextArea[] textAreaWrite;
     private JProgressBar bar = new JProgressBar();
     private JTabbedPane mainTabbedPane = new JTabbedPane();
     private JButton button = new JButton("(Re)Start acquisition");
@@ -32,6 +33,10 @@ class MainForm extends JFrame {
 
     public void appendTextAreaStatistics(String info, int index) {
         this.textAreaStat[index].append(info);
+    }
+
+    public void appendTextAreaWriting(String info, int index) {
+        this.textAreaWrite[index].append(info);
     }
 
     public void incrementProgressBar() {
@@ -112,11 +117,13 @@ class MainForm extends JFrame {
         JTabbedPane acquisitionTabbedPane = new JTabbedPane();
         JTabbedPane parsingTabbedPane = new JTabbedPane();
         JTabbedPane statisticTabbedPane = new JTabbedPane();
+        JTabbedPane writingTabbedPane = new JTabbedPane();
 
         // monospace font
         this.textAreaAcqui = new JTextArea[numThreads];
         this.textAreaParse = new JTextArea[numThreads];
         this.textAreaStat = new JTextArea[numThreads];
+        this.textAreaWrite = new JTextArea[numThreads];
 
         Font monoFont = new Font("Monospaced", Font.PLAIN, 12);
         DefaultCaret caret;
@@ -126,14 +133,17 @@ class MainForm extends JFrame {
             this.textAreaAcqui[i] = new JTextArea();
             this.textAreaParse[i] = new JTextArea();
             this.textAreaStat[i] = new JTextArea();
+            this.textAreaWrite[i] = new JTextArea();
 
             this.textAreaAcqui[i].setFont(monoFont);
             this.textAreaParse[i].setFont(monoFont);
             this.textAreaStat[i].setFont(monoFont);
+            this.textAreaWrite[i].setFont(monoFont);
 
             acquisitionTabbedPane.addTab("Thread " + i, new JScrollPane(this.textAreaAcqui[i]));
             parsingTabbedPane.addTab("Thread " + i, new JScrollPane(this.textAreaParse[i]));
             statisticTabbedPane.addTab("Thread " + i, new JScrollPane(this.textAreaStat[i]));
+            writingTabbedPane.addTab("Thread " + i, new JScrollPane(this.textAreaWrite[i]));
 
             caret = (DefaultCaret)textAreaAcqui[i].getCaret();
             caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
@@ -144,11 +154,15 @@ class MainForm extends JFrame {
             caret = (DefaultCaret)textAreaStat[i].getCaret();
             caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
+            caret = (DefaultCaret)textAreaWrite[i].getCaret();
+            caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
         }
 
         updateTabbedPane.addTab("Acquisition", acquisitionTabbedPane);
         updateTabbedPane.addTab("Parsing", parsingTabbedPane);
         updateTabbedPane.addTab("Statistics", statisticTabbedPane);
+        updateTabbedPane.addTab("Excel Writer", writingTabbedPane);
 
         return updateTabbedPane;
     }

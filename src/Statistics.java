@@ -20,7 +20,6 @@ public class Statistics {
     private int word_length;
     public Genome genome;
     private static ExcelWriter excel;
-    // TODO: add static attribute to classify each genome in kingdom, groups, subgroups...
 
     public Statistics(Alphabet alphabet, Genome genome) {
 

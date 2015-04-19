@@ -24,6 +24,8 @@ import jxl.write.biff.RowsExceededException;
 
 public class ExcelWriter {
 
+    private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
+
     private WritableCellFormat timesBoldUnderline;
     private WritableCellFormat times;
     private String outputFile;
@@ -94,6 +96,7 @@ public class ExcelWriter {
             createLabel(excelSheet);
             int i = 0;
             if (entry.getValue().get(0).genome.getKingdom() != null) {
+                mediatorGUI.updateWritingPanel("Writing Excel file for kingdom " + entry.getValue().get(0).genome.getKingdom());
                 addLabel(excelSheet, ++i, 1, entry.getValue().get(0).genome.getKingdom());
             }
 
@@ -123,6 +126,7 @@ public class ExcelWriter {
                 addLabel(excelSheet, ++i, 1,  entry.getValue().get(0).genome.getKingdom());
             }
             if (entry.getValue().get(0).genome.getGroup() != null) {
+                mediatorGUI.updateWritingPanel("Writing Excel file for group " + entry.getValue().get(0).genome.getGroup());
                 addLabel(excelSheet, ++i, 1,  entry.getValue().get(0).genome.getGroup());
             }
 
@@ -156,6 +160,7 @@ public class ExcelWriter {
                 addLabel(excelSheet, ++i, 1,  entry.getValue().get(0).genome.getGroup());
             }
             if (entry.getValue().get(0).genome.getSubGroup() != null) {
+                mediatorGUI.updateWritingPanel("Writing Excel file for subgroup " + entry.getValue().get(0).genome.getSubGroup());
                 addLabel(excelSheet, ++i, 1, entry.getValue().get(0).genome.getSubGroup());
             }
 
@@ -197,6 +202,8 @@ public class ExcelWriter {
     private void createContent(WritableSheet sheet) throws WriteException,
             RowsExceededException {
 
+
+        mediatorGUI.updateWritingPanel("Writing Excel file for organism " + statistic.genome.getOrganism());
         addLabel(sheet, 0, 0, NOM);
         addLabel(sheet, 1, 0, statistic.genome.getOrganism());
         addLabel(sheet, 0, 1, CHEMIN);
