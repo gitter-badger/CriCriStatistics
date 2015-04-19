@@ -15,3 +15,7 @@ database.sqlite
 database.sqlite-journal
 jxl.log
 obj/*.class
+
+*.so
+*.zip
+*.dylib
