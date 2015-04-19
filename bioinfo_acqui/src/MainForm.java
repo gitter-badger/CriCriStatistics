@@ -16,9 +16,6 @@ class MainForm extends JFrame {
     private JTextArea[] textAreaStat;
     private JProgressBar bar = new JProgressBar();
     private JTabbedPane mainTabbedPane = new JTabbedPane();
-    private JTabbedPane acquisitionTabbedPane = new JTabbedPane();
-    private JTabbedPane parsingTabbedPane = new JTabbedPane();
-    private JTabbedPane statisticTabbedPane = new JTabbedPane();
     private int progressBarValue;
     final static Logger logger = Logger.getLogger(MainForm.class);
 
@@ -45,17 +42,15 @@ class MainForm extends JFrame {
     }
 
     public MainForm(int numThreads) {
+        
         super("Trinucleotide statistical analysis");
 
-        this.textAreaAcqui = new JTextArea[numThreads];
-        this.textAreaParse = new JTextArea[numThreads];
-        this.textAreaStat = new JTextArea[numThreads];
-
+        // Code triggered on CloseWindow event
         this.addWindowListener(new WindowAdapter() {
-
+            
             public void windowClosing(WindowEvent e) {
-
-                   ExcelWriter ew = new ExcelWriter();
+                
+                ExcelWriter ew = new ExcelWriter();
                 try {
                     try {
                         ew.writeStatistics();
@@ -65,17 +60,67 @@ class MainForm extends JFrame {
                 } catch (IOException ex) {
                     java.util.logging.Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                 System.out.println("it is over");
-                 System.exit(1);
-              
+                System.out.println("Terminated.");
+                System.exit(1);
             }
         });
 
+        this.mainTabbedPane.addTab("Menu", CreateMenuTab());
+        this.mainTabbedPane.addTab("Update", CreateUpdateTab(numThreads));
+
+        // Build progress bar
+        BuildBar();
+        
+        // Set main display
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.getContentPane().add(bar, BorderLayout.NORTH);
+        this.getContentPane().add(mainTabbedPane, BorderLayout.CENTER);
+        this.setVisible(true);
+
+        setSize(640, 480);
+        setVisible(true);
+    }
+    
+    private JPanel CreateMenuTab() {
+
+        JPanel menuTabbedPane = new JPanel();
+
+//        JLabel label1 = new JLabel( "Username:" );
+//        label1.setBounds( 10, 15, 150, 20 );
+//        panel1.add( label1 );
+//
+//        JTextField field = new JTextField();
+//        field.setBounds( 10, 35, 150, 20 );
+//        panel1.add( field );
+
+        // We need to bind the launching of the threads to this button
+        // Start acquisition must clear all the textarea
+        menuTabbedPane.add(new JButton("(Re)Start acquisition"), BorderLayout.NORTH);
+
+//        JPanel topPanel = new JPanel();
+//        topPanel.setLayout( new BorderLayout() );
+//        getContentPane().add( topPanel );
+        
+        return menuTabbedPane;
+    }
+    
+    private JTabbedPane CreateUpdateTab(int numThreads) {
+
+        JTabbedPane updateTabbedPane = new JTabbedPane();
+        JTabbedPane acquisitionTabbedPane = new JTabbedPane();
+        JTabbedPane parsingTabbedPane = new JTabbedPane();
+        JTabbedPane statisticTabbedPane = new JTabbedPane();
+
         // monospace font
+        this.textAreaAcqui = new JTextArea[numThreads];
+        this.textAreaParse = new JTextArea[numThreads];
+        this.textAreaStat = new JTextArea[numThreads];
+
         Font monoFont = new Font("Monospaced", Font.PLAIN, 12);
-		DefaultCaret caret;
-		
+        DefaultCaret caret;
+
         for (int i = 0; i < numThreads; i++) {
+
             this.textAreaAcqui[i] = new JTextArea();
             this.textAreaParse[i] = new JTextArea();
             this.textAreaStat[i] = new JTextArea();
@@ -84,37 +129,33 @@ class MainForm extends JFrame {
             this.textAreaParse[i].setFont(monoFont);
             this.textAreaStat[i].setFont(monoFont);
 
-            this.acquisitionTabbedPane.addTab("Thread " + i, null, new JScrollPane(this.textAreaAcqui[i]), "");
-            this.parsingTabbedPane.addTab("Thread " + i, null, new JScrollPane(this.textAreaParse[i]), "");
-            this.statisticTabbedPane.addTab("Thread " + i, null, new JScrollPane(this.textAreaStat[i]), "");
-			
-		  caret = (DefaultCaret)textAreaAcqui[i].getCaret();
-          caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-          
-          caret = (DefaultCaret)textAreaParse[i].getCaret();
-          caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-          
-          caret = (DefaultCaret)textAreaStat[i].getCaret();
-          caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+            acquisitionTabbedPane.addTab("Thread " + i, new JScrollPane(this.textAreaAcqui[i]));
+            parsingTabbedPane.addTab("Thread " + i, new JScrollPane(this.textAreaParse[i]));
+            statisticTabbedPane.addTab("Thread " + i, new JScrollPane(this.textAreaStat[i]));
+
+            caret = (DefaultCaret)textAreaAcqui[i].getCaret();
+            caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
+            caret = (DefaultCaret)textAreaParse[i].getCaret();
+            caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
+            caret = (DefaultCaret)textAreaStat[i].getCaret();
+            caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
         }
 
-        this.mainTabbedPane.addTab("Acquisition", null, acquisitionTabbedPane, "");
-        this.mainTabbedPane.addTab("Parsing", null, parsingTabbedPane, "");
-        this.mainTabbedPane.addTab("Statistic", null, statisticTabbedPane, "");
+        updateTabbedPane.addTab("Acquisition", acquisitionTabbedPane);
+        updateTabbedPane.addTab("Parsing", parsingTabbedPane);
+        updateTabbedPane.addTab("Statistics", statisticTabbedPane);
+
+        return updateTabbedPane;
+    }
+    
+    private void BuildBar() {
 
         this.bar.setMaximum(500);
         this.bar.setMinimum(0);
         this.bar.setStringPainted(true);
         this.progressBarValue = 0;
-
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getContentPane().add(mainTabbedPane, BorderLayout.CENTER);
-        this.getContentPane().add(bar, BorderLayout.NORTH);
-        this.setVisible(true);
-
-        setSize(640, 480);
-        setVisible(true);
-
     }
 }
