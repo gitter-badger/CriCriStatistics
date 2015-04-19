@@ -45,14 +45,14 @@ class MainForm extends JFrame {
     }
 
     public MainForm(int numThreads) {
-        
+
         super("Trinucleotide statistical analysis");
 
         // Trigger writing of Kindgom/Group/Subgroup XLS files on CloseWindow event
         this.addWindowListener(new WindowAdapter() {
-            
+
             public void windowClosing(WindowEvent e) {
-                
+
                 ExcelWriter ew = new ExcelWriter();
                 try {
                     try {
@@ -73,7 +73,7 @@ class MainForm extends JFrame {
 
         // Build progress bar
         BuildBar();
-        
+
         // Set main display
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().add(bar, BorderLayout.NORTH);
@@ -83,7 +83,7 @@ class MainForm extends JFrame {
         setSize(640, 480);
         setVisible(true);
     }
-    
+
     private JPanel CreateMenuTab() {
 
         JPanel menuTabbedPane = new JPanel();
@@ -95,17 +95,17 @@ class MainForm extends JFrame {
 //        JTextField field = new JTextField();
 //        field.setBounds( 10, 35, 150, 20 );
 //        panel1.add( field );
-        
+
         // Start acquisition must clear all the textarea
         menuTabbedPane.add(this.button, BorderLayout.NORTH);
 
 //        JPanel topPanel = new JPanel();
 //        topPanel.setLayout( new BorderLayout() );
 //        getContentPane().add( topPanel );
-        
+
         return menuTabbedPane;
     }
-    
+
     private JTabbedPane CreateUpdateTab(int numThreads) {
 
         JTabbedPane updateTabbedPane = new JTabbedPane();
@@ -152,7 +152,7 @@ class MainForm extends JFrame {
 
         return updateTabbedPane;
     }
-    
+
     private void BuildBar() {
 
         this.bar.setMaximum(500);
@@ -160,9 +160,9 @@ class MainForm extends JFrame {
         this.bar.setStringPainted(true);
         this.progressBarValue = 0;
     }
-    
+
     public JButton getButton() {
-        
+
         return this.button;
     }
 }
