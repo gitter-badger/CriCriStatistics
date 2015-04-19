@@ -1,3 +1,5 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import javax.swing.*;
@@ -16,6 +18,7 @@ class MainForm extends JFrame {
     private JTextArea[] textAreaStat;
     private JProgressBar bar = new JProgressBar();
     private JTabbedPane mainTabbedPane = new JTabbedPane();
+    private JButton button = new JButton("(Re)Start acquisition");
     private int progressBarValue;
     final static Logger logger = Logger.getLogger(MainForm.class);
 
@@ -45,7 +48,7 @@ class MainForm extends JFrame {
         
         super("Trinucleotide statistical analysis");
 
-        // Code triggered on CloseWindow event
+        // Trigger writing of Kindgom/Group/Subgroup XLS files on CloseWindow event
         this.addWindowListener(new WindowAdapter() {
             
             public void windowClosing(WindowEvent e) {
@@ -92,10 +95,9 @@ class MainForm extends JFrame {
 //        JTextField field = new JTextField();
 //        field.setBounds( 10, 35, 150, 20 );
 //        panel1.add( field );
-
-        // We need to bind the launching of the threads to this button
+        
         // Start acquisition must clear all the textarea
-        menuTabbedPane.add(new JButton("(Re)Start acquisition"), BorderLayout.NORTH);
+        menuTabbedPane.add(this.button, BorderLayout.NORTH);
 
 //        JPanel topPanel = new JPanel();
 //        topPanel.setLayout( new BorderLayout() );
@@ -157,5 +159,10 @@ class MainForm extends JFrame {
         this.bar.setMinimum(0);
         this.bar.setStringPainted(true);
         this.progressBarValue = 0;
+    }
+    
+    public JButton getButton() {
+        
+        return this.button;
     }
 }
