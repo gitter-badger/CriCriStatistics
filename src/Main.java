@@ -85,6 +85,18 @@ public class Main {
                         thread.start();
                         threadList.add(thread);
                     }
+                    
+                    // Acquisition finished. Write summed-stats
+                    ExcelWriter ew = new ExcelWriter();
+                    try {
+                        try {
+                            ew.writeStatistics();
+                        } catch (WriteException ex) {
+                            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } catch (IOException ex) {
+                        java.util.logging.Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             });
 
