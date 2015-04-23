@@ -10,3 +10,7 @@ Genomic statistics in Java
 * Donner dans un rapport
   * toutes les instructions et librairies permettant son exécution avec le logiciel Eclipse (version 1.8)
   * toutes les informations sur l'arborescence locale et fichiers nécessaires
+
+## Soutenance
+
+Le 5 mai, dans l'après-midi.
