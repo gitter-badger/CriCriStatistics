@@ -15,6 +15,7 @@ import jxl.format.UnderlineStyle;
 import jxl.write.Formula;
 import jxl.write.Label;
 import jxl.write.Number;
+import jxl.write.NumberFormat;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
@@ -26,8 +27,9 @@ public class ExcelWriter {
 
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
 
-    private WritableCellFormat timesBoldUnderline;
-    private WritableCellFormat times;
+    private WritableCellFormat arialBoldUnderline;
+    private WritableCellFormat arial;
+    private WritableCellFormat twodigit;
     private String outputFile;
     private Statistics statistic;
     private final String NOM = "Nom";
@@ -80,17 +82,16 @@ public class ExcelWriter {
         String absoluteFilePath = "";
 
         absoluteFilePath = homeDirectory + File.separator + "Statistics" + File.separator;
-
+        
+        WorkbookSettings wbSettings = new WorkbookSettings();
+        wbSettings.setLocale(new Locale("en", "EN"));
 
         for (Map.Entry<String, ArrayList<Statistics>> entry : StatsFactory.getKindomMap().entrySet()) {
 
             File file = new File(absoluteFilePath + File.separator + verifyString(entry.getKey()) + File.separator + verifyString(entry.getKey()) + ".xls");
             file.createNewFile();
 
-            WritableWorkbook workbook;
-            WorkbookSettings wbSettings = new WorkbookSettings();
-            wbSettings.setLocale(new Locale("en", "EN"));
-            workbook = Workbook.createWorkbook(file, wbSettings);
+            WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
             workbook.createSheet("Statistics", 0);
             WritableSheet excelSheet = workbook.getSheet(0);
             createLabel(excelSheet);
@@ -113,10 +114,7 @@ public class ExcelWriter {
                     + File.separator + verifyString(entry.getKey()) + File.separator + verifyString(entry.getKey()) + ".xls");
             file.createNewFile();
 
-            WritableWorkbook workbook;
-            WorkbookSettings wbSettings = new WorkbookSettings();
-            wbSettings.setLocale(new Locale("en", "EN"));
-            workbook = Workbook.createWorkbook(file, wbSettings);
+            WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
             workbook.createSheet("Statistics", 0);
             WritableSheet excelSheet = workbook.getSheet(0);
             createLabel(excelSheet);
@@ -144,10 +142,7 @@ public class ExcelWriter {
                     + verifyString(entry.getKey()) + ".xls");
             file.createNewFile();
 
-            WritableWorkbook workbook;
-            WorkbookSettings wbSettings = new WorkbookSettings();
-            wbSettings.setLocale(new Locale("en", "EN"));
-            workbook = Workbook.createWorkbook(file, wbSettings);
+            WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
             workbook.createSheet("Statistics", 0);
             WritableSheet excelSheet = workbook.getSheet(0);
             createLabel(excelSheet);
@@ -173,30 +168,34 @@ public class ExcelWriter {
 
     private void createLabel(WritableSheet sheet)
             throws WriteException {
-        // Lets create a times font
-        WritableFont times10pt = new WritableFont(WritableFont.TIMES, 10);
+        // Lets create an arial font
+        WritableFont arial10pt = new WritableFont(WritableFont.ARIAL, 10);
         // Define the cell format
-        times = new WritableCellFormat(times10pt);
+        arial = new WritableCellFormat(arial10pt);
         // Lets automatically wrap the cells
-        times.setAlignment(Alignment.CENTRE);
-        times.setWrap(true);
+        arial.setAlignment(Alignment.CENTRE);
+        arial.setWrap(true);
 
         // create create a bold font with unterlines
-        WritableFont times10ptBoldUnderline = new WritableFont(WritableFont.TIMES, 12, WritableFont.NO_BOLD, false,
+        WritableFont arial10ptBoldUnderline = new WritableFont(WritableFont.ARIAL, 10, WritableFont.NO_BOLD, false,
                 UnderlineStyle.NO_UNDERLINE);
-        timesBoldUnderline = new WritableCellFormat(times10ptBoldUnderline);
+        arialBoldUnderline = new WritableCellFormat(arial10ptBoldUnderline);
         // Lets automatically wrap the cells
-        timesBoldUnderline.setWrap(true);
+        arialBoldUnderline.setWrap(true);
 
         CellView cv = new CellView();
-        cv.setFormat(times);
-        cv.setFormat(timesBoldUnderline);
+        cv.setFormat(arial);
+        cv.setFormat(arialBoldUnderline);
         cv.setAutosize(true);
         for (int i = 0; i < 7; i++) {
             sheet.setColumnView(i, cv);
         }
 
-
+        twodigit = new WritableCellFormat(
+                new WritableFont(WritableFont.ARIAL), new NumberFormat("#0.00"));
+        // Lets automatically wrap the cells
+        twodigit.setAlignment(Alignment.CENTRE);
+        twodigit.setWrap(true);
     }
 
     private void createContent(WritableSheet sheet) throws WriteException,
@@ -246,7 +245,7 @@ public class ExcelWriter {
             for (int j = 0; j < statistic.phases.size(); j++) {
 
                 float percent = (float) (((float) (statistic.phases.get(j).get(label))) / ((float) (statistic.total_n_nucleotides))) * 100;
-                addReal(sheet, nb, k, (float) (statistic.phases.get(j).get(label)));
+                addNumber(sheet, nb, k, statistic.phases.get(j).get(label));
                 addReal(sheet, nb + 1, k, percent);
                 nb += 2;
             }
@@ -313,7 +312,7 @@ public class ExcelWriter {
                 for (int m = 0; m < stats.size(); m++) {
                     ntotatl = ntotatl + stats.get(m).phases.get(j).get(label);
                 }
-                addReal(sheet, nb, k, (float) (ntotatl));
+                addNumber(sheet, nb, k, ntotatl);
                 float percent = ((float) ntotatl) / ((float) totalTrinu) * 100;
                 addReal(sheet, nb + 1, k, percent);
                 nb += 2;
@@ -339,22 +338,22 @@ public class ExcelWriter {
     private void addNumber(WritableSheet sheet, int column, int row,
             Integer integer) throws WriteException, RowsExceededException {
         Number number;
-        number = new Number(column, row, integer, times);
+        number = new Number(column, row, integer, arial);
         sheet.addCell(number);
     }
-
+    
     private void addReal(WritableSheet sheet, int column, int row,
             Float fl) throws WriteException, RowsExceededException {
 
         Number number;
-        number = new Number(column, row, fl, times);
+        number = new Number(column, row, fl, twodigit);
         sheet.addCell(number);
     }
 
     private void addLabel(WritableSheet sheet, int column, int row, String s)
             throws WriteException, RowsExceededException {
         Label label;
-        label = new Label(column, row, s, times);
+        label = new Label(column, row, s, arial);
         sheet.addCell(label);
     }
 }
