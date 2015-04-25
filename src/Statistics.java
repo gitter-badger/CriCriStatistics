@@ -14,7 +14,8 @@ import jxl.write.WriteException;
 public class Statistics {
 
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
-    
+
+    // it works like an array of dictionnary: phases[0]("ACG") = 1.25
     public ArrayList<HashMap<String, Integer>> phases;
     public int total_n_nucleotides = 0;
     private int word_length;
@@ -23,6 +24,9 @@ public class Statistics {
 
     public Statistics(Alphabet alphabet, Genome genome) {
 
+        /* Each Statistics object has a Genome object in order
+        * to be able to get required information such as number of
+        * correct CDS, etc. */
         this.genome = genome;
         word_length = alphabet.word_length;
         phases = new ArrayList<HashMap<String, Integer>>(word_length);
@@ -39,22 +43,27 @@ public class Statistics {
         }
     }
 
+    /* Constructor that takes just one CDS.
+    * Automatically compute frequencies of given CDS. */
     public Statistics(Alphabet alphabet, String seq, Genome genome) {
 
         this(alphabet, genome);
         ComputeFrequencies(seq);
     }
 
+    /* Constructor that takes an array of CDS.
+    * Automatically compute frequencies of given CDS. */
     public Statistics(Alphabet alphabet, String[] seq, Genome genome) {
 
         this(alphabet, genome);
-
         for (String cds : seq) {
             total_n_nucleotides += (cds.length() / word_length) - 1;
             ComputeFrequencies(cds);
         }
     }
-    
+
+    /* Constructor that takes a vector of CDS.
+    * Automatically compute frequencies of given CDS. */
     public Statistics(Alphabet alphabet, Vector<String> seq, Genome genome) {
 
         this(alphabet, genome);
@@ -65,6 +74,7 @@ public class Statistics {
 
     }
 
+    /* Method to display computed frequencies in a pretty way. */
     public void print() {
 
         mediatorGUI.updateStatisticsPanel("Organism: " + this.genome.getOrganism() + "\n");
@@ -89,14 +99,18 @@ public class Statistics {
         mediatorGUI.updateStatisticsPanel("\n");
     }
 
+    /* The length of a word in the current alphabet determines
+    * the number of phases to compute. With A4, words' length is 3,
+    * thus we have 3 phases. */
     private void ComputeFrequencies(String seq) {
-        // TODO: use multi-threading here!
+        // TODO: multi-threading could be used here
         for (int i = 0; i < word_length; i++) {
 
             PhaseFrequencies(seq, i);
         }
     }
 
+    /* Compute the frequency of each word in a CDS for a given phase. */
     private void PhaseFrequencies(String sequence, int phase) {
 
         // ensure phase do not go out of bounds
@@ -113,25 +127,8 @@ public class Statistics {
             work_sequence = work_sequence.substring(
                     0, work_sequence.length() - 3);
         }
-
-        // tried to optimize, got exceptions, got bored, got back to previous working version
-
-//        char[] char_array = work_sequence.toCharArray();
-//        char[] tmp = new char[word_length+1];
-//
-//        for (int i=0; i<work_sequence.length(); i++) {
-//
-//            // walk on string to get chars
-//            for (int c=0; c<word_length; c++) {
-//
-//                tmp[c] = char_array[i];
-//                i++;
-//            }
-//
-//            // create String from these chars
-//            String n_nucleotide = new String(tmp);
-//            System.out.println("Nucl: "+ n_nucleotide);
-
+        
+        // we split the CDS into words (or keys)
         for (String n_nucleotide : Split(work_sequence)) {
 
             // increment each met key
@@ -142,6 +139,7 @@ public class Statistics {
         }
     }
 
+    /* Takes a string and return the list of words that composes it. */
     private List<String> Split(String s) {
 
         List<String> parts = new ArrayList<String>();
@@ -154,19 +152,16 @@ public class Statistics {
         return parts;
     }
 
-    private static String verifyString(String text) {
-        return text.replaceAll("[?:!/*<>]+", "_");
-    }
-
+    /* This method allow us to write the computed statistics into an Excel file. */
     public static void Write(Statistics stats)
             throws IOException, WriteException {
         String outputFile;
 
         if (stats.genome.getKingdom() != null && stats.genome.getGroup() != null
                 && stats.genome.getSubGroup() != null && stats.genome.getOrganism() != null) {
-            outputFile = verifyString(stats.genome.getKingdom()) + File.separator + verifyString(stats.genome.getGroup())
+            outputFile = ExcelWriter.verifyString(stats.genome.getKingdom()) + File.separator + ExcelWriter.verifyString(stats.genome.getGroup())
                     + File.separator
-                    + verifyString(stats.genome.getSubGroup()) + File.separator;
+                    + ExcelWriter.verifyString(stats.genome.getSubGroup()) + File.separator;
 
             String homeDirectory =  System.getProperty("user.home");
 
@@ -177,13 +172,14 @@ public class Statistics {
             File file = new File(absoluteFilePath);
             file.mkdirs();
             ExcelWriter ew = new ExcelWriter(stats);
-            ew.setOutputFile(absoluteFilePath + verifyString(stats.genome.getOrganism()) + ".xls");
+            ew.setOutputFile(absoluteFilePath + ExcelWriter.verifyString(stats.genome.getOrganism()) + ".xls");
             ew.write();
-
         }
-
     }
 
+    /* Each time a genome's tri-nucleotides frequency has been computed,
+    * we tag it as done in a local database. That let us know which genome
+    * should or should not be treated when the program is restarted. */
     public void tagAsDone(){
       DatabaseModule db = DatabaseModule.getInstance();
       db.updateGenomeEntry(this.genome.getId(), "XXXXX");

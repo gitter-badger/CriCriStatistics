@@ -27,7 +27,6 @@ public class ExcelWriter {
 
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
 
-    private WritableCellFormat arialBoldUnderline;
     private WritableCellFormat arial;
     private WritableCellFormat twodigit;
     private String outputFile;
@@ -44,6 +43,7 @@ public class ExcelWriter {
         this.outputFile = outputFile;
     }
 
+    /* Each ExcelWriter object contains a Statistics object to know what data to write. */
     public ExcelWriter(Statistics stat) {
         statistic = stat;
 
@@ -71,7 +71,8 @@ public class ExcelWriter {
         workbook.close();
     }
 
-    private static String verifyString(String text) {
+    /* Ensure we do not write files with forbidden of annoying characters. */
+    public static String verifyString(String text) {
         return text.replaceAll("[?:!/*<>]+", "_");
     }
 
@@ -166,6 +167,7 @@ public class ExcelWriter {
         }
     }
 
+    /* Initialize fonts and number formats. */
     private void createLabel(WritableSheet sheet)
             throws WriteException {
         // Lets create an arial font
@@ -176,16 +178,8 @@ public class ExcelWriter {
         arial.setAlignment(Alignment.CENTRE);
         arial.setWrap(true);
 
-        // create create a bold font with unterlines
-        WritableFont arial10ptBoldUnderline = new WritableFont(WritableFont.ARIAL, 10, WritableFont.NO_BOLD, false,
-                UnderlineStyle.NO_UNDERLINE);
-        arialBoldUnderline = new WritableCellFormat(arial10ptBoldUnderline);
-        // Lets automatically wrap the cells
-        arialBoldUnderline.setWrap(true);
-
         CellView cv = new CellView();
         cv.setFormat(arial);
-        cv.setFormat(arialBoldUnderline);
         cv.setAutosize(true);
         for (int i = 0; i < 7; i++) {
             sheet.setColumnView(i, cv);
@@ -335,13 +329,16 @@ public class ExcelWriter {
 
     }
 
+    /* Write a number as an integer at the given position. */
     private void addNumber(WritableSheet sheet, int column, int row,
             Integer integer) throws WriteException, RowsExceededException {
         Number number;
         number = new Number(column, row, integer, arial);
         sheet.addCell(number);
     }
-    
+
+    /* Write a number as a float at the given position. 
+    * The whole number is written but only 2 decimals are displayed. */
     private void addReal(WritableSheet sheet, int column, int row,
             Float fl) throws WriteException, RowsExceededException {
 
@@ -350,6 +347,7 @@ public class ExcelWriter {
         sheet.addCell(number);
     }
 
+    /* Write a label (text) at the given position. */
     private void addLabel(WritableSheet sheet, int column, int row, String s)
             throws WriteException, RowsExceededException {
         Label label;

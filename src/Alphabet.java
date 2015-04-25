@@ -14,6 +14,8 @@ public class Alphabet {
         GenerateCombinations(word_length, new char[] {'a','c','g','t'}, "");
     }
 
+    /* This constructor is able to construct any type of alphabet,
+    * given letters and the length of the words that compose it. */
     public Alphabet(String alphabet, int length) {
     
         words = new ArrayList<String>();
@@ -21,6 +23,9 @@ public class Alphabet {
         GenerateCombinations(length, RemoveDuplicates(alphabet).toCharArray(), "");
     }
 
+    /* This method can be useful if you want to build an alphabet based
+    * of an actual sequence of words. It returns a string composed of
+    * copies of each character met. Example: "ACTCTGGATTATCGAATCGAT" -> "ACTG". */
     private String RemoveDuplicates(String s) {
         StringBuilder noDupes = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
@@ -34,6 +39,7 @@ public class Alphabet {
         return noDupes.toString().toLowerCase();
     }
 
+    /* Given a sequence of letters, computes and returns each combination of these letters. */
     private void GenerateCombinations(int length, char[] alphabet, String curr) {
     
         if (curr.length() == length) {

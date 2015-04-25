@@ -93,20 +93,8 @@ class MainForm extends JFrame {
 
         JPanel menuTabbedPane = new JPanel();
 
-//        JLabel label1 = new JLabel( "Username:" );
-//        label1.setBounds( 10, 15, 150, 20 );
-//        panel1.add( label1 );
-//
-//        JTextField field = new JTextField();
-//        field.setBounds( 10, 35, 150, 20 );
-//        panel1.add( field );
-
         // Start acquisition must clear all the textarea
         menuTabbedPane.add(this.button, BorderLayout.NORTH);
-
-//        JPanel topPanel = new JPanel();
-//        topPanel.setLayout( new BorderLayout() );
-//        getContentPane().add( topPanel );
 
         return menuTabbedPane;
     }
