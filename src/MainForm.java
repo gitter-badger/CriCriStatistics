@@ -21,6 +21,7 @@ class MainForm extends JFrame {
     private JTabbedPane mainTabbedPane = new JTabbedPane();
     private JButton startButton = new JButton("(Re)Start acquisition");
     private JButton stopButton = new JButton("Stop acquisition");
+    private JCheckBox saveData = new JCheckBox("Save data on disk");
     private int progressBarValue;
     final static Logger logger = Logger.getLogger(MainForm.class);
 
@@ -96,6 +97,7 @@ class MainForm extends JFrame {
 
         menuTabbedPane.add(this.startButton, BorderLayout.NORTH);
         menuTabbedPane.add(this.stopButton, BorderLayout.NORTH);
+        menuTabbedPane.add(this.saveData, BorderLayout.NORTH);
 
         return menuTabbedPane;
     }
@@ -172,5 +174,10 @@ class MainForm extends JFrame {
     public JButton getStopButton() {
 
         return this.stopButton;
+    }
+
+    public JCheckBox getDataCheckbox() {
+
+        return this.saveData;
     }
 }

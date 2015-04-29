@@ -4,6 +4,7 @@ public class Settings {
 
     private int numThreads;
     private boolean active;
+    private boolean saveData;
 
     // Singleton Stuff
     private static class SingletonHolder {
@@ -42,5 +43,17 @@ public class Settings {
 
     public boolean isActive() {
         return this.active;
+    }
+
+    public void activateSaveData() {
+        this.saveData = true;
+    }
+
+    public void deactivateSaveData() {
+        this.saveData = false;
+    }
+
+    public boolean savingData() {
+        return this.saveData;
     }
 }

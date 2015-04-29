@@ -1,8 +1,7 @@
 import javax.swing.*;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
 import java.lang.System;
 import java.util.ArrayList;
@@ -90,7 +89,7 @@ public class Main {
                         thread.start();
                         threadList.add(thread);
                     }
-                    
+
                     // Acquisition finished. Write summed-stats
                     ExcelWriter ew = new ExcelWriter();
                     try {
@@ -110,6 +109,17 @@ public class Main {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     settings.turnOFF();
+                }
+            });
+
+            // Settings control with saveData checkbox
+            ((MainForm) frame).getDataCheckbox().addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if (e.getStateChange() == ItemEvent.SELECTED)
+                        settings.activateSaveData();
+                    else
+                    settings.deactivateSaveData();
                 }
             });
 
