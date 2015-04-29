@@ -68,4 +68,9 @@ public class MediatorGUI implements IMediatorGUI{
     if (this.gui!= null)
       this.gui.setProgressBar(nbTotalGenome);
   }
+
+  // TODO: write this method
+  public void clearAllAreas() {
+    return;
+  }
 }

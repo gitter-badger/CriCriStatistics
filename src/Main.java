@@ -37,7 +37,7 @@ public class Main {
         try {
 
             JFrame frame = new MainForm(settings.getNumThreads());
-            MediatorGUI mediatorGUI = MediatorGUI.getInstance();
+            final MediatorGUI mediatorGUI = MediatorGUI.getInstance();
             mediatorGUI.setGUI((MainForm) frame);
 
             System.setProperty("java.net.useSystemProxies", "true");
@@ -48,10 +48,13 @@ public class Main {
             final SAXParserFactory factory = SAXParserFactory.newInstance();
 
             // Trigger launching of acquisition and treatment when hitting button
-            ((MainForm) frame).getButton().addActionListener(new ActionListener() {
+            ((MainForm) frame).getStartButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     GenomeOverview genomeOverview = new GenomeOverview();
+
+                    settings.turnON();
+                    mediatorGUI.clearAllAreas();
 
                     List<Genome> genomeList = null;
                     try {
@@ -99,6 +102,14 @@ public class Main {
                     } catch (IOException ex) {
                         java.util.logging.Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }
+            });
+
+            // Trigger stop threads when hitting Stop button
+            ((MainForm) frame).getStopButton().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    settings.turnOFF();
                 }
             });
 

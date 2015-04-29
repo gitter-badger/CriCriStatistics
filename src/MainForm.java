@@ -19,7 +19,8 @@ class MainForm extends JFrame {
     private JTextArea[] textAreaWrite;
     private JProgressBar bar = new JProgressBar();
     private JTabbedPane mainTabbedPane = new JTabbedPane();
-    private JButton button = new JButton("(Re)Start acquisition");
+    private JButton startButton = new JButton("(Re)Start acquisition");
+    private JButton stopButton = new JButton("Stop acquisition");
     private int progressBarValue;
     final static Logger logger = Logger.getLogger(MainForm.class);
 
@@ -93,8 +94,8 @@ class MainForm extends JFrame {
 
         JPanel menuTabbedPane = new JPanel();
 
-        // Start acquisition must clear all the textarea
-        menuTabbedPane.add(this.button, BorderLayout.NORTH);
+        menuTabbedPane.add(this.startButton, BorderLayout.NORTH);
+        menuTabbedPane.add(this.stopButton, BorderLayout.NORTH);
 
         return menuTabbedPane;
     }
@@ -163,8 +164,13 @@ class MainForm extends JFrame {
         this.progressBarValue = 0;
     }
 
-    public JButton getButton() {
+    public JButton getStartButton() {
 
-        return this.button;
+        return this.startButton;
+    }
+
+    public JButton getStopButton() {
+
+        return this.stopButton;
     }
 }

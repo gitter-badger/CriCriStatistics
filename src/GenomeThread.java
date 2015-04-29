@@ -45,16 +45,19 @@ public class GenomeThread implements Runnable
     }
 
     public void run()
-    { 
-        
+    {
+        Settings settings = Settings.getInstance();
         IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
         for (final Genome genome: genomeList) {
-            if (genomeParser != null){
-                genomeParser.parseGenome(genome, getGenomeGenbanks(genome.getOrganism(), genome));
-                mediatorGUI.incrementProgressBar();
+            if (settings.isActive()) {
+                if (genomeParser != null) {
+                    genomeParser.parseGenome(genome, getGenomeGenbanks(genome.getOrganism(), genome));
+                    mediatorGUI.incrementProgressBar();
+                } else
+                    getGenomeGenbanks(genome.getOrganism(), genome);
             }
             else
-                getGenomeGenbanks(genome.getOrganism(), genome);
+                break;
         }
     }
 
