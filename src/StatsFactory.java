@@ -17,6 +17,7 @@ public class StatsFactory {
         stats.print();
         Statistics.Write(stats);
         stats.tagAsDone();
+
         if (!kingdomHash.containsKey(stats.genome.getKingdom())) {
             ArrayList<Statistics> stat = new ArrayList<Statistics>();
             stat.add(stats);
@@ -26,8 +27,6 @@ public class StatsFactory {
             stat = kingdomHash.get(stats.genome.getKingdom());
             findOrganism(stat, stats.genome.getOrganism());
             stat.add(stats);
-
-
         }
 
         if (!groupHash.containsKey(stats.genome.getGroup())) {
@@ -39,21 +38,17 @@ public class StatsFactory {
             stat = groupHash.get(stats.genome.getGroup());
             findOrganism(stat, stats.genome.getOrganism());
             stat.add(stats);
-
-
         }
 
         if (!subgroupHash.containsKey(stats.genome.getSubGroup())) {
             ArrayList<Statistics> stat = new ArrayList<Statistics>();
             stat.add(stats);
             subgroupHash.put(stats.genome.getSubGroup(), stat);
-
         } else {
             ArrayList<Statistics> stat;
             stat = subgroupHash.get(stats.genome.getSubGroup());
             findOrganism(stat, stats.genome.getOrganism());
             stat.add(stats);
-
         }
 
     }

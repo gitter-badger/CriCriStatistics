@@ -124,6 +124,24 @@ public class Main {
                 }
             });
 
+            // Directory selection
+            ((MainForm) frame).getChooserButton().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    JFileChooser chooser = new JFileChooser();
+                    chooser.setCurrentDirectory(new java.io.File("."));
+                    chooser.setDialogTitle("choosertitle");
+                    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    chooser.setAcceptAllFileFilterUsed(false);
+
+                    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                        String newPath = chooser.getSelectedFile().getAbsolutePath();
+                        settings.setOutputDir(newPath);
+                        ((MainForm) frame).setOutputText(newPath);
+                    }
+                }
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }

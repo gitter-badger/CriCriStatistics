@@ -23,6 +23,8 @@ class MainForm extends JFrame {
     private JButton startButton = new JButton("(Re)Start acquisition");
     private JButton stopButton = new JButton("Stop acquisition");
     private JCheckBox saveData = new JCheckBox("Save data on disk");
+    private JButton chooser = new JButton("Select output directory");
+    private JTextField outputText = new JTextField(50);
     private int progressBarValue;
     final static Logger logger = Logger.getLogger(MainForm.class);
 
@@ -82,6 +84,10 @@ class MainForm extends JFrame {
         // Build progress bar
         BuildBar();
 
+        // Text field is read only
+        this.outputText.setEditable(false);
+        setOutputText(Settings.getInstance().getOutputDir());
+
         // Set main display
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().add(bar, BorderLayout.NORTH);
@@ -99,6 +105,8 @@ class MainForm extends JFrame {
         menuTabbedPane.add(this.startButton, BorderLayout.NORTH);
         menuTabbedPane.add(this.stopButton, BorderLayout.NORTH);
         menuTabbedPane.add(this.saveData, BorderLayout.NORTH);
+        menuTabbedPane.add(this.chooser, BorderLayout.NORTH);
+        menuTabbedPane.add(this.outputText, BorderLayout.NORTH);
 
         return menuTabbedPane;
     }
@@ -180,5 +188,20 @@ class MainForm extends JFrame {
     public JCheckBox getDataCheckbox() {
 
         return this.saveData;
+    }
+
+    public JButton getChooserButton() {
+
+        return this.chooser;
+    }
+
+    public void setOutputText(String s) {
+
+        this.outputText.setText(s);
+    }
+
+    public JTextField getOutputTextField() {
+
+        return this.outputText;
     }
 }

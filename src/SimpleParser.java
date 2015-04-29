@@ -80,6 +80,8 @@ public class SimpleParser implements IGenomeParser {
             return false;
 
         for (Scanner scan : genbanksScanner) {
+            // FIXME: do several scanner can be one splitted genome?
+            // it would be the origin of the "multiple writing of the same excel file" bug
             this.cdsInfo.clear();
             this.cds.clear();
             duplicates = dupScanner(scan);

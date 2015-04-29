@@ -112,18 +112,16 @@ public class ExcelWriter {
 
     public void writeStatistics() throws IOException, WriteException {
 
-        String homeDirectory = System.getProperty("user.home");
+        String absoluteDirPath = settings.getOutputDir();
 
-        String absoluteFilePath = "";
-
-        absoluteFilePath = homeDirectory + File.separator + "Statistics" + File.separator;
-        
         WorkbookSettings wbSettings = new WorkbookSettings();
         wbSettings.setLocale(new Locale("en", "EN"));
 
         for (Map.Entry<String, ArrayList<Statistics>> entry : StatsFactory.getKindomMap().entrySet()) {
 
-            File file = new File(absoluteFilePath + File.separator + verifyString(entry.getKey()) + File.separator + verifyString(entry.getKey()) + ".xls");
+            File file = new File(absoluteDirPath + File.separator
+                    + verifyString(entry.getKey()) + File.separator
+                    + verifyString(entry.getKey()) + ".xls");
             file.createNewFile();
 
             WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
@@ -144,9 +142,10 @@ public class ExcelWriter {
 
         for (Map.Entry<String, ArrayList<Statistics>> entry : StatsFactory.getGroupMap().entrySet()) {
 
-            File file = new File(absoluteFilePath + File.separator
-                    + File.separator + verifyString(entry.getValue().get(0).genome.getKingdom())
-                    + File.separator + verifyString(entry.getKey()) + File.separator + verifyString(entry.getKey()) + ".xls");
+            File file = new File(absoluteDirPath + File.separator
+                    + verifyString(entry.getValue().get(0).genome.getKingdom()) + File.separator
+                    + verifyString(entry.getKey()) + File.separator
+                    + verifyString(entry.getKey()) + ".xls");
             file.createNewFile();
 
             WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
@@ -171,9 +170,10 @@ public class ExcelWriter {
 
         for (Map.Entry<String, ArrayList<Statistics>> entry : StatsFactory.getSubGroupMap().entrySet()) {
 
-            File file = new File(absoluteFilePath + File.separator
-                    + File.separator + verifyString(entry.getValue().get(0).genome.getKingdom())
-                    + File.separator + verifyString(entry.getValue().get(0).genome.getGroup()) + File.separator + verifyString(entry.getKey()) + File.separator
+            File file = new File(absoluteDirPath + File.separator
+                    + verifyString(entry.getValue().get(0).genome.getKingdom()) + File.separator
+                    + verifyString(entry.getValue().get(0).genome.getGroup()) + File.separator
+                    + verifyString(entry.getKey()) + File.separator
                     + verifyString(entry.getKey()) + ".xls");
             file.createNewFile();
 
@@ -184,10 +184,10 @@ public class ExcelWriter {
 
             int i = 0;
             if (entry.getValue().get(0).genome.getKingdom() != null) {
-                addLabel(excelSheet, ++i, 1,  entry.getValue().get(0).genome.getKingdom());
+                addLabel(excelSheet, ++i, 1, entry.getValue().get(0).genome.getKingdom());
             }
             if (entry.getValue().get(0).genome.getGroup() != null) {
-                addLabel(excelSheet, ++i, 1,  entry.getValue().get(0).genome.getGroup());
+                addLabel(excelSheet, ++i, 1, entry.getValue().get(0).genome.getGroup());
             }
             if (entry.getValue().get(0).genome.getSubGroup() != null) {
                 mediatorGUI.updateWritingPanel("Writing Excel file for subgroup " + entry.getValue().get(0).genome.getSubGroup());
