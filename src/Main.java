@@ -7,6 +7,7 @@ import java.lang.System;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 import jxl.write.WriteException;
@@ -43,7 +44,7 @@ public class Main {
 
             final DebugOption debugOption = new DebugOption();
             debugOption.parseInputCommand(argv);
-            
+
             final SAXParserFactory factory = SAXParserFactory.newInstance();
 
             // Trigger launching of acquisition and treatment when hitting button
@@ -119,7 +120,7 @@ public class Main {
                     if (e.getStateChange() == ItemEvent.SELECTED)
                         settings.activateSaveData();
                     else
-                    settings.deactivateSaveData();
+                        settings.deactivateSaveData();
                 }
             });
 

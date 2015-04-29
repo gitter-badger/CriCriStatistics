@@ -9,6 +9,7 @@ import java.util.Vector;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.*;
+
 import jxl.write.WriteException;
 
 public class Statistics {
@@ -79,18 +80,18 @@ public class Statistics {
 
         mediatorGUI.updateStatisticsPanel("Organism: " + this.genome.getOrganism() + "\n");
         mediatorGUI.updateStatisticsPanel("      ");
-        for (int i=0; i<phases.size(); i++) {
+        for (int i = 0; i < phases.size(); i++) {
             mediatorGUI.updateStatisticsPanel(String.format("%-16s", "Phase " + i));
         }
         mediatorGUI.updateStatisticsPanel("\n------------------------------------------------------\n");
 
-        for (Entry<String, Integer> entry : phases.get(0).entrySet() ) {
+        for (Entry<String, Integer> entry : phases.get(0).entrySet()) {
 
             String label = entry.getKey();
             mediatorGUI.updateStatisticsPanel(label.toUpperCase() + "   ");
-            for (int i=0; i<phases.size(); i++) {
+            for (int i = 0; i < phases.size(); i++) {
 
-                float percent = (float)(((float) (phases.get(i).get(label))) / ((float) (total_n_nucleotides))) * 100;
+                float percent = (float) (((float) (phases.get(i).get(label))) / ((float) (total_n_nucleotides))) * 100;
                 mediatorGUI.updateStatisticsPanel(String.format("%-16s", percent + "%"));
             }
             mediatorGUI.updateStatisticsPanel("\n");
@@ -127,15 +128,15 @@ public class Statistics {
             work_sequence = work_sequence.substring(
                     0, work_sequence.length() - 3);
         }
-        
+
         // we split the CDS into words (or keys)
         for (String n_nucleotide : Split(work_sequence)) {
 
             // increment each met key
             phases.get(true_phase)
-                  .put(n_nucleotide,
-                       phases.get(true_phase)
-                             .get(n_nucleotide) + 1);
+                    .put(n_nucleotide,
+                            phases.get(true_phase)
+                                    .get(n_nucleotide) + 1);
         }
     }
 
@@ -168,8 +169,8 @@ public class Statistics {
     /* Each time a genome's tri-nucleotides frequency has been computed,
     * we tag it as done in a local database. That let us know which genome
     * should or should not be treated when the program is restarted. */
-    public void tagAsDone(){
-      DatabaseModule db = DatabaseModule.getInstance();
-      db.updateGenomeEntry(this.genome.getId(), "XXXXX");
+    public void tagAsDone() {
+        DatabaseModule db = DatabaseModule.getInstance();
+        db.updateGenomeEntry(this.genome.getId(), "XXXXX");
     }
 }

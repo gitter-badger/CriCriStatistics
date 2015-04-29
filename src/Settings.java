@@ -1,4 +1,5 @@
 import org.apache.log4j.Logger;
+
 import java.io.File;
 
 public class Settings {
@@ -10,30 +11,30 @@ public class Settings {
 
     // Singleton Stuff
     private static class SingletonHolder {
-         public static final Settings INSTANCE = new Settings();
+        public static final Settings INSTANCE = new Settings();
     }
 
     public static Settings getInstance() {
-         return SingletonHolder.INSTANCE;
+        return SingletonHolder.INSTANCE;
     }
     // End Singleton Stuff
 
-    private Settings(){
+    private Settings() {
         this.numThreads = 1;
         this.active = true;
         this.outputDir = System.getProperty("user.home") + File.separator + "Statistics";
     }
 
-    public void setNumThreads(int numThreads){
+    public void setNumThreads(int numThreads) {
         this.numThreads = numThreads;
     }
 
-    public int getNumThreads(){
+    public int getNumThreads() {
         return this.numThreads;
     }
 
-    public int getCleanThreadId(){
-        return (int)((Thread.currentThread().getId() % numThreads));
+    public int getCleanThreadId() {
+        return (int) ((Thread.currentThread().getId() % numThreads));
     }
 
     public void turnON() {

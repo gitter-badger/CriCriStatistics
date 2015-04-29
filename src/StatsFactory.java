@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
+
 import jxl.write.WriteException;
 
 public class StatsFactory {
@@ -15,7 +16,7 @@ public class StatsFactory {
         Statistics stats = new Statistics(alphabet, seq, genome);
         stats.print();
         Statistics.Write(stats);
-		stats.tagAsDone(); 
+        stats.tagAsDone();
         if (!kingdomHash.containsKey(stats.genome.getKingdom())) {
             ArrayList<Statistics> stat = new ArrayList<Statistics>();
             stat.add(stats);

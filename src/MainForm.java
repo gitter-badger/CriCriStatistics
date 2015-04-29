@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.PrintStream;
+
 import jxl.write.WriteException;
 import org.apache.log4j.Logger;
 
@@ -136,16 +137,16 @@ class MainForm extends JFrame {
             statisticTabbedPane.addTab("Thread " + i, new JScrollPane(this.textAreaStat[i]));
             writingTabbedPane.addTab("Thread " + i, new JScrollPane(this.textAreaWrite[i]));
 
-            caret = (DefaultCaret)textAreaAcqui[i].getCaret();
+            caret = (DefaultCaret) textAreaAcqui[i].getCaret();
             caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
-            caret = (DefaultCaret)textAreaParse[i].getCaret();
+            caret = (DefaultCaret) textAreaParse[i].getCaret();
             caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
-            caret = (DefaultCaret)textAreaStat[i].getCaret();
+            caret = (DefaultCaret) textAreaStat[i].getCaret();
             caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
-            caret = (DefaultCaret)textAreaWrite[i].getCaret();
+            caret = (DefaultCaret) textAreaWrite[i].getCaret();
             caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
         }
