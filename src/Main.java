@@ -47,7 +47,7 @@ public class Main {
 
             final SAXParserFactory factory = SAXParserFactory.newInstance();
 
-            // Trigger launching of acquisition and treatment when hitting button
+            // Trigger launching of acquisition and treatment when hitting start button
             ((MainForm) frame).getStartButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
@@ -105,7 +105,7 @@ public class Main {
                 }
             });
 
-            // Trigger stop threads when hitting Stop button
+            // Stop threads when hitting Stop button
             ((MainForm) frame).getStopButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {

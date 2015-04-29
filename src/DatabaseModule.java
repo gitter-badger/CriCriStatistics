@@ -16,7 +16,7 @@ public class DatabaseModule{
 
 
   private DatabaseModule(){
-    this.queue = new SQLiteQueue(new File("database.sqlite"));
+    this.queue = new SQLiteQueue(new File(System.getProperty("user.home") + File.separator + "GenBanksDB.sqlite"));
     this.queue.start();
     
     queue.execute(new SQLiteJob<Object>() {
@@ -25,7 +25,7 @@ public class DatabaseModule{
           SQLiteStatement statement = connection.prepare("CREATE TABLE IF NOT EXISTS genome_version (id INT PRIMARY KEY NOT NULL, hash CHAR(50));");
           statement.stepThrough();
           statement.dispose();
-          System.out.println("table is created");
+          System.out.println("Database is ready.");
           return null;
         }
         catch (SQLiteException ex){
