@@ -1,10 +1,12 @@
 import org.apache.log4j.Logger;
+import java.io.File;
 
 public class Settings {
 
     private int numThreads;
     private boolean active;
     private boolean saveData;
+    private String outputDir;
 
     // Singleton Stuff
     private static class SingletonHolder {
@@ -19,6 +21,7 @@ public class Settings {
     private Settings(){
         this.numThreads = 1;
         this.active = true;
+        this.outputDir = System.getProperty("user.home") + File.separator + "Statistics";
     }
 
     public void setNumThreads(int numThreads){
@@ -55,5 +58,13 @@ public class Settings {
 
     public boolean savingData() {
         return this.saveData;
+    }
+
+    public void setOutputDir(String dir) {
+        this.outputDir = dir;
+    }
+
+    public String getOutputDir() {
+        return this.outputDir;
     }
 }

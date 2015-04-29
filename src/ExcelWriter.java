@@ -26,6 +26,8 @@ import jxl.write.biff.RowsExceededException;
 public class ExcelWriter {
 
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
+    private static Settings settings = Settings.getInstance();
+    private static int count_missing_data = 0;
 
     private WritableCellFormat arial;
     private WritableCellFormat twodigit;
@@ -74,6 +76,38 @@ public class ExcelWriter {
     /* Ensure we do not write files with forbidden of annoying characters. */
     public static String verifyString(String text) {
         return text.replaceAll("[?:!/*<>]+", "_");
+    }
+
+    public static String buildOutputDirPath(Genome genome) {
+        if (genome.getKingdom() != null
+                && genome.getGroup() != null
+                && genome.getSubGroup() != null) {
+
+            String outputDir = ExcelWriter.verifyString(genome.getKingdom()) + File.separator
+                    + ExcelWriter.verifyString(genome.getGroup()) + File.separator
+                    + ExcelWriter.verifyString(genome.getSubGroup()) + File.separator;
+
+            return settings.getOutputDir() + File.separator + outputDir;
+        }
+        else {
+            return settings.getOutputDir() + File.separator + "_Missing_Data" + File.separator;
+        }
+    }
+
+    public static String buildOutputFilePath(Genome genome) {
+
+        return buildOutputFilePath(genome, buildOutputDirPath(genome));
+    }
+
+    public static String buildOutputFilePath(Genome genome, String dirpath) {
+
+        if (genome.getOrganism() != null) {
+            return dirpath + ExcelWriter.verifyString(genome.getOrganism()) + ".xls";
+        }
+        else {
+            count_missing_data++;
+            return dirpath + "_no_organism-" + count_missing_data + ".xls";
+        }
     }
 
     public void writeStatistics() throws IOException, WriteException {

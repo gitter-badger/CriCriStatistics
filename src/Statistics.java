@@ -139,7 +139,7 @@ public class Statistics {
         }
     }
 
-    /* Takes a string and return the list of words that composes it. */
+    /* Takes a sequence and return the list of words that composes it. */
     private List<String> Split(String s) {
 
         List<String> parts = new ArrayList<String>();
@@ -152,29 +152,17 @@ public class Statistics {
         return parts;
     }
 
-    /* This method allow us to write the computed statistics into an Excel file. */
+    /* This method allows us to write the computed statistics into an Excel file. */
     public static void Write(Statistics stats)
             throws IOException, WriteException {
-        String outputFile;
 
-        if (stats.genome.getKingdom() != null && stats.genome.getGroup() != null
-                && stats.genome.getSubGroup() != null && stats.genome.getOrganism() != null) {
-            outputFile = ExcelWriter.verifyString(stats.genome.getKingdom()) + File.separator + ExcelWriter.verifyString(stats.genome.getGroup())
-                    + File.separator
-                    + ExcelWriter.verifyString(stats.genome.getSubGroup()) + File.separator;
+        String absoluteDirPath = ExcelWriter.buildOutputDirPath(stats.genome);
 
-            String homeDirectory =  System.getProperty("user.home");
-
-            String absoluteFilePath = "";
-
-            absoluteFilePath = homeDirectory + File.separator + "Statistics" + File.separator + outputFile;
-
-            File file = new File(absoluteFilePath);
-            file.mkdirs();
-            ExcelWriter ew = new ExcelWriter(stats);
-            ew.setOutputFile(absoluteFilePath + ExcelWriter.verifyString(stats.genome.getOrganism()) + ".xls");
-            ew.write();
-        }
+        File dir = new File(absoluteDirPath);
+        dir.mkdirs();
+        ExcelWriter ew = new ExcelWriter(stats);
+        ew.setOutputFile(ExcelWriter.buildOutputFilePath(stats.genome, absoluteDirPath));
+        ew.write();
     }
 
     /* Each time a genome's tri-nucleotides frequency has been computed,
