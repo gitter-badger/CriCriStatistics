@@ -97,8 +97,14 @@ public class Main {
             ((MainForm) frame).getUpdateGroupedStatsButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    GroupedStats gs = new GroupedStats();
-                    gs.updateGroupedStats();
+                    Runnable r = new Runnable() {
+                        public void run() {
+                            GroupedStats gs = new GroupedStats();
+                            gs.updateGroupedStats();
+                        }
+                    };
+
+                    new Thread(r).start();
                 }
             });
 

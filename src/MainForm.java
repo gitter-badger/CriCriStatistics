@@ -3,6 +3,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import javax.swing.*;
+import javax.swing.JPanel;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -83,12 +84,23 @@ class MainForm extends JFrame {
 
         JPanel menuTabbedPane = new JPanel();
 
-        menuTabbedPane.add(this.startButton, BorderLayout.NORTH);
-        menuTabbedPane.add(this.stopButton, BorderLayout.NORTH);
-        menuTabbedPane.add(this.saveData, BorderLayout.NORTH);
-        menuTabbedPane.add(this.chooser, BorderLayout.NORTH);
-        menuTabbedPane.add(this.outputText, BorderLayout.NORTH);
-        menuTabbedPane.add(this.updateGrouped, BorderLayout.NORTH);
+        JPanel menuLeft = new JPanel();
+        JPanel menuRight = new JPanel();
+        JPanel menuBottom = new JPanel();
+//        JPanel menuLeft = new JPanel();
+
+        menuLeft.add(this.startButton, BorderLayout.NORTH);
+        menuLeft.add(this.stopButton, BorderLayout.NORTH);
+        menuLeft.add(this.updateGrouped, BorderLayout.NORTH);
+
+        menuRight.add(this.chooser, BorderLayout.NORTH);
+        menuRight.add(this.saveData, BorderLayout.NORTH);
+
+        menuBottom.add(this.outputText, BorderLayout.WEST);
+
+        menuTabbedPane.add(menuLeft, BorderLayout.WEST);
+        menuTabbedPane.add(menuRight, BorderLayout.EAST);
+        menuTabbedPane.add(menuBottom, BorderLayout.SOUTH);
 
         return menuTabbedPane;
     }
