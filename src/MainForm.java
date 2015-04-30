@@ -24,6 +24,7 @@ class MainForm extends JFrame {
     private JButton stopButton = new JButton("Stop acquisition");
     private JCheckBox saveData = new JCheckBox("Save data on disk");
     private JButton chooser = new JButton("Select output directory");
+    private JButton updateGrouped = new JButton("Update grouped statistics");
     private JTextField outputText = new JTextField(50);
     private int progressBarValue;
     final static Logger logger = Logger.getLogger(MainForm.class);
@@ -58,26 +59,6 @@ class MainForm extends JFrame {
 
         super("Trinucleotide statistical analysis");
 
-        // Trigger writing of Kindgom/Group/Subgroup XLS files on CloseWindow event
-        this.addWindowListener(new WindowAdapter() {
-
-            public void windowClosing(WindowEvent e) {
-
-                ExcelWriter ew = new ExcelWriter();
-                try {
-                    try {
-                        ew.writeStatistics();
-                    } catch (WriteException ex) {
-                        java.util.logging.Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } catch (IOException ex) {
-                    java.util.logging.Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                System.out.println("Terminated.");
-                System.exit(1);
-            }
-        });
-
         this.mainTabbedPane.addTab("Menu", CreateMenuTab());
         this.mainTabbedPane.addTab("Update", CreateUpdateTab(numThreads));
 
@@ -107,6 +88,7 @@ class MainForm extends JFrame {
         menuTabbedPane.add(this.saveData, BorderLayout.NORTH);
         menuTabbedPane.add(this.chooser, BorderLayout.NORTH);
         menuTabbedPane.add(this.outputText, BorderLayout.NORTH);
+        menuTabbedPane.add(this.updateGrouped, BorderLayout.NORTH);
 
         return menuTabbedPane;
     }
@@ -203,5 +185,10 @@ class MainForm extends JFrame {
     public JTextField getOutputTextField() {
 
         return this.outputText;
+    }
+
+    public JButton getUpdateGroupedStatsButton() {
+
+        return this.updateGrouped;
     }
 }

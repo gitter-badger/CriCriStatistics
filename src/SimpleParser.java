@@ -17,7 +17,6 @@ public class SimpleParser implements IGenomeParser {
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
     final static Logger logger = Logger.getLogger(SimpleParser.class);
     private StringBuilder sequence;
-    StatsFactory statsFactory = new StatsFactory();
     private Genome genome;
     private int totalNucleotide;
     private Vector<String> cdsInfo;
@@ -103,7 +102,10 @@ public class SimpleParser implements IGenomeParser {
             if (this.cds.size() > 0) {
                 try {
                     mediatorGUI.updateParsingPanel("        Launching stats computation (" + this.cds.size() + " CDS)");
-                    statsFactory.new_stats(this.a4, this.cds, genome);
+                    Statistics stats = new Statistics(this.a4, this.cds, genome);
+                    stats.print();
+                    stats.write();
+                    stats.tagAsDone();
                 } catch (IOException ex) {
                     java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (WriteException ex) {

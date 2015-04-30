@@ -90,18 +90,15 @@ public class Main {
                         thread.start();
                         threadList.add(thread);
                     }
+                }
+            });
 
-                    // Acquisition finished. Write summed-stats
-                    ExcelWriter ew = new ExcelWriter();
-                    try {
-                        try {
-                            ew.writeStatistics();
-                        } catch (WriteException ex) {
-                            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    } catch (IOException ex) {
-                        java.util.logging.Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+            // Acquisition finished. Write summed-stats
+            ((MainForm) frame).getUpdateGroupedStatsButton().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    GroupedStats gs = new GroupedStats();
+                    gs.updateGroupedStats();
                 }
             });
 
@@ -130,7 +127,7 @@ public class Main {
                 public void actionPerformed(ActionEvent actionEvent) {
                     JFileChooser chooser = new JFileChooser();
                     chooser.setCurrentDirectory(new java.io.File("."));
-                    chooser.setDialogTitle("choosertitle");
+                    chooser.setDialogTitle("Select the output directory");
                     chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                     chooser.setAcceptAllFileFilterUsed(false);
 

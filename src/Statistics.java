@@ -21,7 +21,7 @@ public class Statistics {
     public int total_n_nucleotides = 0;
     private int word_length;
     public Genome genome;
-    private static ExcelWriter excel;
+    private static ExcelWriter excel = new ExcelWriter();
 
     public Statistics(Alphabet alphabet, Genome genome) {
 
@@ -154,16 +154,13 @@ public class Statistics {
     }
 
     /* This method allows us to write the computed statistics into an Excel file. */
-    public static void Write(Statistics stats)
+    public void write()
             throws IOException, WriteException {
 
-        String absoluteDirPath = ExcelWriter.buildOutputDirPath(stats.genome);
-
-        File dir = new File(absoluteDirPath);
+        File dir = new File(ExcelWriter.buildOutputDirPath(this.genome));
         dir.mkdirs();
-        ExcelWriter ew = new ExcelWriter(stats);
-        ew.setOutputFile(ExcelWriter.buildOutputFilePath(stats.genome, absoluteDirPath));
-        ew.write();
+        excel.setStatistics(this);
+        excel.write();
     }
 
     /* Each time a genome's tri-nucleotides frequency has been computed,
