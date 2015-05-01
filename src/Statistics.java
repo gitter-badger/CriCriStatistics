@@ -95,9 +95,11 @@ public class Statistics {
                 mediatorGUI.updateStatisticsPanel(String.format("%-16s", percent + "%"));
             }
             mediatorGUI.updateStatisticsPanel("\n");
+            mediatorGUI.incrementStatsLines();
         }
 
         mediatorGUI.updateStatisticsPanel("\n");
+        mediatorGUI.incrementStatsLines(4);
     }
 
     /* The length of a word in the current alphabet determines

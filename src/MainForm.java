@@ -19,17 +19,27 @@ class MainForm extends JFrame {
     private JTextArea[] textAreaParse;
     private JTextArea[] textAreaStat;
     private JTextArea[] textAreaWrite;
+    
+    public int[] countAcqui;
+    public int[] countParse;
+    public int[] countStats;
+    public int[] countWrite;
+    
     private JProgressBar bar = new JProgressBar();
+    private int progressBarValue;
+    
     private JTabbedPane mainTabbedPane = new JTabbedPane();
+    
     private JButton startButton = new JButton("(Re)Start acquisition");
     private JButton stopButton = new JButton("Stop acquisition");
     private JCheckBox saveData = new JCheckBox("Save data on disk");
     private JButton chooser = new JButton("Select output directory");
     private JButton updateGrouped = new JButton("Update grouped statistics");
     private JTextField outputText = new JTextField(50);
-    private int progressBarValue;
-    final static Logger logger = Logger.getLogger(MainForm.class);
 
+    private static int num_threads;
+    final static Logger logger = Logger.getLogger(MainForm.class);
+    
     public void appendTextAreaAcquisition(String info, int index) {
         this.textAreaAcqui[index].append(info);
     }
@@ -45,6 +55,42 @@ class MainForm extends JFrame {
     public void appendTextAreaWriting(String info, int index) {
         this.textAreaWrite[index].append(info);
     }
+    
+    public void clearAcquiArea(int index) {
+        this.textAreaAcqui[index].setText(null);
+    }
+
+    public void clearParseArea(int index) {
+        this.textAreaParse[index].setText(null);
+    }
+
+    public void clearStatsArea(int index) {
+        this.textAreaStat[index].setText(null);
+    }
+
+    public void clearWriteArea(int index) {
+        this.textAreaWrite[index].setText(null);
+    }
+
+    public void clearAllAcquiArea() {
+        for (int i=0; i<num_threads; i++)
+            this.textAreaAcqui[i].setText(null);
+    }
+
+    public void clearAllParseArea() {
+        for (int i=0; i<num_threads; i++)
+            this.textAreaParse[i].setText(null);
+    }
+
+    public void clearAllStatsArea() {
+        for (int i=0; i<num_threads; i++)
+            this.textAreaStat[i].setText(null);
+    }
+
+    public void clearAllWriteArea() {
+        for (int i=0; i<num_threads; i++)
+            this.textAreaWrite[i].setText(null);
+    }
 
     public void incrementProgressBar() {
         this.progressBarValue++;
@@ -59,9 +105,10 @@ class MainForm extends JFrame {
     public MainForm(int numThreads) {
 
         super("Trinucleotide statistical analysis");
+        num_threads = numThreads;
 
         this.mainTabbedPane.addTab("Menu", CreateMenuTab());
-        this.mainTabbedPane.addTab("Update", CreateUpdateTab(numThreads));
+        this.mainTabbedPane.addTab("Progress", CreateUpdateTab(numThreads));
 
         // Build progress bar
         BuildBar();
@@ -119,6 +166,11 @@ class MainForm extends JFrame {
         this.textAreaStat = new JTextArea[numThreads];
         this.textAreaWrite = new JTextArea[numThreads];
 
+        this.countAcqui = new int[numThreads];
+        this.countParse = new int[numThreads];
+        this.countStats = new int[numThreads];
+        this.countWrite = new int[numThreads];
+
         Font monoFont = new Font("Monospaced", Font.PLAIN, 12);
         DefaultCaret caret;
 
@@ -133,6 +185,11 @@ class MainForm extends JFrame {
             this.textAreaParse[i].setFont(monoFont);
             this.textAreaStat[i].setFont(monoFont);
             this.textAreaWrite[i].setFont(monoFont);
+
+            this.countAcqui[i] = 0;
+            this.countParse[i] = 0;
+            this.countStats[i] = 0;
+            this.countWrite[i] = 0;
 
             acquisitionTabbedPane.addTab("Thread " + i, new JScrollPane(this.textAreaAcqui[i]));
             parsingTabbedPane.addTab("Thread " + i, new JScrollPane(this.textAreaParse[i]));
