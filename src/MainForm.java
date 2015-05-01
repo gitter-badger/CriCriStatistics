@@ -134,7 +134,6 @@ class MainForm extends JFrame {
         JPanel menuLeft = new JPanel();
         JPanel menuRight = new JPanel();
         JPanel menuBottom = new JPanel();
-//        JPanel menuLeft = new JPanel();
 
         menuLeft.add(this.startButton, BorderLayout.NORTH);
         menuLeft.add(this.stopButton, BorderLayout.NORTH);
