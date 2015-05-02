@@ -16,8 +16,8 @@ public class SimpleParser implements IGenomeParser {
 
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
     final static Logger logger = Logger.getLogger(SimpleParser.class);
+    
     private StringBuilder sequence;
-    private Genome genome;
     private int totalNucleotide;
     private Vector<String> cdsInfo;
     private Vector<String> cds;
@@ -69,49 +69,51 @@ public class SimpleParser implements IGenomeParser {
 
         return duplicates;
     }
-
+    
     public boolean parseGenome(Genome genome, List<Scanner> genbanksScanner) {
+        
+        // Variable initialization
         List<Scanner> duplicates;
         this.sequence.setLength(0);
         this.totalNucleotide = -1;
 
         if (genbanksScanner == null)
             return false;
+        
+        this.cdsInfo.clear();
+        this.cds.clear();
 
+        // Extract data from each scanner
         for (Scanner scan : genbanksScanner) {
-            // FIXME: do several scanner can be one splitted genome?
-            // it would be the origin of the "multiple writing of the same excel file" bug
-            this.cdsInfo.clear();
-            this.cds.clear();
             duplicates = dupScanner(scan);
             extractSequence(duplicates.get(0));
             extractCDSInfo(duplicates.get(1));
 
             duplicates.get(0).close();
             duplicates.get(1).close();
+        }
 
-            for (String cdsItem : this.cdsInfo) {
-                checkCDSBounds(cdsItem);
-            }
-
+        // Check extracted data
+        for (String cdsItem : this.cdsInfo) {
+            checkCDSBounds(cdsItem);
+        }
+        
+        // If correct data, launch stats computation
+        if (this.cds.size() > 0) {
 
             genome.setNbFailedCDS(this.cdsInfo.size() - this.cds.size());
             genome.setNbCorrectCDS(this.cds.size());
-
-
-            if (this.cds.size() > 0) {
-                try {
-                    mediatorGUI.updateParsingPanel("        Launching stats computation (" + this.cds.size() + " CDS)");
-                    Statistics stats = new Statistics(this.a4, this.cds, genome);
-                    stats.print();
-                    stats.write();
-                    stats.tagAsDone();
-                } catch (IOException ex) {
-                    java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (WriteException ex) {
-                    java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+            
+            mediatorGUI.updateParsingPanel("        Launching stats computation (" + this.cds.size() + " CDS)");
+            Statistics stats = new Statistics(this.a4, this.cds, genome);
+            stats.print();
+            
+            try {
+                stats.write();
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (WriteException ex) {
+                java.util.logging.Logger.getLogger(SimpleParser.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }

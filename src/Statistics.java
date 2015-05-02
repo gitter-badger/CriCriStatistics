@@ -163,6 +163,7 @@ public class Statistics {
         dir.mkdirs();
         excel.setStatistics(this);
         excel.write();
+        tagAsDone();
     }
 
     /* Each time a genome's tri-nucleotides frequency has been computed,

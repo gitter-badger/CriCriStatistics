@@ -27,7 +27,7 @@ public class GenomeThread implements Runnable
 
     private IGenomeParser genomeParser;
 
-    public GenomeThread(String threadName, SAXParser parser, List<Genome> genomeList,DatabaseModule db, IGenomeParser genomeParser) {
+    public GenomeThread(String threadName, SAXParser parser, List<Genome> genomeList, DatabaseModule db, IGenomeParser genomeParser) {
         
         this.debugOption = null;
         this.db = db;
@@ -56,8 +56,10 @@ public class GenomeThread implements Runnable
                 } else
                     getGenomeGenbanks(genome.getOrganism(), genome);
             }
-            else
+            else {
+                mediatorGUI.updateAquisitionPanel("\nAcquisition stopped.");
                 break;
+            }
         }
     }
 

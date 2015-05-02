@@ -1,4 +1,3 @@
-//#Organism/Name	Kingdom	Group	SubGroup	Size (Mb)	Chrs	Organelles	Plasmids	BioProjects
 public class Genome
 {
     private String organism;
@@ -8,8 +7,8 @@ public class Genome
     private String size;
     private String chrs;
     private int id;
-    private int nbFailedCDS;
-    private int nbCorrectCDS;
+    private int nbFailedCDS = 0;
+    private int nbCorrectCDS = 0;
 
     public String getOrganism() {
         return organism;

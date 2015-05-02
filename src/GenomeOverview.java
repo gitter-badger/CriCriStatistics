@@ -30,7 +30,6 @@ public class GenomeOverview
     List<Genome> getGenomeList() throws IOException {
         List<Genome> genomeList = new ArrayList<Genome>();
 
-        //#Organism/Name	Kingdom	Group	SubGroup	Size (Mb)	Chrs	Organelles	Plasmids	BioProjects
         for (final String line: Files.readAllLines(FileSystems.getDefault().getPath("genome_overview.txt"), Charset.defaultCharset()))
         {
             if (line.charAt(0) != '#')
@@ -46,12 +45,6 @@ public class GenomeOverview
                 g.setChrs(split[5]);
 
                 genomeList.add(g);
-
-//                //create directory
-//                boolean isCreated = (new File(String.format("%s/%s/%s/%s.txt", g.getKingdom(), g.getGroup(), g.getSubGroup(), g.getOrganism()))).mkdirs();
-//                if (!isCreated) {
-//                    // Directory creation failed
-//                }
             }
         }
         mediatorGUI.setProgressBar(genomeList.size());

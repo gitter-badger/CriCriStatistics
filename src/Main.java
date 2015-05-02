@@ -60,7 +60,7 @@ public class Main {
                     GenomeOverview genomeOverview = new GenomeOverview();
 
                     settings.turnON();
-                    mediatorGUI.clearAllAreas();
+//                    mediatorGUI.clearAllAreas();
 
                     List<Genome> genomeList = null;
                     try {
