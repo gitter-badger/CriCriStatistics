@@ -18,6 +18,8 @@ import org.apache.commons.io.FileUtils;
 public class GroupedStats {
 
     // Attributes
+    private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
+    
     public static HashMap<String, ArrayList<WrittenStats>> kingdomHash;
     public static HashMap<String, ArrayList<WrittenStats>> groupHash;
     public static HashMap<String, ArrayList<WrittenStats>> subgroupHash;
@@ -47,13 +49,18 @@ public class GroupedStats {
         String outputDir = Settings.getInstance().getOutputDir();
         String[] extensions = {"xls", "xlsx"};
         Collection<File> list = FileUtils.listFiles(new File(outputDir), extensions, true);
-
+        
+        int old_size = mediatorGUI.getBarSize();
+        int old_percentage = mediatorGUI.getProgress();
+        mediatorGUI.setProgressBar(list.size());
+        mediatorGUI.setProgress(0);
+        
         for (File file : list) {
-//            System.out.println("Reading file " + file);
             try {
                 // For each found file, read it and get the contents
                 er.setInputFile(file);
                 WrittenStats ws = er.read();
+                mediatorGUI.incrementProgressBar();
 
                 if (ws == null) continue;
 
@@ -84,13 +91,22 @@ public class GroupedStats {
                     ensureNoDuplicate(subgroup, ws.organism);
                 }
                 subgroup.add(ws);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
+        mediatorGUI.setProgressBar(kingdomHash.size() + groupHash.size() + subgroupHash.size());
+        mediatorGUI.setProgress(0);
+        
         ExcelWriter.writeKingdoms(kingdomHash);
         ExcelWriter.writeGroups(groupHash);
         ExcelWriter.writeSubgroups(subgroupHash);
+        
+        if (old_size > 0) {
+            mediatorGUI.setProgressBar(old_size);
+            mediatorGUI.setProgress(old_percentage);
+        }
     }
 }

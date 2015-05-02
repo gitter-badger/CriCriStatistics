@@ -28,7 +28,8 @@ class MainForm extends JFrame {
     
     private JProgressBar bar = new JProgressBar();
     private int progressBarValue;
-    
+    private int progressBarMax;
+
     private JTabbedPane mainTabbedPane = new JTabbedPane();
     
     private JButton startButton = new JButton("(Re)Start acquisition");
@@ -99,8 +100,22 @@ class MainForm extends JFrame {
     }
 
     public void setProgressBar(int max) {
+        this.progressBarMax = max;
         this.bar.setMaximum(max);
         this.bar.setStringPainted(true);
+    }
+    
+    public void setProgress(int v) {
+        this.progressBarValue = v;
+        this.bar.setValue(v);
+    }
+    
+    public int getProgress() {
+        return this.progressBarValue;
+    }
+    
+    public int getBarSize() {
+        return this.progressBarMax;
     }
 
     public MainForm(int numThreads) {
@@ -128,6 +143,12 @@ class MainForm extends JFrame {
         // Text field is read only
         this.outputText.setEditable(false);
         setOutputText(Settings.getInstance().getOutputDir());
+        
+        // Enable / Disable buttons at startup
+        this.startButton.setEnabled(true);
+        this.updateGrouped.setEnabled(true);
+        this.chooser.setEnabled(true);
+        this.stopButton.setEnabled(false);
 
         // Set main display
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

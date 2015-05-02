@@ -97,14 +97,23 @@ public class MediatorGUI implements IMediatorGUI {
     }
 
     public synchronized void incrementProgressBar() {
-        if (this.gui != null) {
-            this.gui.incrementProgressBar();
-        }
+        this.gui.incrementProgressBar();
     }
 
     public void setProgressBar(int nbTotalGenome) {
-        if (this.gui != null)
-            this.gui.setProgressBar(nbTotalGenome);
+        this.gui.setProgressBar(nbTotalGenome);
+    }
+    
+    public void setProgress(int value) {
+        this.gui.setProgress(value);
+    }
+    
+    public int getProgress() {
+        return this.gui.getProgress();
+    }
+    
+    public int getBarSize() {
+        return this.gui.getBarSize();
     }
     
     public void clearAcquiArea(int id) {

@@ -51,6 +51,12 @@ public class Main {
             ((MainForm) frame).getStartButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
+
+                    ((MainForm) frame).getStartButton().setEnabled(false);
+                    ((MainForm) frame).getUpdateGroupedStatsButton().setEnabled(false);
+                    ((MainForm) frame).getChooserButton().setEnabled(false);
+                    ((MainForm) frame).getStopButton().setEnabled(true);
+                    
                     GenomeOverview genomeOverview = new GenomeOverview();
 
                     settings.turnON();
@@ -97,6 +103,12 @@ public class Main {
             ((MainForm) frame).getUpdateGroupedStatsButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
+
+//                    ((MainForm) frame).getStartButton().setEnabled(false);
+//                    ((MainForm) frame).getUpdateGroupedStatsButton().setEnabled(false);
+//                    ((MainForm) frame).getChooserButton().setEnabled(false);
+//                    ((MainForm) frame).getStopButton().setEnabled(false);
+
                     Runnable r = new Runnable() {
                         public void run() {
                             GroupedStats gs = new GroupedStats();
@@ -105,6 +117,11 @@ public class Main {
                     };
 
                     new Thread(r).start();
+
+//                    ((MainForm) frame).getStartButton().setEnabled(true);
+//                    ((MainForm) frame).getUpdateGroupedStatsButton().setEnabled(true);
+//                    ((MainForm) frame).getChooserButton().setEnabled(true);
+//                    ((MainForm) frame).getStopButton().setEnabled(true);
                 }
             });
 
@@ -113,6 +130,11 @@ public class Main {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     settings.turnOFF();
+
+                    ((MainForm) frame).getStartButton().setEnabled(true);
+                    ((MainForm) frame).getUpdateGroupedStatsButton().setEnabled(true);
+                    ((MainForm) frame).getChooserButton().setEnabled(true);
+                    ((MainForm) frame).getStopButton().setEnabled(false);
                 }
             });
 

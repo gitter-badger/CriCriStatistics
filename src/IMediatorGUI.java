@@ -15,6 +15,12 @@ public interface IMediatorGUI {
 
     public void setProgressBar(int nbTotalGenome);
 
+    public void setProgress(int value);
+
+    public int getProgress();
+
+    public int getBarSize();
+
     public void clearAcquiArea(int id);
 
     public void clearParseArea(int id);

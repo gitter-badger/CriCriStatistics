@@ -331,6 +331,8 @@ public class ExcelWriter {
                 createGroupedContent(excelSheet, entry.getValue(), entry.getKey());
                 workbook.write();
                 workbook.close();
+                
+                mediatorGUI.incrementProgressBar();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (WriteException e) {
@@ -369,6 +371,8 @@ public class ExcelWriter {
                 createGroupedContent(excelSheet, entry.getValue(), entry.getKey());
                 workbook.write();
                 workbook.close();
+                
+                mediatorGUI.incrementProgressBar();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (WriteException e) {
@@ -411,6 +415,8 @@ public class ExcelWriter {
                 createGroupedContent(excelSheet, entry.getValue(), entry.getKey());
                 workbook.write();
                 workbook.close();
+
+                mediatorGUI.incrementProgressBar();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (WriteException e) {
