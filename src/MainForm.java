@@ -1,7 +1,12 @@
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.UIManager.*;
 import javax.swing.*;
 import javax.swing.JPanel;
@@ -162,26 +167,43 @@ class MainForm extends JFrame {
 
     private JPanel CreateMenuTab() {
 
+        JPanel main = new JPanel();
+        
         JPanel menuTabbedPane = new JPanel();
+        menuTabbedPane.setLayout(new BoxLayout(menuTabbedPane, BoxLayout.Y_AXIS));
+//        menuTabbedPane.setPreferredSize(new Dimension(320, 400));
 
-        JPanel menuLeft = new JPanel();
-        JPanel menuRight = new JPanel();
-        JPanel menuBottom = new JPanel();
+        this.startButton.setMinimumSize(new Dimension(250, 20));
+        this.startButton.setMaximumSize(new Dimension(250, 20));
+        
+        this.updateGrouped.setMinimumSize(new Dimension(250, 20));
+        this.updateGrouped.setMaximumSize(new Dimension(250, 20));
+        
+        this.chooser.setMinimumSize(new Dimension(250, 20));
+        this.chooser.setMaximumSize(new Dimension(250, 20));
+        
+        this.stopButton.setMinimumSize(new Dimension(250, 20));
+        this.stopButton.setMaximumSize(new Dimension(250, 20));
+        
+        this.outputText.setMinimumSize(new Dimension(250, 20));
+        this.outputText.setMaximumSize(new Dimension(250, 20));
+        
+        this.saveData.setMinimumSize(new Dimension(250, 20));
+        this.saveData.setMaximumSize(new Dimension(250, 20));
 
-        menuLeft.add(this.startButton, BorderLayout.NORTH);
-        menuLeft.add(this.stopButton, BorderLayout.NORTH);
-        menuLeft.add(this.updateGrouped, BorderLayout.NORTH);
+        this.outputText.setMinimumSize(new Dimension(250, 20));
+        this.outputText.setMaximumSize(new Dimension(250, 20));
 
-        menuRight.add(this.chooser, BorderLayout.NORTH);
-        menuRight.add(this.saveData, BorderLayout.NORTH);
+        menuTabbedPane.add(this.startButton);
+        menuTabbedPane.add(this.stopButton);
+        menuTabbedPane.add(this.updateGrouped);
+        menuTabbedPane.add(this.chooser);
+        menuTabbedPane.add(this.saveData);
+        menuTabbedPane.add(this.outputText);
+        
+        main.add(menuTabbedPane, BorderLayout.WEST);
 
-        menuBottom.add(this.outputText, BorderLayout.WEST);
-
-        menuTabbedPane.add(menuLeft, BorderLayout.WEST);
-        menuTabbedPane.add(menuRight, BorderLayout.EAST);
-        menuTabbedPane.add(menuBottom, BorderLayout.SOUTH);
-
-        return menuTabbedPane;
+        return main;
     }
 
     private JTabbedPane CreateUpdateTab(int numThreads) {
