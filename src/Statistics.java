@@ -169,7 +169,7 @@ public class Statistics {
     /* Each time a genome's tri-nucleotides frequency has been computed,
     * we tag it as done in a local database. That let us know which genome
     * should or should not be treated when the program is restarted. */
-    public void tagAsDone() {
+    private void tagAsDone() {
         DatabaseModule db = DatabaseModule.getInstance();
         db.updateGenomeEntry(this.genome.getId(), "XXXXX");
     }
