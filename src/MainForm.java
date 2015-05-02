@@ -2,6 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
+import javax.swing.UIManager.*;
 import javax.swing.*;
 import javax.swing.JPanel;
 import javax.swing.text.DefaultCaret;
@@ -103,9 +104,20 @@ class MainForm extends JFrame {
     }
 
     public MainForm(int numThreads) {
-
+        
         super("Trinucleotide statistical analysis");
         num_threads = numThreads;
+
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        }
 
         this.mainTabbedPane.addTab("Menu", CreateMenuTab());
         this.mainTabbedPane.addTab("Progress", CreateUpdateTab(numThreads));
