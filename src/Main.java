@@ -36,7 +36,7 @@ public class Main {
 
         try {
 
-            JFrame frame = new MainForm(settings.getNumThreads());
+            final JFrame frame = new MainForm(settings.getNumThreads());
             final MediatorGUI mediatorGUI = MediatorGUI.getInstance();
             mediatorGUI.setGUI((MainForm) frame);
 
