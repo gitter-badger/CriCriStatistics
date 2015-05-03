@@ -16,7 +16,6 @@ public class DebugOption
   
   public void parseInputCommand(String args[]){
     int i = 0;
-    int argc = args.length;
     
     for (i = 0; i < args.length; i++){
 

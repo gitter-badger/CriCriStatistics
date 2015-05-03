@@ -1,27 +1,21 @@
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.logging.Level;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.UIManager.*;
 import javax.swing.*;
 import javax.swing.JPanel;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.PrintStream;
 
-import jxl.write.WriteException;
 import org.apache.log4j.Logger;
 
 class MainForm extends JFrame {
 
-    private JTextArea[] textAreaAcqui;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextArea[] textAreaAcqui;
     private JTextArea[] textAreaParse;
     private JTextArea[] textAreaStat;
     private JTextArea[] textAreaWrite;

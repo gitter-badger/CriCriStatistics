@@ -2,17 +2,7 @@ import java.io.IOException;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
 import java.util.Collection;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Locale;
-
-import jxl.Workbook;
-import jxl.WorkbookSettings;
-import jxl.write.WritableSheet;
-import jxl.write.WriteException;
-import jxl.write.WritableWorkbook;
 import org.apache.commons.io.FileUtils;
 
 public class GroupedStats {
@@ -20,15 +10,12 @@ public class GroupedStats {
     // Attributes
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
     
-    public static HashMap<String, ArrayList<WrittenStats>> kingdomHash;
-    public static HashMap<String, ArrayList<WrittenStats>> groupHash;
-    public static HashMap<String, ArrayList<WrittenStats>> subgroupHash;
+    public static HashMap<String, ArrayList<WrittenStats>> kingdomHash = new HashMap<String, ArrayList<WrittenStats>>();
+    public static HashMap<String, ArrayList<WrittenStats>> groupHash = new HashMap<String, ArrayList<WrittenStats>>();
+    public static HashMap<String, ArrayList<WrittenStats>> subgroupHash = new HashMap<String, ArrayList<WrittenStats>>();
 
     // Constructor
     public GroupedStats() {
-        this.kingdomHash = new HashMap<String, ArrayList<WrittenStats>>();
-        this.groupHash = new HashMap<String, ArrayList<WrittenStats>>();
-        this.subgroupHash = new HashMap<String, ArrayList<WrittenStats>>();
     }
 
     // Methods

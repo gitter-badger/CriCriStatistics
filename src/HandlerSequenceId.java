@@ -10,7 +10,7 @@ public class HandlerSequenceId extends HandlerGenomeId {
     boolean inLinkId = false;
     private static IMediatorGUI mediatorGUI = MediatorGUI.getInstance();
 
-    List sequenceIdList = new ArrayList<String>();
+    List<String> sequenceIdList = new ArrayList<String>();
 
     public void startElement(String uri, String localName,String qName,
                              Attributes attributes) throws SAXException {

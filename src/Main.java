@@ -6,11 +6,9 @@ import java.io.IOException;
 import java.lang.System;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
-import jxl.write.WriteException;
 
 //TODO: Get genomes overview list (timestamp for updating once a day?week?
 public class Main {
@@ -111,8 +109,7 @@ public class Main {
 
                     Runnable r = new Runnable() {
                         public void run() {
-                            GroupedStats gs = new GroupedStats();
-                            gs.updateGroupedStats();
+                            GroupedStats.updateGroupedStats();
                         }
                     };
 

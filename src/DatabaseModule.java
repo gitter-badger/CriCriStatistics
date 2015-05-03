@@ -16,8 +16,8 @@ public class DatabaseModule{
 
 
   private DatabaseModule(){
-    this.queue = new SQLiteQueue(new File(System.getProperty("user.home") + File.separator + "GenBanksDB.sqlite"));
-    this.queue.start();
+    queue = new SQLiteQueue(new File(System.getProperty("user.home") + File.separator + "GenBanksDB.sqlite"));
+    queue.start();
     
     queue.execute(new SQLiteJob<Object>() {
       protected Object job(SQLiteConnection connection) throws SQLiteException {
@@ -41,7 +41,7 @@ public class DatabaseModule{
     final int  id = genomeId;
     final String h = hash;
 
-    this.queue.execute(new SQLiteJob<Object>() {
+    queue.execute(new SQLiteJob<Object>() {
       protected Object job(SQLiteConnection connection) throws SQLiteException {
         try{
           SQLiteStatement statement = connection.prepare("INSERT INTO genome_version (id, hash) VALUES(" + id + ",\"" + h + "\");");
@@ -61,7 +61,7 @@ public class DatabaseModule{
   private String getGenomeEntry(int genomeId){
       final int id = genomeId;
 
-      String hash = (String) this.queue.execute(new SQLiteJob<Object>() {
+      String hash = (String) queue.execute(new SQLiteJob<Object>() {
         protected Object job(SQLiteConnection connection) throws SQLiteException {
           try{
             SQLiteStatement st = connection.prepare("SELECT * FROM genome_version WHERE id=" + id + ";");
@@ -94,7 +94,7 @@ public class DatabaseModule{
     final int  id = genomeId;
     final String h = hash;
     
-    this.queue.execute(new SQLiteJob<Object>() {
+    queue.execute(new SQLiteJob<Object>() {
       protected Object job(SQLiteConnection connection) throws SQLiteException {
         try{
           SQLiteStatement statement = connection.prepare("UPDATE genome_version SET hash =\"" + h + "\" WHERE id=" + id + ";");
@@ -138,7 +138,7 @@ public class DatabaseModule{
 
   public void gracefulStop(){
     try{ 
-      this.queue.stop(true).join();
+      queue.stop(true).join();
     }
     catch(Exception e){
       System.out.println("Database queue execution failed: " + e.getMessage());

@@ -12,7 +12,6 @@ import jxl.CellView;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.format.Alignment;
-import jxl.format.UnderlineStyle;
 import jxl.write.Formula;
 import jxl.write.Label;
 import jxl.write.Number;

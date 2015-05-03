@@ -1,7 +1,5 @@
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Proxy;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;

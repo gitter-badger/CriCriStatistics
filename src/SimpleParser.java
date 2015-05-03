@@ -2,7 +2,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Vector;
 import java.util.Stack;
 import java.util.ArrayList;
@@ -266,10 +265,6 @@ public class SimpleParser implements IGenomeParser {
         }
 
         return false;
-    }
-
-    private boolean check() {
-        return true;
     }
 
     public void extractCDSInfo(Scanner genBank) {
