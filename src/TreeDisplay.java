@@ -66,10 +66,11 @@ class TreeFactory {
          * Returns a "Sample" tree with {@link TextInBox} items as nodes.
          */
         public static TreeForTreeLayout<TextInBox> createTree() {
+                final Settings settings = Settings.getInstance();
                 TextInBox root = new TextInBox("root", 40, 20);
-
                 DefaultTreeForTreeLayout<TextInBox> tree = new DefaultTreeForTreeLayout<TextInBox>(root);
-                FileNode fileTree = new FileNode("");
+                
+                FileNode fileTree = new FileNode(settings.getOutputDir());
                 fileTree.buildTree(root, tree);
                 return tree;
         }

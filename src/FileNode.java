@@ -62,7 +62,7 @@ public class FileNode extends File
 
 				j = sizeTab - 1;
         
-        TextInBox tb = new TextInBox(getName(), 20, 20);
+        TextInBox tb = new TextInBox(getName(), getName().length()*7, 30);
         tree.addChild(root, tb);
 				for(i = 0; i < sizeTab; i++)
 				{
