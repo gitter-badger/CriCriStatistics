@@ -230,8 +230,9 @@ public class TreeDisplay {
             String path = panel.getPathFromXY(e.getX(), e.getY());
             reader.setInputFile(path);
             try {
-              WrittenStats stat = reader.read();
+              WrittenStats stat = reader.readGrouped();
               StatsHistogram hist = new StatsHistogram("test",stat);
+              hist.showStatsHistogram();
             } 
             catch (Exception ex){
               ex.printStackTrace();
