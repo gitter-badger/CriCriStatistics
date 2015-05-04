@@ -140,9 +140,7 @@ public class GenomeThread implements Runnable
                     mediatorGUI.updateAquisitionPanel("      *"+s.nextLine());
                     
                     if( Settings.getInstance().savingData() == true ){
-                        File sequenceDir = new File("sequenceDir");
-                        sequenceDir.mkdir();
-                        FileWriter fw = new FileWriter("sequenceDir/"+genomeName+sequenceId);
+                        FileWriter fw = new FileWriter("sequenceDir/"+genomeName+sequenceId+".gb");
                     
                         while (s.hasNextLine())
                         {
