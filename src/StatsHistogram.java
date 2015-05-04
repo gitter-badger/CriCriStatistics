@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashMap;
 
+import javax.swing.JFrame;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -25,7 +27,7 @@ import org.jfree.ui.TextAnchor;
  * This demo shows a simple bar chart created using the {@link XYSeriesCollection} dataset.
  *
  */
-public class StatsHistogram extends ApplicationFrame {
+public class StatsHistogram extends JFrame {
     
     IntervalXYDataset[] datasetPhases;
      
