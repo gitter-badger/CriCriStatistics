@@ -26,12 +26,10 @@ public class ExcelReader {
     // Methods
     public void setInputFile(String inputFile) {
         this.inputFile = new File(inputFile);
-        System.out.println("FILE: " + this.inputFile);
     }
 
     public void setInputFile(File inputFile) {
         this.inputFile = inputFile;
-        System.out.println("FILE: " + this.inputFile);
     }
 
     public WrittenStats read() throws IOException {
@@ -70,7 +68,6 @@ public class ExcelReader {
             return stats;
 
         } catch (BiffException e) {
-            System.out.println(this.inputFile);
             e.printStackTrace();
         }
 
@@ -89,7 +86,7 @@ public class ExcelReader {
             stats.subgroup = sheet.getCell(3, 1).getContents();
             stats.organism = sheet.getCell(4, 1).getContents();
 
-            // If this is a grouped stats excel file, we return null
+            // If this is a grouped stats excel file, its okay
             if (stats.group.isEmpty() || stats.subgroup.isEmpty() || stats.organism.isEmpty()) {
 
                 for (int i=7; i<=70; i++) {
@@ -106,7 +103,6 @@ public class ExcelReader {
                 return null;
 
         } catch (BiffException e) {
-            System.out.println(this.inputFile);
             e.printStackTrace();
         }
 
