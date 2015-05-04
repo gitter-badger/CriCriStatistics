@@ -124,7 +124,7 @@ public class StatsHistogram extends JFrame {
      */
     private JFreeChart createChart() {
         final JFreeChart chart = ChartFactory.createXYBarChart(
-            "XY Series Demo",
+            "Trinucleotide frequencies",
             "X", 
             false,
             "Y", 
