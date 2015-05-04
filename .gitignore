@@ -20,3 +20,5 @@ obj/*.class
 *.zip
 *.dylib
 *.dll
+
+Eclipse/
