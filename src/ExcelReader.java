@@ -26,10 +26,12 @@ public class ExcelReader {
     // Methods
     public void setInputFile(String inputFile) {
         this.inputFile = new File(inputFile);
+        System.out.println("FILE: " + this.inputFile);
     }
 
     public void setInputFile(File inputFile) {
         this.inputFile = inputFile;
+        System.out.println("FILE: " + this.inputFile);
     }
 
     public WrittenStats read() throws IOException {
@@ -72,7 +74,7 @@ public class ExcelReader {
             return stats;
 
         } catch (BiffException e) {
-//            System.out.println(this.inputFile);
+            System.out.println(this.inputFile);
             e.printStackTrace();
         }
 
