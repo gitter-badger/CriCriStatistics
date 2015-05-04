@@ -44,6 +44,17 @@ public class StatsHistogram extends ApplicationFrame {
         setContentPane(chartPanel);
     }
     
+    public StatsHistogram(final String title, WrittenStats stat) {
+        super(title);
+        datasetPhases = new IntervalXYDataset[3];
+        createDataset(stat);
+        JFreeChart chart = createChart();
+        final ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+        setContentPane(chartPanel);
+    }
+    
+    
     /**
      * Creates a sample dataset.
      * 
@@ -60,6 +71,35 @@ public class StatsHistogram extends ApplicationFrame {
         for (i = 0; i < 3 ; i++){ 
           j = 0;
           for (Map.Entry<String, Integer> entry : stats.phases.get(i).entrySet()) {
+            String key = entry.getKey();
+            double value = entry.getValue();
+            seriesPhases[i].add(j, value);
+            j++;
+          }
+        } 
+
+        for (i = 0; i < 3; i++){
+          datasetPhases[i] = new XYSeriesCollection(seriesPhases[i]);
+        }
+
+    }
+    
+    /**
+     * Creates a sample dataset.
+     * 
+     * @return A sample dataset.
+     */
+    private void createDataset(WrittenStats stats) {
+        final XYSeries[] seriesPhases = new XYSeries[3];
+        int i = 0, j = 0;
+        seriesPhases[0] = new XYSeries("Phases 1");
+        seriesPhases[1] = new XYSeries("Phases 2");
+        seriesPhases[2] = new XYSeries("Phases 3");
+        
+        
+        for (i = 0; i < 3 ; i++){ 
+          j = 0;
+          for (Map.Entry<String, Float> entry : stats.phases_freq.get(i).entrySet()) {
             String key = entry.getKey();
             double value = entry.getValue();
             seriesPhases[i].add(j, value);
