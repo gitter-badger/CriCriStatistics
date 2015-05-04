@@ -104,8 +104,13 @@ public class ExcelWriter {
 
     public static String buildOutputFilePath(Genome genome, String dirpath) {
 
+        return buildOutputFilePath(genome, dirpath, "xls");
+    }
+
+    public static String buildOutputFilePath(Genome genome, String dirpath, String ext) {
+
         if (genome.getOrganism() != null) {
-            return dirpath + verifyString(genome.getOrganism()) + ".xls";
+            return dirpath + verifyString(genome.getOrganism()) + "." + ext;
         }
         else {
             return null;

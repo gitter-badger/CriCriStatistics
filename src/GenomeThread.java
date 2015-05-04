@@ -139,8 +139,12 @@ public class GenomeThread implements Runnable
                     cdsList.add(s);
                     mediatorGUI.updateAquisitionPanel("      *"+s.nextLine());
                     
-                    if( Settings.getInstance().savingData() == true ){
-                        FileWriter fw = new FileWriter("sequenceDir/"+genomeName+sequenceId+".gb");
+                    if (Settings.getInstance().savingData() == true) {
+
+                        String outputDir = ExcelWriter.buildOutputDirPath(genome);
+                        File newdir = new File(outputDir);
+                        newdir.mkdirs();
+                        FileWriter fw = new FileWriter(ExcelWriter.buildOutputFilePath(genome, outputDir, "gb"));
                     
                         while (s.hasNextLine())
                         {
