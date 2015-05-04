@@ -5,7 +5,7 @@ INC = -Iinclude
 VPATH = src:include:bin
 CC = javac
 CFLAGS = -g 
-LIBS = lib/*.jar:lib/sqlite4java-392/sqlite4java.jar
+LIBS = lib/*:lib/sqlite4java-392/sqlite4java.jar
 
 ALL: Bio
 
