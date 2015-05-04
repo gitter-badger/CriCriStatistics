@@ -139,7 +139,7 @@ public class GenomeThread implements Runnable
                     cdsList.add(s);
                     mediatorGUI.updateAquisitionPanel("      *"+s.nextLine());
                     
-                    if( debugOption != null && debugOption.isGBLoggingActivated() ){
+                    if( Settings.getInstance().savingData() == true ){
                         File sequenceDir = new File("sequenceDir");
                         sequenceDir.mkdir();
                         FileWriter fw = new FileWriter("sequenceDir/"+genomeName+sequenceId);
