@@ -5,7 +5,7 @@ INC = -Iinclude
 VPATH = src:include:bin
 CC = javac
 CFLAGS = -g 
-LIBS = lib/jxl.jar:lib/log4j-1.2.17.jar:lib/sqlite4java-392/sqlite4java.jar:lib/apache.jar:lib/jfreechart-1.0.19/lib/*:lib/org.abego.treelayout.core.jar
+LIBS = lib/*.jar:lib/sqlite4java-392/sqlite4java.jar
 
 ALL: Bio
 
