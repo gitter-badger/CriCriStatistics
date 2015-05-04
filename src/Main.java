@@ -54,7 +54,7 @@ public class Main {
                     ((MainForm) frame).getUpdateGroupedStatsButton().setEnabled(false);
                     ((MainForm) frame).getChooserButton().setEnabled(false);
                     ((MainForm) frame).getStopButton().setEnabled(true);
-                    
+
                     GenomeOverview genomeOverview = new GenomeOverview();
 
                     settings.turnON();
@@ -161,6 +161,14 @@ public class Main {
                         settings.setOutputDir(newPath);
                         ((MainForm) frame).setOutputText(newPath);
                     }
+                }
+            });
+
+            // Button to display the big tree
+            ((MainForm) frame).getTreeButton().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    // TON CODE ICI JOSEPH
                 }
             });
 

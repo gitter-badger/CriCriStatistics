@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.UIManager.*;
 import javax.swing.*;
 import javax.swing.JPanel;
@@ -36,6 +37,7 @@ class MainForm extends JFrame {
     private JCheckBox saveData = new JCheckBox("Save data on disk");
     private JButton chooser = new JButton("Select output directory");
     private JButton updateGrouped = new JButton("Update grouped statistics");
+    private JButton showTree = new JButton("Show taxonomy");
     private JTextField outputText = new JTextField(50);
 
     private static int num_threads;
@@ -188,9 +190,13 @@ class MainForm extends JFrame {
         this.outputText.setMinimumSize(new Dimension(250, 20));
         this.outputText.setMaximumSize(new Dimension(250, 20));
 
+        this.showTree.setMinimumSize(new Dimension(250, 20));
+        this.showTree.setMaximumSize(new Dimension(250, 20));
+
         menuTabbedPane.add(this.startButton);
         menuTabbedPane.add(this.stopButton);
         menuTabbedPane.add(this.updateGrouped);
+        menuTabbedPane.add(this.showTree);
         menuTabbedPane.add(this.chooser);
         menuTabbedPane.add(this.saveData);
         menuTabbedPane.add(this.outputText);
@@ -307,5 +313,10 @@ class MainForm extends JFrame {
     public JButton getUpdateGroupedStatsButton() {
 
         return this.updateGrouped;
+    }
+
+    public JButton getTreeButton() {
+
+        return this.showTree;
     }
 }
