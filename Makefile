@@ -26,3 +26,9 @@ clean:
 
 dropdb:
 	@rm database.sqlite
+
+eclipse:
+	@rm -rf Eclipse
+	@mkdir -p Eclipse/genbank/bin
+	@cp -r lib src Eclipse/genbank
+	@cp obj/log4j.properties Eclipse/genbank/bin
