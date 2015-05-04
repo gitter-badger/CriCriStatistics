@@ -240,7 +240,7 @@ public class ExcelWriter {
         addNumber(sheet, 1, 4, totalCDSn);
         addLabel(sheet, 0, 6, TRINUCLEOTIDES);
 
-        Map<String, Integer> treeMap = new TreeMap<String, Integer>(stats.get(0).phases.get(0));
+        Map<String, Integer> treeMap = new TreeMap<String, Integer>(stats.get(0).phases_count.get(0));
 
         int k = 7;
         for (Entry<String, Integer> entry : treeMap.entrySet()) {
@@ -248,12 +248,12 @@ public class ExcelWriter {
             addLabel(sheet, 0, k, label.toUpperCase());
 
             int nb = 1;
-            for (int j = 0; j < stats.get(0).phases.size(); j++) {
+            for (int j = 0; j < stats.get(0).phases_count.size(); j++) {
                 int ntotatl = 0;
                
                 for (int m = 0; m < stats.size(); m++) {
 //                    System.out.println("Label: " + label);
-                    ntotatl = ntotatl + stats.get(m).phases.get(j).get(label);
+                    ntotatl = ntotatl + stats.get(m).phases_count.get(j).get(label);
                 }
                 addNumber(sheet, nb, k, ntotatl);
                 float percent = ((float) ntotatl) / ((float) totalTrinu) * 100;
@@ -265,7 +265,7 @@ public class ExcelWriter {
         }
 
         addLabel(sheet, 0, k, TOTAL);
-        for (int j = 0; j < 2 * stats.get(0).phases.size(); j++) {
+        for (int j = 0; j < 2 * stats.get(0).phases_count.size(); j++) {
             StringBuffer buf = new StringBuffer();
 
             buf.append("ROUND(SUM(" + CellReferenceHelper.getColumnReference(j + 1) + "8:"

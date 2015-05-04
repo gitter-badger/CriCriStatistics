@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.NumberCell;
 import jxl.read.biff.BiffException;
 
 public class ExcelReader {
@@ -56,12 +57,16 @@ public class ExcelReader {
             stats.nb_tri = Integer.parseInt(sheet.getCell(1, 3).getContents());
             stats.nb_wrong_cds = Integer.parseInt(sheet.getCell(1, 4).getContents());
 
-            // Read phases key counts (probabilities will be recomputed later)
             for (int i=7; i<=70; i++) {
                 String key = sheet.getCell(0, i).getContents();
+                // Read phases key counts
                 stats.addCount(0, key, Integer.parseInt(sheet.getCell(1, i).getContents()));
                 stats.addCount(1, key, Integer.parseInt(sheet.getCell(3, i).getContents()));
                 stats.addCount(2, key, Integer.parseInt(sheet.getCell(5, i).getContents()));
+                // Read phases key frequencies
+                stats.addFreq(0, key, (float) ((NumberCell) sheet.getCell(2, i)).getValue());
+                stats.addFreq(1, key, (float) ((NumberCell) sheet.getCell(4, i)).getValue());
+                stats.addFreq(2, key, (float) ((NumberCell) sheet.getCell(6, i)).getValue());
             }
 
             return stats;
