@@ -227,11 +227,16 @@ public class TreeDisplay {
         public void mouseClicked(MouseEvent e) {
             super.mouseClicked(e);
             
-            reader.setInputFile(path);
-            WrittenStats stat = reader.read();
-            
             String path = panel.getPathFromXY(e.getX(), e.getY());
-            System.out.println(path);
+            reader.setInputFile(path);
+            try {
+              WrittenStats stat = reader.read();
+              StatsHistogram hist = new StatsHistogram("test",stat);
+            } 
+            catch (Exception ex){
+              ex.printStackTrace();
+            }
+
         }
     });
 

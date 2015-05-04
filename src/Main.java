@@ -168,7 +168,8 @@ public class Main {
             ((MainForm) frame).getTreeButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    // TON CODE ICI JOSEPH
+                    TreeDisplay tree = new TreeDisplay();
+                    tree.showTree();
                 }
             });
 
