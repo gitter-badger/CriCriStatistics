@@ -1,4 +1,5 @@
 import java.awt.Container;
+import java.awt.event.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -24,11 +25,17 @@ class TextInBox {
         public final String text;
         public final int height;
         public final int width;
+        public String path;
 
         public TextInBox(String text, int width, int height) {
                 this.text = text;
                 this.width = width;
                 this.height = height;
+        }
+
+        public TextInBox(String text, int width, int height, String path) {
+          this(text, width, height);
+          this.path = path;
         }
 }
 
@@ -118,7 +125,6 @@ class TextInBoxTreePane extends JComponent {
         private final static Color BOX_COLOR = Color.orange;
         private final static Color BORDER_COLOR = Color.darkGray;
         private final static Color TEXT_COLOR = Color.black;
-
         private void paintEdges(Graphics g, TextInBox parent) {
                 if (!getTree().isLeaf(parent)) {
                         Rectangle2D.Double b1 = getBoundsOfNode(parent);
@@ -132,6 +138,15 @@ class TextInBoxTreePane extends JComponent {
                                 paintEdges(g, child);
                         }
                 }
+        }
+        
+        public String getPathFromXY(int x, int y){
+                for (TextInBox textInBox : treeLayout.getNodeBounds().keySet()) {
+                        Rectangle2D.Double b1 = getBoundsOfNode(textInBox);
+                        if (b1.contains(x,y))
+                          return textInBox.path;
+                }
+                return "NOT_FOUND";
         }
 
         private void paintBox(Graphics g, TextInBox textInBox) {
@@ -204,8 +219,23 @@ public class TreeDisplay {
 				nodeExtentProvider, configuration);
 
 		// Create a panel that draws the nodes and edges and show the panel
-		TextInBoxTreePane panel = new TextInBoxTreePane(treeLayout);
-		showInDialog(panel);
+		final TextInBoxTreePane panel = new TextInBoxTreePane(treeLayout);
+		
+    final ExcelReader reader = new ExcelReader();
+    panel.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            super.mouseClicked(e);
+            
+            reader.setInputFile(path);
+            WrittenStats stat = reader.read();
+            
+            String path = panel.getPathFromXY(e.getX(), e.getY());
+            System.out.println(path);
+        }
+    });
+
+    showInDialog(panel);
 	}
 
 }
