@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.lang.IndexOutOfBoundsException;
 
 import jxl.Sheet;
 import jxl.Workbook;
@@ -25,10 +26,12 @@ public class ExcelReader {
 
     // Methods
     public void setInputFile(String inputFile) {
+        System.out.println(inputFile);
         this.inputFile = new File(inputFile);
     }
 
     public void setInputFile(File inputFile) {
+        System.out.println(inputFile);
         this.inputFile = inputFile;
     }
 
@@ -69,6 +72,8 @@ public class ExcelReader {
 
         } catch (BiffException e) {
             e.printStackTrace();
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
 
         return null;
@@ -103,6 +108,9 @@ public class ExcelReader {
                 return null;
 
         } catch (BiffException e) {
+            System.out.println(this.inputFile);
+            e.printStackTrace();
+        } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
 

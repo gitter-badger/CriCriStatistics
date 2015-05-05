@@ -255,7 +255,7 @@ public class ExcelWriter {
             int nb = 1;
             for (int j = 0; j < stats.get(0).phases_count.size(); j++) {
                 int ntotatl = 0;
-               
+
                 for (int m = 0; m < stats.size(); m++) {
 //                    System.out.println("Label: " + label);
                     ntotatl = ntotatl + stats.get(m).phases_count.get(j).get(label);
@@ -291,7 +291,7 @@ public class ExcelWriter {
         sheet.addCell(number);
     }
 
-    /* Write a number as a float at the given position. 
+    /* Write a number as a float at the given position.
     * The whole number is written but only 2 decimals are displayed. */
     private static void addReal(WritableSheet sheet, int column, int row,
             Float fl) throws WriteException, RowsExceededException {
@@ -307,6 +307,31 @@ public class ExcelWriter {
         Label label;
         label = new Label(column, row, s, arial);
         sheet.addCell(label);
+    }
+
+    public static void writeGlobal(ArrayList<WrittenStats> aws) {
+        try {
+            WorkbookSettings wbSettings = new WorkbookSettings();
+            wbSettings.setLocale(new Locale("en", "EN"));
+
+            String outputDir = Settings.getInstance().getOutputDir();
+            File file = new File(outputDir + File.separator + "Statistics.xls");
+            file.createNewFile();
+
+            WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
+            workbook.createSheet("Statistics", 0);
+            WritableSheet excelSheet = workbook.getSheet(0);
+
+            createLabel(excelSheet);
+            createGroupedContent(excelSheet, aws, "Global");
+
+            workbook.write();
+            workbook.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void writeKingdoms(HashMap<String, ArrayList<WrittenStats>> kingdomHash) {
@@ -335,7 +360,7 @@ public class ExcelWriter {
                 createGroupedContent(excelSheet, entry.getValue(), entry.getKey());
                 workbook.write();
                 workbook.close();
-                
+
                 mediatorGUI.incrementProgressBar();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -375,7 +400,7 @@ public class ExcelWriter {
                 createGroupedContent(excelSheet, entry.getValue(), entry.getKey());
                 workbook.write();
                 workbook.close();
-                
+
                 mediatorGUI.incrementProgressBar();
             } catch (IOException e) {
                 e.printStackTrace();
