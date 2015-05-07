@@ -42,7 +42,6 @@ public class GroupedStats {
         mediatorGUI.setProgressBar(list.size());
         mediatorGUI.setProgress(0);
 
-        ArrayList<String> kingdoms = new ArrayList<String>();
 
         for (File file : list) {
             try {
@@ -58,7 +57,6 @@ public class GroupedStats {
                 if (kingdom == null) {
                     kingdom = new ArrayList<WrittenStats>();
                     kingdomHash.put(ws.kingdom, kingdom);
-                    kingdoms.add(ws.kingdom);
                 //} else {
                 //    ensureNoDuplicate(kingdom, ws.organism);
                 }
@@ -93,30 +91,55 @@ public class GroupedStats {
         ExcelWriter.writeKingdoms(kingdomHash);
         ExcelWriter.writeGroups(groupHash);
         ExcelWriter.writeSubgroups(subgroupHash);
-
-        ArrayList<WrittenStats> ks = new ArrayList<WrittenStats>();
-
-        for (String kd : kingdoms) {
-
-            try {
-                String checked_kd = ExcelWriter.verifyString(kd);
-                String outputFile = Settings.getInstance().getOutputDir() + File.separator
-                    + checked_kd + File.separator + checked_kd + ".xls";
-
-                er.setInputFile(outputFile);
-                WrittenStats ws = er.readGrouped();
-
-                if (ws != null) ks.add(ws);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        ExcelWriter.writeGlobal(ks);
+        
+        updateGlobalStats();
 
         if (old_size > 0) {
             mediatorGUI.setProgressBar(old_size);
             mediatorGUI.setProgress(old_percentage);
         }
+    }
+    
+    public static void updateGlobalStats() {
+        try {
+
+            ExcelReader er = new ExcelReader();
+            ArrayList<WrittenStats> ks = new ArrayList<WrittenStats>();
+            String outputDir = Settings.getInstance().getOutputDir() + File.separator;
+            WrittenStats ws = null;
+
+            // We use hardcoded values since there is only 5 kingdoms
+            String bacteriaFile = outputDir + "Bacteria" + File.separator + "Bacteria.xls";
+            String virusesFile = outputDir + "Viruses" + File.separator + "Viruses.xls";
+            String eukaryotaFile = outputDir + "Eukaryota" + File.separator + "Eukaryota.xls";
+            String archaeaFile = outputDir + "Archaea" + File.separator + "Archaea.xls";
+            String viroidsFile = outputDir + "Viroids" + File.separator + "Viroids.xls";
+
+            er.setInputFile(bacteriaFile);
+            ws = er.readKingdom();
+            if (ws != null) ks.add(ws);
+
+            er.setInputFile(virusesFile);
+            ws = er.readKingdom();
+            if (ws != null) ks.add(ws);
+
+            er.setInputFile(eukaryotaFile);
+            ws = er.readKingdom();
+            if (ws != null) ks.add(ws);
+
+            er.setInputFile(archaeaFile);
+            ws = er.readKingdom();
+            if (ws != null) ks.add(ws);
+
+            er.setInputFile(viroidsFile);
+            ws = er.readKingdom();
+            if (ws != null) ks.add(ws);
+
+            ExcelWriter.writeGlobal(ks);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 }

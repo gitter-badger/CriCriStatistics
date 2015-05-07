@@ -254,18 +254,18 @@ public class ExcelWriter {
 
             int nb = 1;
             for (int j = 0; j < stats.get(0).phases_count.size(); j++) {
+                
                 int ntotatl = 0;
 
-                for (int m = 0; m < stats.size(); m++) {
-//                    System.out.println("Label: " + label);
+                for (int m = 0; m < stats.size(); m++)
                     ntotatl = ntotatl + stats.get(m).phases_count.get(j).get(label);
-                }
+                
                 addNumber(sheet, nb, k, ntotatl);
                 float percent = ((float) ntotatl) / ((float) totalTrinu) * 100;
                 addReal(sheet, nb + 1, k, percent);
                 nb += 2;
-
             }
+            
             k++;
         }
 

@@ -79,6 +79,38 @@ public class ExcelReader {
         return null;
     }
 
+    public WrittenStats readKingdom() throws IOException {
+        try {
+            WrittenStats stats = new WrittenStats();
+            Workbook w = Workbook.getWorkbook(this.inputFile);
+            // Get the first sheet
+            Sheet sheet = w.getSheet(0);
+
+            stats.kingdom = sheet.getCell(1, 1).getContents();
+
+            stats.nb_cds = Integer.parseInt(sheet.getCell(1, 2).getContents());
+            stats.nb_tri = Integer.parseInt(sheet.getCell(1, 3).getContents());
+            stats.nb_wrong_cds = Integer.parseInt(sheet.getCell(1, 4).getContents());
+
+            for (int i=7; i<=70; i++) {
+                String key = sheet.getCell(0, i).getContents();
+                // Read phases key counts
+                stats.addCount(0, key, Integer.parseInt(sheet.getCell(1, i).getContents()));
+                stats.addCount(1, key, Integer.parseInt(sheet.getCell(3, i).getContents()));
+                stats.addCount(2, key, Integer.parseInt(sheet.getCell(5, i).getContents()));
+            }
+
+            return stats;
+
+        } catch (BiffException e) {
+            e.printStackTrace();
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public WrittenStats readGrouped() throws IOException {
         try {
             WrittenStats stats = new WrittenStats();

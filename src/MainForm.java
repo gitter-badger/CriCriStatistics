@@ -37,6 +37,7 @@ class MainForm extends JFrame {
     private JCheckBox saveData = new JCheckBox("Save data on disk");
     private JButton chooser = new JButton("Select output directory");
     private JButton updateGrouped = new JButton("Update grouped statistics");
+    private JButton updateGlobal = new JButton("Update global statistics");
     private JButton showTree = new JButton("Show taxonomy");
     private JTextField outputText = new JTextField(50);
 
@@ -193,9 +194,13 @@ class MainForm extends JFrame {
         this.showTree.setMinimumSize(new Dimension(250, 20));
         this.showTree.setMaximumSize(new Dimension(250, 20));
 
+        this.updateGlobal.setMinimumSize(new Dimension(250, 20));
+        this.updateGlobal.setMaximumSize(new Dimension(250, 20));
+
         menuTabbedPane.add(this.startButton);
         menuTabbedPane.add(this.stopButton);
         menuTabbedPane.add(this.updateGrouped);
+        menuTabbedPane.add(this.updateGlobal);
         menuTabbedPane.add(this.showTree);
         menuTabbedPane.add(this.chooser);
         menuTabbedPane.add(this.saveData);
@@ -313,6 +318,11 @@ class MainForm extends JFrame {
     public JButton getUpdateGroupedStatsButton() {
 
         return this.updateGrouped;
+    }
+
+    public JButton getUpdateGlobalStatsButton() {
+
+        return this.updateGlobal;
     }
 
     public JButton getTreeButton() {
