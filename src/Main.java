@@ -113,12 +113,12 @@ public class Main {
             });
 
             // Shortcut to recompute global stats from kingdom files
-            ((MainForm) frame).getUpdateGlobalStatsButton().addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    GroupedStats.updateGlobalStats();
-                }
-            });
+//            ((MainForm) frame).getUpdateGlobalStatsButton().addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent actionEvent) {
+//                    GroupedStats.updateGlobalStats();
+//                }
+//            });
             
             // Stop threads when hitting Stop button
             ((MainForm) frame).getStopButton().addActionListener(new ActionListener() {
