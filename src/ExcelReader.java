@@ -26,12 +26,10 @@ public class ExcelReader {
 
     // Methods
     public void setInputFile(String inputFile) {
-        System.out.println(inputFile);
         this.inputFile = new File(inputFile);
     }
 
     public void setInputFile(File inputFile) {
-        System.out.println(inputFile);
         this.inputFile = inputFile;
     }
 
@@ -46,11 +44,6 @@ public class ExcelReader {
             stats.group = sheet.getCell(2, 1).getContents();
             stats.subgroup = sheet.getCell(3, 1).getContents();
             stats.organism = sheet.getCell(4, 1).getContents();
-
-//            System.out.println(stats.kingdom);
-//            System.out.println(stats.group);
-//            System.out.println(stats.subgroup);
-//            System.out.println(stats.organism);
 
             // If this is a grouped stats excel file, we return null
             if (stats.group.isEmpty() || stats.subgroup.isEmpty() || stats.organism.isEmpty())
