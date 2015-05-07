@@ -1,0 +1,8 @@
+Main-Class: Main
+Class-Path: lib/log4j-1.2.17.jar
+            lib/sqlite4java.jar
+            lib/apache.jar
+            lib/jfreechart-1.0.19.jar
+            lib/junit-4.11.jar
+            lib/jxl.jar
+            lib/org.abego.treelayout.core.jar

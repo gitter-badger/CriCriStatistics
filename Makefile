@@ -5,7 +5,7 @@ INC = -Iinclude
 VPATH = src:include:bin
 CC = javac
 CFLAGS = -g 
-LIBS = lib/*:lib/sqlite4java-392/sqlite4java.jar
+LIBS = lib/*:
 
 ALL: Bio
 
@@ -16,10 +16,10 @@ obj:
 	mkdir obj
 
 launch:
-	@java -cp ".:obj:lib/*:lib/sqlite4java-392/*:lib/jfreechart-1.0.19/lib/*" Main
+	@java -cp ".:obj:lib/*" Main
 
 debug:
-	@jdb -classpath ".:obj:lib/*:lib/sqlite4java-392/*" Main
+	@jdb -classpath ".:obj:lib/*" Main
 
 clean:
 	@rm -r $(OBJ)/*.class genome_overview.txt bioinfo.log* 2>/dev/null     
@@ -32,3 +32,12 @@ eclipse:
 	@mkdir -p Eclipse/genbank/bin
 	@cp -r lib src Eclipse/genbank
 	@cp obj/log4j.properties Eclipse/genbank/bin
+
+jar: Bio
+	@rm -rf jar
+	@mkdir jar
+	@cp obj/* jar
+	@cp -r lib jar
+	@cp MANIFEST.MF jar
+	@(cd jar; jar cvmf MANIFEST.MF genbank.jar *.class log4j.properties)
+	@cp jar/genbank.jar .
