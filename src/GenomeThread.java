@@ -142,6 +142,7 @@ public class GenomeThread implements Runnable
 
             try
             {
+                String test = "";
                 String buffer = "";
                 Boolean first = true;
                 while(s.hasNextLine()){
@@ -154,10 +155,14 @@ public class GenomeThread implements Runnable
                     }
 
                     buffer += line;
+                    test += line;
 
                     if (first)
                         first = false;
                 }
+
+                cdsList.add(new Scanner(buffer));
+                return cdsList;
             }
             finally {
                 s.close();
@@ -197,8 +202,6 @@ public class GenomeThread implements Runnable
 ////                    System.out.println(ex);
 ////                }
 //            }
-
-            return cdsList;
         }
         catch (Exception e)
         {
