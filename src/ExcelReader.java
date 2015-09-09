@@ -59,6 +59,11 @@ public class ExcelReader {
                 stats.addCount(0, key, Integer.parseInt(sheet.getCell(1, i).getContents()));
                 stats.addCount(1, key, Integer.parseInt(sheet.getCell(3, i).getContents()));
                 stats.addCount(2, key, Integer.parseInt(sheet.getCell(5, i).getContents()));
+
+                // Read preferential frames
+                stats.addPref(0, key, Integer.parseInt(sheet.getCell(7, i).getContents()));
+                stats.addPref(1, key, Integer.parseInt(sheet.getCell(8, i).getContents()));
+                stats.addPref(2, key, Integer.parseInt(sheet.getCell(9, i).getContents()));
             }
 
             return stats;
