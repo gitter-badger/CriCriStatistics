@@ -132,37 +132,76 @@ public class GenomeThread implements Runnable
                 }
             }
 
-            for (final String sequenceId : handlerSequenceId.getSequenceIdList()) {
-                try {
-                    URL url = new URL("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&rettype=gb&retmode=text&id=" + sequenceId);
-                    Scanner s = new Scanner(url.openStream());
-                    cdsList.add(s);
-                    mediatorGUI.updateAquisitionPanel("      *"+s.nextLine());
-                    
-                    if (Settings.getInstance().savingData() == true) {
 
-                        String outputDir = ExcelWriter.buildOutputDirPath(genome);
-                        File newdir = new File(outputDir);
-                        newdir.mkdirs();
-                        FileWriter fw = new FileWriter(ExcelWriter.buildOutputFilePath(genome, outputDir, "gb"));
-                    
-                        while (s.hasNextLine())
-                        {
-                            fw.write(s.nextLine()+'\n');
-                        }
-                        fw.close();
-                        // read from your scanner
+            String idList = org.apache.commons.lang3.StringUtils.join(handlerSequenceId.getSequenceIdList(), ',');
+            System.out.println(idList);
+
+            URL url = new URL("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&rettype=gb&retmode=text&id=" + idList);
+
+            Scanner s = new Scanner(url.openStream());
+
+            try
+            {
+                String test = "";
+                String buffer = "";
+                Boolean first = true;
+                while(s.hasNextLine()){
+                    String line = s.nextLine();
+
+                    if (!first && line.contains("LOCUS"))
+                    {
+                        cdsList.add(new Scanner(buffer));
+                        buffer = "";
                     }
 
-                } catch (IOException ex) {
-                    // there was some connection problem, or the file did not exist on the server,
-                    // or your URL was not in the right format.
-                    // think about what to do now, and put it here.
-                    System.out.println(ex);
+                    buffer += line;
+                    test += line;
+
+                    if (first)
+                        first = false;
                 }
+
+                cdsList.add(new Scanner(buffer));
+                return cdsList;
+            }
+            finally {
+                s.close();
             }
 
-            return cdsList;
+            //mediatorGUI.updateAquisitionPanel("      *"+idList);
+
+
+
+//            for (final String sequenceId : handlerSequenceId.getSequenceIdList()) {
+//
+////                try {
+////                    URL url = new URL("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&rettype=gb&retmode=text&id=" + sequenceId);
+////                    Scanner s = new Scanner(url.openStream());
+////                    cdsList.add(s);
+////                    mediatorGUI.updateAquisitionPanel("      *"+s.nextLine());
+////
+////                    if (Settings.getInstance().savingData() == true) {
+////
+////                        String outputDir = ExcelWriter.buildOutputDirPath(genome);
+////                        File newdir = new File(outputDir);
+////                        newdir.mkdirs();
+////                        FileWriter fw = new FileWriter(ExcelWriter.buildOutputFilePath(genome, outputDir, "gb"));
+////
+////                        while (s.hasNextLine())
+////                        {
+////                            fw.write(s.nextLine()+'\n');
+////                        }
+////                        fw.close();
+////                        // read from your scanner
+////                    }
+////
+////                } catch (IOException ex) {
+////                    // there was some connection problem, or the file did not exist on the server,
+////                    // or your URL was not in the right format.
+////                    // think about what to do now, and put it here.
+////                    System.out.println(ex);
+////                }
+//            }
         }
         catch (Exception e)
         {
