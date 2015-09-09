@@ -16,6 +16,7 @@ public class Statistics {
 
     // it works like an array of dictionnary: phases[0]("ACG") = 1.25
     public ArrayList<HashMap<String, Integer>> phases;
+    public ArrayList<HashMap<String, Integer>> prefFrame;
     public int total_n_nucleotides = 0;
     private int word_length;
     public Genome genome;
@@ -34,11 +35,14 @@ public class Statistics {
         for (int i = 0; i < word_length; i++) {
 
             HashMap<String, Integer> frequencies = new HashMap<String, Integer>();
+            HashMap<String, Integer> pref_frame = new HashMap<String, Integer>();
             for (String key : alphabet.words) {
 
                 frequencies.put(key, 0);
+                pref_frame.put(key, 0);
             }
             phases.add(frequencies);
+            prefFrame.add(pref_frame);
         }
     }
 
@@ -109,10 +113,45 @@ public class Statistics {
 
             PhaseFrequencies(seq, i);
         }
+
+        for (String n_nucleotide : phases.get(0).keySet()) {
+
+            ComputePreferentialFrame(n_nucleotide);
+        }
+    }
+
+    private void ComputePreferentialFrame(String n_nucleotide) {
+
+        int max = -1;
+        int pf[] = new int[word_length];
+
+        for (int i = 0; i < word_length; i++) {
+            pf[i] = 0;
+        }
+
+        for (int i = 0; i < word_length; i++) {
+
+            if (phases.get(i).get(n_nucleotide) > max) {
+
+                max = phases.get(i).get(n_nucleotide);
+
+                for (int j = 0; j < i; j++) {
+                    pf[j] = 0;
+                }
+
+                pf[i] = 1;
+
+            } else if (phases.get(i).get(n_nucleotide) == max) {
+
+              pf[i] = 1;
+            }
+        }
     }
 
     /* Compute the frequency of each word in a CDS for a given phase. */
     private void PhaseFrequencies(String sequence, int phase) {
+
+        // FIXME: ensure sequence has at least word_length * n_nucleotides
 
         // ensure phase do not go out of bounds
         int true_phase = phase % word_length;
@@ -125,6 +164,7 @@ public class Statistics {
             work_sequence = work_sequence.substring(
                     0, work_sequence.length() - shift);
         } else {
+
             work_sequence = work_sequence.substring(
                     0, work_sequence.length() - 3);
         }
@@ -167,6 +207,7 @@ public class Statistics {
     /* Each time a genome's tri-nucleotides frequency has been computed,
     * we tag it as done in a local database. That let us know which genome
     * should or should not be treated when the program is restarted. */
+    // TODO: add timestamps for the update feature
     private void tagAsDone() {
         DatabaseModule db = DatabaseModule.getInstance();
         db.updateGenomeEntry(this.genome.getId(), "XXXXX");
