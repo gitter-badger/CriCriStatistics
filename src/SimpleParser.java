@@ -137,24 +137,41 @@ public class SimpleParser implements IGenomeParser {
             if (bounds.startsWith("complement", 0)) {
 
                 if (!bounds.contains("join")) {
-                    bounds = bounds.substring(11, bounds.length()).replace(")", "");
-                    isComplement = true;
+                    if (bounds.length() > 11 ) {
+                      bounds = bounds.substring(11, bounds.length()).replace(")", "");
+                      isComplement = true;
+                    }
+                    else {
+                      return false;
+                    }
                 } else {
                     isComplement = true;
-                    bounds = bounds.substring(11, bounds.length());
+                    if (bounds.length() > 11 ) {
+                      bounds = bounds.substring(11, bounds.length());
 
-                    if (bounds.startsWith("join", 0)) {
-                        Vector<Integer> boundsVector = join(bounds.substring(5, bounds.length()).replace(")", ""));
-                        extractCDS(boundsVector, isComplement);
-                        mediatorGUI.updateParsingPanel("    Checked CDS (" + bounds + ")");
-                        return true;
+                      if (bounds.startsWith("join", 0)) {
+                          if (bounds.length() > 5 ){ 
+                            Vector<Integer> boundsVector = join(bounds.substring(5, bounds.length()).replace(")", ""));
+                            extractCDS(boundsVector, isComplement);
+                            mediatorGUI.updateParsingPanel("    Checked CDS (" + bounds + ")");
+                            return true;
+                          }
+                      }
+                    }
+                    else {
+                      return false;
                     }
                 }
             } else if (bounds.startsWith("join", 0)) {
-                Vector<Integer> boundsVector = join(bounds.substring(5, bounds.length()).replace(")", ""));
-                extractCDS(boundsVector, isComplement);
-                mediatorGUI.updateParsingPanel("    Checked CDS (" + bounds + ")");
-                return true;
+                if (bounds.length() > 5 ){ 
+                  Vector<Integer> boundsVector = join(bounds.substring(5, bounds.length()).replace(")", ""));
+                  extractCDS(boundsVector, isComplement);
+                  mediatorGUI.updateParsingPanel("    Checked CDS (" + bounds + ")");
+                  return true;
+                }
+                else {
+                  return false;
+                }
             }
 
             return false;
